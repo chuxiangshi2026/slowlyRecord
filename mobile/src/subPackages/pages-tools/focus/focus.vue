@@ -46,6 +46,34 @@
           </view>
         </view>
       </view>
+      <view class="setting-row">
+        <text class="setting-label">发音遍数</text>
+        <view class="setting-chips">
+          <view
+            v-for="n in repeatOptions"
+            :key="n"
+            class="chip"
+            :class="{ on: settings.repeatCount === n }"
+            @click="setRepeatCount(n)"
+          >
+            <text>{{ n }}遍</text>
+          </view>
+        </view>
+      </view>
+      <view class="setting-row">
+        <text class="setting-label">语速</text>
+        <view class="setting-chips">
+          <view
+            v-for="opt in speechRateOptions"
+            :key="opt.value"
+            class="chip"
+            :class="{ on: settings.speechRate === opt.value }"
+            @click="setSpeechRate(opt.value)"
+          >
+            <text>{{ opt.label }}</text>
+          </view>
+        </view>
+      </view>
       <!-- 词间停顿：仅听词模式使用，与「自动翻页」相互独立 -->
       <view v-if="settings.mode === 'listen'" class="setting-row">
         <text class="setting-label">词间停顿</text>
@@ -197,6 +225,8 @@ interface FocusSettings {
   intervalSec: number     // 标准模式自动翻页间隔，0 = 手动
   listenPauseSec: number  // 听词模式词间停顿（秒）
   autoPlay: boolean       // 自动发音
+  repeatCount: number     // 每词发音遍数
+  speechRate: number      // 发音语速（0.5–2.0）
 }
 
 const modeOptions: { value: FocusMode; label: string }[] = [
@@ -222,6 +252,17 @@ const listenPauseOptions = [
   { value: 5, label: '5s' }
 ]
 
+// 发音遍数与语速档位（语速受微信 playbackRate 0.5–2.0 范围约束）
+const repeatOptions = [1, 2, 3, 5, 10, 20]
+const speechRateOptions = [
+  { value: 0.5, label: '0.5x' },
+  { value: 0.75, label: '0.75x' },
+  { value: 1, label: '1x' },
+  { value: 1.25, label: '1.25x' },
+  { value: 1.5, label: '1.5x' },
+  { value: 2, label: '2x' }
+]
+
 function loadSettings(): FocusSettings {
   try {
     const raw = uni.getStorageSync(SETTINGS_KEY)
@@ -233,11 +274,13 @@ function loadSettings(): FocusSettings {
         listenPauseSec: typeof raw.listenPauseSec === 'number'
           ? raw.listenPauseSec
           : (typeof raw.intervalSec === 'number' && raw.intervalSec > 0 ? raw.intervalSec : 1.5),
-        autoPlay: !!raw.autoPlay
+        autoPlay: !!raw.autoPlay,
+        repeatCount: typeof raw.repeatCount === 'number' && raw.repeatCount >= 1 ? Math.floor(raw.repeatCount) : 1,
+        speechRate: typeof raw.speechRate === 'number' && raw.speechRate >= 0.5 && raw.speechRate <= 2 ? raw.speechRate : 1
       }
     }
   } catch {}
-  return { mode: 'standard', intervalSec: 0, listenPauseSec: 1.5, autoPlay: true }
+  return { mode: 'standard', intervalSec: 0, listenPauseSec: 1.5, autoPlay: true, repeatCount: 1, speechRate: 1 }
 }
 
 const settings = ref<FocusSettings>(loadSettings())
@@ -267,6 +310,16 @@ function setListenPauseSec(sec: number) {
   settings.value.listenPauseSec = sec
   persistSettings()
   // 无需重启播放器：ListenPlayer 每次调度前都会重新读取停顿毫秒数
+}
+
+function setRepeatCount(count: number) {
+  settings.value.repeatCount = count
+  persistSettings()
+}
+
+function setSpeechRate(rate: number) {
+  settings.value.speechRate = rate
+  persistSettings()
 }
 
 function toggleAutoPlay() {
@@ -324,18 +377,28 @@ function scheduleAutoTimer() {
 }
 
 // ========== 发音（全局统一入口：播前停旧音、代际防抢跑、预取下一词） ==========
-function playCurrent(userInitiated = false) {
+function playCurrent(userInitiated = false, repeatLeft = settings.value.repeatCount) {
   const word = currentWord.value
   if (!word?.word) return
   played.value = true
+  const isLastRepeat = repeatLeft <= 1
   speakWord(word.word, {
     userInitiated,
-    prefetchNext: wordList.value[currentIndex.value + 1]?.word,
+    rate: settings.value.speechRate,
     // 口语句库词条优先播放预合成连读录音（含连读/弱读），失败回退在线 TTS
     speechBankId: word.speechBankId,
+    // 还有重播遍数时不预取下一词（重播直接命中本次音频缓存）
+    prefetchNext: isLastRepeat ? wordList.value[currentIndex.value + 1]?.word : undefined,
     prefetchNextSpeechBankId: wordList.value[currentIndex.value + 1]?.speechBankId,
-    // 自动发音开启时，发音自然播完即切下一个并继续发音（自动连播）
-    onEnded: settings.value.autoPlay ? advanceByAudio : undefined
+    onEnded: () => {
+      if (!isLastRepeat) {
+        // 遍数未完：同词重播（切词/停止会作废旧代次，此回调不再触发）
+        playCurrent(false, repeatLeft - 1)
+      } else if (settings.value.autoPlay) {
+        // 自动发音开启时，发音自然播完即切下一个并继续发音（自动连播）
+        advanceByAudio()
+      }
+    }
   })
 }
 
@@ -379,7 +442,10 @@ function startListen() {
         console.warn('ListenPlayer: 单词发音全部音源失败，已跳过')
       }
     },
-    wordsStore.currentLanguage
+    wordsStore.currentLanguage,
+    () => settings.value.speechRate,
+    () => settings.value.repeatCount,
+    wordList.value.map(w => w.speechBankId)
   )
   listenPlaying.value = true
   listenPlayer.start()

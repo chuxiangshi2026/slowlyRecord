@@ -235,4 +235,65 @@ describe('ListenPlayer', () => {
     expect(prefetched[0]).toContain('tl=ja')
     p.destroy()
   })
+
+  it('发音遍数 >1 时同词重播指定遍数后再推进', async () => {
+    const played: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => { played.push(url); return Promise.resolve() }
+    }
+    const onFinished = vi.fn()
+    const p = new ListenPlayer(['apple', 'banana'], player, () => 1000, { onFinished }, 'en', () => 1, () => 3)
+
+    p.start()
+    await vi.advanceTimersByTimeAsync(0)
+    // apple 连播 3 遍（同 URL 重复），然后才停顿推进
+    expect(played).toHaveLength(3)
+    expect(played.every(u => u.includes('apple'))).toBe(true)
+
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(played).toHaveLength(6)
+    expect(played.slice(3).every(u => u.includes('banana'))).toBe(true)
+
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(onFinished).toHaveBeenCalledTimes(1)
+  })
+
+  it('语速通过 playAudio options 透传到底层播放器', async () => {
+    const rates: (number | undefined)[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (_url, options) => { rates.push(options?.rate); return Promise.resolve() }
+    }
+    const p = new ListenPlayer(['apple'], player, () => 1000, {}, 'en', () => 0.75)
+
+    p.start()
+    await vi.advanceTimersByTimeAsync(0)
+    expect(rates).toEqual([0.75])
+    p.destroy()
+  })
+
+  it('口语句库词条首选音源为预合成录音，预取下一词同样生效', () => {
+    const played: string[] = []
+    const prefetched: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => { played.push(url); return new Promise<void>(() => {}) },
+      prefetchAudio: (url) => { prefetched.push(url) },
+    }
+    const p = new ListenPlayer(
+      ['I wanna go home', 'apple'],
+      player,
+      () => 1000,
+      {},
+      'en',
+      () => 1,
+      () => 1,
+      ['spoken-reductions-1', undefined],
+    )
+
+    p.start()
+    expect(played[0]).toContain('cdn.jsdelivr.net')
+    expect(played[0]).toContain('spoken-reductions-1')
+    // 下一词无 speechBankId：预取走有道音源
+    expect(prefetched[0]).toContain('dict.youdao.com')
+    p.destroy()
+  })
 })

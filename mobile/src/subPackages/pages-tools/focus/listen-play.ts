@@ -3,13 +3,13 @@
  * 流程：播放单词发音 → 停顿 → 自动推进下一个；发音失败按音源回退，全部失败则跳过该词。
  */
 
-import { buildWordAudioUrls } from '@/utils/word-audio'
+import { buildWordAudioUrls, buildPlayUrls } from '@/utils/word-audio'
 import { getActiveLanguage, type LanguageCode } from '@/utils/language'
 
 export { buildWordAudioUrls }
 
 export interface WordAudioPlayer {
-  playAudio(url: string): Promise<void>
+  playAudio(url: string, options?: { rate?: number }): Promise<void>
   prefetchAudio?(url: string): void
 }
 
@@ -29,13 +29,21 @@ export class ListenPlayer {
   private finished = false
   /** 播放代次：每次起播、暂停或销毁后，旧 playAudio 的回调一律作废 */
   private session = 0
+  /** 当前词剩余重播遍数（发音遍数 >1 时，播完一遍同词重播再推进） */
+  private repeatLeft = 1
 
   constructor(
     private readonly words: string[],
     private readonly player: WordAudioPlayer,
     private readonly getPauseMs: () => number,
     private readonly callbacks: ListenPlayCallbacks = {},
-    private readonly language: LanguageCode = getActiveLanguage()
+    private readonly language: LanguageCode = getActiveLanguage(),
+    /** 播放语速（0.5–2.0），getter 形式便于设置变更后下次起播即生效 */
+    private readonly getRate: () => number = () => 1,
+    /** 每词发音遍数，getter 形式同上 */
+    private readonly getRepeatCount: () => number = () => 1,
+    /** 与 words 对齐的预合成音频词库 id（口语句库词条优先播录音，缺失位置传 undefined） */
+    private readonly speechBankIds: (string | undefined)[] = []
   ) {}
 
   get currentIndex(): number {
@@ -105,19 +113,26 @@ export class ListenPlayer {
       this.finish()
       return
     }
-    this.playWithFallback(buildWordAudioUrls(word, this.language), 0, session)
+    this.repeatLeft = Math.max(1, Math.floor(this.getRepeatCount()))
+    this.playWithFallback(buildPlayUrls(word, this.language, this.speechBankIds[this.index]), 0, session)
     const nextWord = this.words[this.index + 1]
     if (nextWord) {
-      const nextUrl = buildWordAudioUrls(nextWord, this.language)[0]
+      const nextUrl = buildPlayUrls(nextWord, this.language, this.speechBankIds[this.index + 1])[0]
       if (nextUrl) this.player.prefetchAudio?.(nextUrl)
     }
   }
 
   private playWithFallback(urls: string[], urlIndex: number, session: number): void {
     if (session !== this.session || !this.playing) return
-    this.player.playAudio(urls[urlIndex]).then(
+    this.player.playAudio(urls[urlIndex], { rate: this.getRate() }).then(
       () => {
         if (session !== this.session || !this.playing) return
+        // 遍数未完：同词重播一遍（音频已命中本地缓存，重播无网络开销）
+        if (this.repeatLeft > 1) {
+          this.repeatLeft--
+          this.playWithFallback(urls, 0, session)
+          return
+        }
         this.scheduleNext(session)
       },
       () => {

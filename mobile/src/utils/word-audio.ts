@@ -25,6 +25,8 @@ export interface SpeakWordOptions {
   language?: LanguageCode
   /** 词条来自带预合成连读音频的词库（口语句库）：优先播放录音，失败回退在线 TTS */
   speechBankId?: string
+  /** 播放语速（0.5–2.0），专注模式语速设置经此透传到底层播放器 */
+  rate?: number
 }
 
 /** 发言代次：每次 speakWord/stopSpeaking 自增 */
@@ -46,7 +48,7 @@ export function buildWordAudioUrls(word: string, language: LanguageCode = getAct
 }
 
 /** 完整播放音源链：带预合成连读音频的词库把录音地址放最前，其后维持原 TTS 兜底链 */
-function buildPlayUrls(word: string, language: LanguageCode, speechBankId?: string): string[] {
+export function buildPlayUrls(word: string, language: LanguageCode, speechBankId?: string): string[] {
   const urls = buildWordAudioUrls(word, language)
   if (!speechBankId) return urls
   const speechUrl = getSpeechAudioUrl(speechBankId, word)
@@ -75,7 +77,7 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
   const playAt = (urlIndex: number): void => {
     // 代际丢弃：加载/回退完成前已切词（新的 speakWord 或 stopSpeaking）则不再播
     if (seq !== speakSeq) return
-    tts.playAudio(urls[urlIndex], { silent: !options.userInitiated }).then(
+    tts.playAudio(urls[urlIndex], { silent: !options.userInitiated, rate: options.rate }).then(
       () => {
         if (seq !== speakSeq) return
         options.onEnded?.()

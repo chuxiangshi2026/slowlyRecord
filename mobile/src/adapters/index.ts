@@ -432,6 +432,8 @@ export class MiniProgramDbAdapter implements DbAdapter {
 export interface PlayAudioOptions {
   /** 静默模式：播放失败时不弹 toast（自动发音/自动连播用）；用户主动发音缺省会弹节流提示 */
   silent?: boolean
+  /** 播放语速（0.5–2.0，超出范围自动钳制；低版本基础库不支持 playbackRate 时静默忽略） */
+  rate?: number
 }
 
 export interface TtsAdapter {
@@ -576,7 +578,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       // 代际校验：已被更新的播放取代（切词/手动停止）时，旧请求直接作废，不再重试
       if (generation !== this.generation) throw lastErr ?? new Error('stale audio play aborted')
       try {
-        await this.playOnce(targetUrl)
+        await this.playOnce(targetUrl, options?.rate)
         // 播放成功后后台补齐本地缓存（仅在线地址命中且本地无缓存时）
         if (!cachedPath && cacheKey) {
           this.downloadAndCache(url, cacheKey).catch(() => { /* 缓存失败静默 */ })
@@ -613,7 +615,7 @@ class MiniProgramTtsAdapter implements TtsAdapter {
   }
 
   /** 单次播放：出错或超时视为失败，由上层决定是否重试 */
-  private playOnce(url: string): Promise<void> {
+  private playOnce(url: string, rate = 1): Promise<void> {
     return new Promise((resolve, reject) => {
       // 先停止并销毁旧实例，避免旧实例的 onEnded 把新引用清掉导致 stop() 失效
       if (this.innerAudio) {
@@ -659,6 +661,11 @@ class MiniProgramTtsAdapter implements TtsAdapter {
         reject(err)
       })
       audio.src = url
+      if (rate !== 1) {
+        try {
+          audio.playbackRate = Math.min(2, Math.max(0.5, rate))
+        } catch { /* 低版本基础库无 playbackRate，按原速播放 */ }
+      }
       audio.play()
     })
   }

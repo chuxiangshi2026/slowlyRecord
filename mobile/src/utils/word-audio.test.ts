@@ -191,6 +191,15 @@ describe('speakWord 音频调度', () => {
     env.calls[1].resolve()
   })
 
+  it('语速设置透传到底层 playAudio（含回退音源）', async () => {
+    speakWord('hello', { rate: 0.75 })
+    expect(env.calls[0].options).toEqual({ silent: true, rate: 0.75 })
+    env.calls[0].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls[1].options).toEqual({ silent: true, rate: 0.75 })
+    env.calls[1].resolve()
+  })
+
   it('不带 speechBankId 的词条不掺入预合成音源', () => {
     speakWord('hello')
     expect(env.calls[0].url).toContain('dict.youdao.com')
