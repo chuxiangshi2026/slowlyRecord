@@ -6,6 +6,7 @@
     <OCRSelector
         :visible="showOCRPanel"
         :ocr-results="ocrResults"
+        :loading="ocrPanelLoading"
         @close="closeOCRPanel"
         @select="handleSelectOCRItem"
         @select-all="handleSelectAllItems"
@@ -73,6 +74,8 @@ import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
 import { containsChinese } from '@/utils/zh-entry';
+import { resolveZhEnDirection } from '@/utils/text-utils';
+import { translateWithPlatform } from '@/utils/translation-api';
 import { reconcileSchedules } from '@/utils/schedule-reminder';
 
 const wordsStore = useWordsStore();
@@ -84,6 +87,7 @@ const router = useRouter();
 
 // 添加OCR结果相关的响应式变量
 const showOCRPanel = ref<boolean>(false);
+const ocrPanelLoading = ref<boolean>(false); // OCR 结果返回前的「识别中」状态
 const ocrResults = ref<any[]>([]);
 
 // 添加文本选择相关的响应式变量
@@ -132,6 +136,10 @@ if ((window as any).electronAPI?.onGlobalShortcut) {
 // （index.html 内联脚本已提前注册 onPluginEnter，防止 Vite 冷启动慢时事件丢失）
 async function handleUtoolsEnter(action: any) {
   console.log('[handleUtoolsEnter] code=', action?.code, '时间=', new Date().toISOString());
+  // 新功能进入时关闭上个功能的悬浮面板（OCR 结果/划段选择），避免盖住本次页面
+  showOCRPanel.value = false;
+  ocrPanelLoading.value = false;
+  showTextPanel.value = false;
   // 先同步 设置（商店版文档中的密钥为密文，这里解密为明文副本后再合并，库内文档仍是密文）
   let setDb = await decryptSyncedSecrets(getSetDb());
 
@@ -398,11 +406,20 @@ async function handleUtoolsEnter(action: any) {
   // 划词翻译：优先用 uTools 派发的选中文本（autocopy 模式 payload），读不到再模拟复制
   if (action.code === 'huaciTranslate') {
     try {
-      let selected = typeof action.payload === 'string' ? action.payload.trim() : '';
-      if (!selected && action.from === 'hotkey') {
-        try { selected = ((await navigator.clipboard.readText()) || '').trim(); } catch { /* 读不到再走模拟复制 */ }
+      // 注意：不能退化为直接读剪贴板——其中可能是任意旧内容而非当前选中文本，
+      // 只有模拟复制拿到的才是用户真实选中（2026-11 划词翻译错译旧剪贴板内容的回归）
+      debugLog('[划词翻译] 进入分支, from=', action.from, ', type=', action.type, ', payload长度=', typeof action.payload === 'string' ? action.payload.length : 'none');
+      let selected = '';
+      if (action.from === 'main') {
+        // 主输入框触发：payload 是输入框原文（通常就是关键词本身，回归：曾把「划词翻译」四字拿去翻译），
+        // 不是系统选中文本。剥掉关键词前缀，剩余部分作为待翻译文本；没有剩余则走模拟复制取当前选中
+        selected = (typeof action.payload === 'string' ? action.payload : '').replace(/^划词翻译[，,.\s:：]*/, '').trim();
+      } else if (typeof action.payload === 'string') {
+        // 热词触发且 uTools autocopy 把选中内容作为 payload 传入
+        selected = action.payload.trim();
       }
       if (!selected) selected = (await getSelectedTextFromSystem()).trim();
+      debugLog('[划词翻译] 最终文本长度=', selected.length, ', 前20字=', selected.slice(0, 20));
       if (!selected) {
         ElMessage.warning('未获取到选中的文本，请先选中要翻译的内容');
         return;
@@ -411,7 +428,9 @@ async function handleUtoolsEnter(action: any) {
         ElMessage.error(selected);
         return;
       }
+      prewarmTranslation(selected);
       router.push({ path: '/translate', query: { text: selected } });
+      debugLog('[划词翻译] 已调用 router.push /translate');
     } catch (e) {
       debugLog('划词翻译获取选中文本失败:', e);
       ElMessage.error('划词翻译失败，请重试');
@@ -428,10 +447,23 @@ async function handleUtoolsEnter(action: any) {
           ElMessage.warning('未能读取图片内容，请重试');
           return;
         }
+        // 已有图片直接 OCR：同样先打开识别中面板，不空等网络
+        ocrResults.value = [];
+        ocrPanelLoading.value = true;
+        showOCRPanel.value = true;
         result = await ocrExistingImage(base64);
       } else {
         // 这里只应该返回  文本  具体添加的时候，还会单独翻译，这两个不在一个模块，不相互影响
-        result = await ocrTranslateMultiPlatform();
+        // 截图完成立即恢复窗口并切到单词列表（添加流程目的地），
+        // 避免 OCR 网络期间停留在上次页面（如旧翻译页），看起来像闪退/卡死
+        result = await ocrTranslateMultiPlatform(() => {
+          restoreUtoolsMainWindow();
+          router.push('/word');
+          // 识别面板立即打开（识别中状态），OCR 结果稍后填入，不空等网络
+          ocrResults.value = [];
+          ocrPanelLoading.value = true;
+          showOCRPanel.value = true;
+        });
       }
 
 
@@ -441,17 +473,20 @@ async function handleUtoolsEnter(action: any) {
 
         // 本地OCR错误处理
         if (result.errorCode === 'LOCAL_OCR_NO_TEXT') {
+          closeOCRPanel();
           ElMessage.warning('本地OCR未能识别到文字，请尝试使用云端OCR');
           return;
         }
         if (result.errorCode === 'LOCAL_OCR_FAILED') {
           console.error('[截图添加] 本地OCR失败详情:', result.errorMessage);
+          closeOCRPanel();
           ElMessage.error('本地 OCR 识别失败，可在设置中切换云端 OCR 引擎');
           return;
         }
 
         // 其他错误，也尝试显示结果（可能部分成功）
         if (!result.resRegions || result.resRegions.length === 0) {
+          closeOCRPanel();
           ElMessage.error(`OCR 识别失败，请稍后重试或切换 OCR 引擎（错误码: ${result.errorCode}）`);
           return;
         }
@@ -464,11 +499,13 @@ async function handleUtoolsEnter(action: any) {
         displayOCRResults(result.resRegions);
       } else {
         console.warn('[截图添加] OCR识别结果为空');
+        closeOCRPanel();
         ElMessage.warning('OCR识别结果为空，请检查图片内容');
         return;
       }
     } catch (err: any) {
       console.error('[截图添加] 捕获到错误:', err);
+      closeOCRPanel();
       // 发生错误或取消时，显示主窗口让用户可以继续操作
       if (isUTools()) (window as any).utools?.showMainWindow?.();
       // 检查是否是使用次数超限的错误
@@ -489,9 +526,27 @@ async function handleUtoolsEnter(action: any) {
 
   // 截图翻译：截图/OCR 后把原文送入翻译页，由当前翻译引擎处理
   if (action.code === 'jietuTranslate') {
+    // 是否已打开「识别中」翻译页：失败/空结果时要把它复原，避免页面永远停在识别中
+    let pendingPageOpened = false;
+    const closePendingPage = () => {
+      if (pendingPageOpened) {
+        pendingPageOpened = false;
+        router.push({ path: '/translate' });
+      }
+    };
     try {
-      const result = await ocrTranslateMultiPlatform();
+      let ocrStart = Date.now();
+      const result = await ocrTranslateMultiPlatform(() => {
+        // 截图一完成立即恢复窗口并打开翻译页（识别中状态），不再让用户盯着空屏等 OCR 网络返回；
+        // 计时也从截图完成开始：只统计纯 OCR 网络耗时，不含用户框选时间
+        ocrStart = Date.now();
+        restoreUtoolsMainWindow();
+        pendingPageOpened = true;
+        router.push({ path: '/translate', query: { pending: 'ocr' } });
+      });
+      debugLog('[截图翻译] OCR 耗时=', Date.now() - ocrStart, 'ms');
       if (result.errorCode !== '0' && (!result.resRegions || result.resRegions.length === 0)) {
+        closePendingPage();
         if (result.errorCode === 'LOCAL_OCR_NO_TEXT') {
           ElMessage.warning('本地OCR未能识别到文字，请尝试使用云端OCR');
         } else if (result.errorCode === 'LOCAL_OCR_FAILED') {
@@ -507,12 +562,15 @@ async function handleUtoolsEnter(action: any) {
         .join('\n')
         .trim();
       if (!text) {
+        closePendingPage();
         ElMessage.warning('未识别到可翻译的原文');
         return;
       }
+      prewarmTranslation(text);
       router.push({ path: '/translate', query: { text } });
     } catch (e: any) {
       debugLog('截图翻译失败:', e);
+      closePendingPage();
       if (e?.message?.includes('截图取消')) return;
       ElMessage.error(e?.message || '截图翻译失败，请重试');
     } finally {
@@ -698,6 +756,18 @@ function restoreUtoolsMainWindow() {
 }
 
 /**
+ * 翻译预热：用与翻译页相同的参数（中文→en、其他→zh）提前发起请求；
+ * 翻译页挂载后经 translation-api 在途去重共享同一 Promise，省一次网络往返
+ */
+function prewarmTranslation(text: string) {
+  try {
+    // 与翻译页同一套方向判定（中英混杂按占比），保证在途去重命中同一缓存键
+    const { from, to } = resolveZhEnDirection(text);
+    void translateWithPlatform(text, wordsStore.currentTranslationPlatform, from, to).catch(() => { /* 预热失败由页面自身重试 */ });
+  } catch { /* 预热失败不影响正常流程 */ }
+}
+
+/**
  * 显示OCR识别结果供用户选择和保存
  */
 async function displayOCRResults(resRegions: any[]) {
@@ -709,6 +779,7 @@ async function displayOCRResults(resRegions: any[]) {
 
   // 存储OCR结果
   ocrResults.value = resRegions;
+  ocrPanelLoading.value = false;
   // console.log('[截图添加] ocrResults 已设置:', JSON.stringify(ocrResults.value));
 
   // 显示选择面板
@@ -771,6 +842,7 @@ function handleSelectAllItems(items: any[]) {
 function closeOCRPanel() {
   showOCRPanel.value = false;
   ocrResults.value = [];
+  ocrPanelLoading.value = false;
 }
 
 // ==================== 核心：静默获取选中文本 ====================
@@ -796,8 +868,8 @@ async function getSelectedTextFromSystem(): Promise<string> {
     }
   }
   debugLog('开始静默获取选中文本...')
-  // 增加延迟，确保焦点恢复到原窗口
-  await new Promise(r => setTimeout(r, 300));
+  // 焦点恢复到原窗口的等待（原 300ms，过长会拖慢划词链路体感）
+  await new Promise(r => setTimeout(r, 150));
 
   // 获取当前平台
   const isMac = utoolsApi.isMacOS?.();
@@ -807,28 +879,30 @@ async function getSelectedTextFromSystem(): Promise<string> {
   utoolsApi.simulateKeyboardTap?.("c", modifier);
   debugLog('发送快捷键...')
 
-  // 增加延迟，等待系统完成复制操作
-  await new Promise(resolve => setTimeout(resolve, 300));
-
   utoolsApi.showMainWindow?.();
-
   debugLog('显示主界面...')
-  // 再次延迟，确保剪贴板数据已更新
-  await new Promise(resolve => setTimeout(resolve, 200));
 
-  // 读取剪贴板
+  // 轮询剪贴板：复制完成立即返回，不再死等固定 500ms；超时兜底（慢速应用最大等待 700ms）
   let selectedText = '';
-  try {
-    selectedText = await navigator.clipboard.readText();
-  } catch (e) {
-    debugLog('读取剪贴板失败:', e);
-    // 按未获取到处理：走下方恢复备份剪贴板并提示的分支
+  const pollStart = Date.now();
+  while (Date.now() - pollStart < 700) {
+    await new Promise(r => setTimeout(r, 60));
+    try {
+      selectedText = await navigator.clipboard.readText();
+    } catch (e) {
+      debugLog('读取剪贴板失败:', e);
+      break;
+    }
+    // 读到与备份不同的新内容即为复制成功
+    if (selectedText && selectedText !== backupText) break;
   }
 
   debugLog('[划段添加] 获取到的文本:', selectedText);
 
-  // 模拟复制失败（读不到新内容或与备份一致）时恢复原剪贴板并提示用户
-  if (!selectedText || selectedText === backupText) {
+  // 只在完全读不到内容时才算失败：恢复原剪贴板并提示。
+  // 读到与备份一致的非空内容视为成功——进入前已清空剪贴板，之后还能读到备份原文，
+  // 说明 ctrl+c 确实重新写入了相同文本（用户重复选中同一段落），不是复制失败
+  if (!selectedText) {
     if (backupText) {
       try {
         utoolsApi.copyText?.(backupText);
@@ -837,7 +911,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
         debugLog('恢复剪贴板内容失败:', e);
       }
     }
-    ElMessage.warning('未获取到新的选中文本，已恢复原有剪贴板内容');
+    ElMessage.warning('未获取到选中的文本，请先选中内容再试');
   }
 
   return selectedText;
@@ -1116,11 +1190,18 @@ function handlePluginDefaultEnter() {
 function handlePluginTranslate(action: any) {
   // 显示主窗口
   if (isUTools()) (window as any).utools?.showMainWindow?.()
-  // 跳转到快速翻译页面，如果有payload则传递文本参数
-  if (action.payload) {
+  // over 匹配（超级面板选中内容）时 payload 才是选中文本；主输入框键入触发时
+  // payload 是输入框原文（含关键词本身，如「翻译」），剥掉关键词前缀取剩余部分
+  let text = ''
+  if (action.type === 'over') {
+    text = typeof action.payload === 'string' ? action.payload.trim() : ''
+  } else if (typeof action.payload === 'string') {
+    text = action.payload.replace(/^翻译[，,.\s:：]*/, '').trim()
+  }
+  if (text) {
     router.push({
       path: '/translate',
-      query: { text: action.payload }
+      query: { text }
     })
   } else {
     router.push('/translate')

@@ -59,7 +59,7 @@
           </el-select>
           <el-button
             type="primary"
-            :loading="loading"
+            :loading="loading || ocrPending"
             @click="handleTranslate"
             class="translate-btn"
           >
@@ -74,6 +74,16 @@
             清空
           </el-button>
         </div>
+      </div>
+
+      <!-- 截图 OCR 识别中 / 翻译中提示：页面先开、结果后到，避免窗口空等像闪退 -->
+      <div v-if="ocrPending" class="pending-hint">
+        <el-icon class="is-loading"><Loading /></el-icon>
+        <span>正在识别截图文字…</span>
+      </div>
+      <div v-else-if="loading && !result" class="pending-hint">
+        <el-icon class="is-loading"><Loading /></el-icon>
+        <span>翻译中…</span>
       </div>
 
       <!-- 结果区域 -->
@@ -246,7 +256,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import {
@@ -265,12 +275,13 @@ import {
   Picture,
   Plus,
   Close,
-  Position
+  Position,
+  Loading
 } from '@element-plus/icons-vue';
 import { translateWithPlatform } from '@/utils/translation-api';
 import { getAvailableTranslationEngineGroups } from '@/utils/engine-options';
 import { addWord } from '@/utils/str-util';
-import { isSentenceLike } from '@/utils/text-utils';
+import { isSentenceLike, resolveZhEnDirection } from '@/utils/text-utils';
 import { useWordsStore } from '@/stores/words';
 import { getClipboardAdapter } from '@/adapters/clipboard';
 import { useSentencesStore } from '@/stores/sentences';
@@ -337,14 +348,42 @@ onMounted(() => {
 
   // 检查路由参数中是否有文本
   const queryText = route.query.text as string;
+  (window as any).services?.appendLog?.(`[翻译页] onMounted, query.text长度=${typeof queryText === 'string' ? queryText.length : 'none'}`);
   if (queryText) {
     inputText.value = queryText;
     handleTranslate();
   }
 });
 
+// 已在翻译页时再次触发划词/截图翻译：组件复用不重建，监听 query 变化填入新文本
+// （修复：停留在翻译页时再次划词翻译，输入框仍是旧内容）
+watch(
+  () => route.query.text,
+  (text) => {
+    (window as any).services?.appendLog?.(`[翻译页] watch触发, text长度=${typeof text === 'string' ? text.length : 'none'}`);
+    if (typeof text === 'string' && text.trim()) {
+      ocrPending.value = false;
+      inputText.value = text.trim();
+      handleTranslate();
+    }
+  }
+);
+
+// 截图翻译先打开页面（pending=ocr）再回填识别结果：期间显示识别中提示，并清掉上一次结果
+const ocrPending = ref(route.query.pending === 'ocr');
+watch(
+  () => route.query.pending,
+  (p) => {
+    ocrPending.value = p === 'ocr';
+    if (p === 'ocr') {
+      result.value = null;
+    }
+  }
+);
+
 // 执行翻译
 async function handleTranslate() {
+  if (ocrPending.value) return; // 截图识别中，禁止重复触发
   const text = inputText.value.trim();
   if (!text) {
     ElMessage.warning('请输入要翻译的文本');
@@ -355,18 +394,19 @@ async function handleTranslate() {
   result.value = null;
 
   try {
-    // 检测输入语言，如果是中文则自动调整翻译方向
-    const isChinese = /[\u4e00-\u9fa5]/.test(text);
+    // 如果源语言是自动检测，按中文字符/拉丁字母占比判定方向（中英混杂→译中，而非含中文即译英）
     let from = sourceLang.value;
     let to = targetLang.value;
 
-    // 如果源语言是自动检测，根据内容判断
     if (from === 'auto') {
-      from = isChinese ? 'zh' : 'en';
-      to = isChinese ? 'en' : 'zh';
+      const dir = resolveZhEnDirection(text);
+      from = dir.from;
+      to = dir.to;
     }
 
+    const translateStart = Date.now();
     const res = await translateWithPlatform(text, selectedPlatform.value, from, to);
+    (window as any).services?.appendLog?.(`[翻译页] 翻译完成 平台=${selectedPlatform.value} ${from}->${to} 耗时=${Date.now() - translateStart}ms 成功=${res.success}`);
     result.value = res;
 
     if (res.success) {
@@ -774,9 +814,20 @@ function handleImageError() {
   }
 }
 
+.pending-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  color: var(--utools-text-secondary);
+  background: var(--utools-bg-tertiary);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
 .result-section {
   margin-top: 20px;
-  
   .result-content {
     background: var(--utools-bg-tertiary);
     border-radius: 8px;
