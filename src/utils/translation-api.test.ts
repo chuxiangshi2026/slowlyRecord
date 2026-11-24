@@ -530,3 +530,39 @@ describe('内置免费额度闸门（商店版严格模式）', () => {
     expect(fetchMock).not.toHaveBeenCalled()
   })
 })
+
+describe('翻译在途去重（预热与页面请求共享 Promise）', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    apiKeys['deepseek'] = { appkey: 'sk-test', key: '' }
+  })
+
+  it('相同请求并发时共享同一 Promise，只发起一次网络请求', async () => {
+    let resolveFetch!: (r: Response) => void
+    fetchMock.mockImplementationOnce(() => new Promise<Response>((resolve) => { resolveFetch = resolve }))
+
+    const p1 = translateWithPlatform('inflight-hello', 'deepseek', 'en', 'zh')
+    const p2 = translateWithPlatform('inflight-hello', 'deepseek', 'en', 'zh')
+    // 去重命中：两个调用拿到同一个 Promise（截图/划词翻译预热与翻译页请求的场景）
+    expect(p2).toBe(p1)
+
+    resolveFetch(new Response(JSON.stringify({
+      choices: [{ message: { content: JSON.stringify({ translation: '你好' }) } }]
+    }), { status: 200 }))
+    const [r1, r2] = await Promise.all([p1, p2])
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(r1.explains).toBe('你好')
+    expect(r2.explains).toBe('你好')
+  })
+
+  it('失败后清理在途记录，允许后续重试', async () => {
+    fetchMock.mockRejectedValueOnce(new Error('network down'))
+    const r1 = await translateWithPlatform('inflight-retry', 'deepseek', 'en', 'zh')
+    expect(r1.success).toBe(false)
+
+    mockChatResponse(JSON.stringify({ translation: '译文' }))
+    const r2 = await translateWithPlatform('inflight-retry', 'deepseek', 'en', 'zh')
+    expect(r2.success).toBe(true)
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+})

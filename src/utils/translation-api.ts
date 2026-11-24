@@ -1439,7 +1439,33 @@ function shouldFallback(result: TranslationResult): boolean {
 /**
  * 调用不同平台的翻译接口
  */
-export async function translateWithPlatform(
+/** 相同翻译请求的在途去重：同 query/平台/方向/密钥 的并发调用共享同一 Promise（预热与页面请求不重复计费） */
+const inflightTranslations = new Map<string, Promise<TranslationResult>>();
+
+export function translateWithPlatform(
+    query: string,
+    platform: TranslationPlatform = 'spark',
+    from: string = 'auto',
+    to: string = 'zh',
+    options: { connectionTest?: boolean } = {}
+): Promise<TranslationResult> {
+    // 连接测试必须真实请求，不参与在途去重
+    if (options.connectionTest) {
+        return translateWithPlatformOnce(query, platform, from, to, options);
+    }
+    const key = translationCacheKey(query, platform, from, to);
+    const pending = inflightTranslations.get(key);
+    if (pending) return pending;
+    const task = translateWithPlatformOnce(query, platform, from, to, options);
+    inflightTranslations.set(key, task);
+    const cleanup = () => {
+        if (inflightTranslations.get(key) === task) inflightTranslations.delete(key);
+    };
+    task.then(cleanup, cleanup);
+    return task;
+}
+
+async function translateWithPlatformOnce(
     query: string,
     platform: TranslationPlatform = 'spark',
     from: string = 'auto',

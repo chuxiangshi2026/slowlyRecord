@@ -97,3 +97,13 @@ export function isSentenceLike(text: string): boolean {
   // 英文：超过 6 个词视为句子
   return t.split(/\s+/).length > 6;
 }
+
+/**
+ * 中英互译方向判定：按中文字符与拉丁字母数量对比（中文占多数→译英，否则→译中），
+ * 避免中英混杂文本「含一个中文即整段译英」的误判（截图 OCR 结果常见中英混杂）
+ */
+export function resolveZhEnDirection(text: string): { from: 'zh' | 'en'; to: 'zh' | 'en' } {
+  const cjk = (text.match(/[一-龥]/g) || []).length;
+  const latin = (text.match(/[a-zA-Z]/g) || []).length;
+  return cjk > latin ? { from: 'zh', to: 'en' } : { from: 'en', to: 'zh' };
+}

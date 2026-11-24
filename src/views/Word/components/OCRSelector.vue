@@ -13,7 +13,10 @@
           </div>
         </div>
         <div class="ocr-items-container">
-          <div v-if="!ocrResults || ocrResults.length === 0" class="ocr-empty">
+          <div v-if="loading" class="ocr-empty">
+            <p>正在识别截图文字…</p>
+          </div>
+          <div v-else-if="!ocrResults || ocrResults.length === 0" class="ocr-empty">
             <p>未获取到识别结果</p>
           </div>
           <div
@@ -94,6 +97,8 @@ import { getClipboardAdapter } from '@/adapters/clipboard';
 interface Props {
   visible: boolean;
   ocrResults: any[];
+  /** true 表示截图已完成、OCR 网络请求进行中：面板先出，结果稍后填入 */
+  loading?: boolean;
 }
 
 interface Emits {

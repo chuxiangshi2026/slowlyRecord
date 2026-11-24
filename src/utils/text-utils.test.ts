@@ -7,6 +7,7 @@ import {
   isPhrase,
   isSentenceLike,
   normalizeItemText,
+  resolveZhEnDirection,
 } from './text-utils'
 
 /**
@@ -98,5 +99,27 @@ describe('text-utils 英语行为快照', () => {
       expect(isSentenceLike('愿你走出半生归来仍是少年')).toBe(false) // 12 字
       expect(isSentenceLike('愿你在被打击时记起你的珍贵抵抗恶意愿你在迷茫时坚信你的珍贵')).toBe(true) // >20 字
     })
+  })
+})
+
+describe('resolveZhEnDirection：中英互译方向判定', () => {
+  it('纯中文 → 译英', () => {
+    expect(resolveZhEnDirection('愿所有美好如期而至')).toEqual({ from: 'zh', to: 'en' })
+  })
+
+  it('纯英文 → 译中', () => {
+    expect(resolveZhEnDirection('The quick brown fox')).toEqual({ from: 'en', to: 'zh' })
+  })
+
+  it('中英混杂以英文为主 → 译中（回归：OCR 混杂文本曾被误判整段译英）', () => {
+    expect(resolveZhEnDirection('Click 设置 to open 翻译 options panel')).toEqual({ from: 'en', to: 'zh' })
+  })
+
+  it('中英混杂以中文为主 → 译英', () => {
+    expect(resolveZhEnDirection('今天天气很好适合出去游玩 hello')).toEqual({ from: 'zh', to: 'en' })
+  })
+
+  it('无字母字符（数字/标点）默认译中', () => {
+    expect(resolveZhEnDirection('123456 !!!')).toEqual({ from: 'en', to: 'zh' })
   })
 })

@@ -283,7 +283,7 @@ export async function ocrRecognizeWithPlatform(
 }
 
 // 新增：多平台OCR翻译函数
-export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
+export async function ocrTranslateMultiPlatform(onCaptured?: () => void): Promise<OcrResult> {
 
     const wordsStore = useWordsStore();
     const ocrPlatform = wordsStore.currentOcrPlatform || 'local';
@@ -320,6 +320,8 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
     if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
         throw new Error('截图数据格式异常，请重新截图');
     }
+    // 截图完成即通知调用方（可立即恢复窗口/打开页面），OCR 网络请求继续在后台跑
+    try { onCaptured?.(); } catch { /* 回调异常不影响 OCR */ }
 
     const engineTask = (async (): Promise<OcrResult> => {
     let result: OcrResult;
