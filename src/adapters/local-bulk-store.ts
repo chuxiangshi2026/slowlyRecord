@@ -85,6 +85,11 @@ export function localBulkHas(key: string): boolean {
   return memory.has(key)
 }
 
+/** 全量键值快照（本地备份导出用；内存镜像的浅拷贝，键序按插入序） */
+export function localBulkEntries(): [string, any][] {
+  return Array.from(memory.entries())
+}
+
 /** 写入：先更新内存（同步可读），再异步落 IndexedDB */
 export async function localBulkSet(key: string, value: any): Promise<boolean> {
   memory.set(key, value)

@@ -12,6 +12,22 @@
       />
     </div>
     <p class="config-hint">导出配置可保存您的 API 密钥、翻译引擎设置等个人配置{{ storeLocalOnly ? '（当前版本导出不含 API 密钥；密钥保存在本机，并以加密形式随账号同步）' : '' }}</p>
+
+    <el-divider class="backup-divider">完整备份（换机迁移）</el-divider>
+    <div class="config-buttons">
+      <el-button type="primary" @click="exportBackup" :icon="Download" :loading="exportingBackup">导出完整备份</el-button>
+      <el-button type="success" @click="triggerBackupImport" :icon="Upload" :loading="importingBackup">导入完整备份</el-button>
+      <input
+        type="file"
+        ref="backupFileInput"
+        style="display: none"
+        accept=".json"
+        @change="handleBackupImport"
+      />
+    </div>
+    <p class="config-hint">
+      包含全部学习数据{{ storeLocalOnly ? '与本机图片/外置词典' : '' }}：词库与复习进度、句子、记忆宫殿、数字/字母映射、设置等，可用于换机原样迁移
+    </p>
   </div>
 </template>
 
@@ -21,6 +37,7 @@ import {useWordsStore} from "@/stores/words.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {getSetDb} from "@/utils/user-set-db-util.ts";
 import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
+import {exportLocalBackupToFile, parseLocalBackup, applyLocalBackup} from "@/utils/local-backup";
 import {Download, Upload} from '@element-plus/icons-vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
@@ -165,6 +182,71 @@ const handleFileImport = (event: Event) => {
 
   reader.readAsText(file)
 }
+
+// ==================== 完整备份（全量数据换机迁移） ====================
+const backupFileInput = ref<HTMLInputElement | null>(null)
+const exportingBackup = ref(false)
+const importingBackup = ref(false)
+
+const exportBackup = async () => {
+  if (exportingBackup.value) return
+  exportingBackup.value = true
+  try {
+    const res = await exportLocalBackupToFile()
+    ElMessage.success(`备份已导出（${res.docs} 个文档${res.bulk ? `、${res.bulk} 项本机数据` : ''}）`)
+  } catch (e) {
+    console.error('导出完整备份失败:', e)
+    ElMessage.error('导出完整备份失败，请重试')
+  } finally {
+    exportingBackup.value = false
+  }
+}
+
+const triggerBackupImport = () => {
+  backupFileInput.value?.click()
+}
+
+const handleBackupImport = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  // 清空 input 值，允许重复选择同一文件
+  target.value = ''
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = async (e) => {
+    let backup
+    try {
+      backup = parseLocalBackup(e.target?.result as string)
+    } catch (err: any) {
+      ElMessage.error(err?.message || '备份文件解析失败，请检查文件')
+      return
+    }
+
+    try {
+      await ElMessageBox.confirm(
+        '导入将用备份覆盖本机同 ID 数据（备份之外的数据保留），完成后自动刷新页面，是否继续？',
+        '确认导入完整备份',
+        { confirmButtonText: '确认导入', cancelButtonText: '取消', type: 'warning' }
+      )
+    } catch {
+      return
+    }
+
+    if (importingBackup.value) return
+    importingBackup.value = true
+    try {
+      const res = await applyLocalBackup(backup)
+      ElMessage.success(`已恢复 ${res.docs} 个文档${res.bulk ? `、${res.bulk} 项本机数据` : ''}，即将刷新页面`)
+      setTimeout(() => location.reload(), 1000)
+    } catch (err) {
+      console.error('导入完整备份失败:', err)
+      ElMessage.error('导入完整备份失败，请重试')
+      importingBackup.value = false
+    }
+  }
+  reader.readAsText(file)
+}
 </script>
 
 <style scoped lang="scss">
@@ -212,5 +294,14 @@ const handleFileImport = (event: Event) => {
   color: var(--utools-text-tertiary);
   font-size: 12px;
   margin: 8px 0 0 0;
+}
+
+.backup-divider {
+  margin: 20px 0 4px;
+
+  :deep(.el-divider__text) {
+    font-size: 12px;
+    color: var(--utools-text-secondary);
+  }
 }
 </style>
