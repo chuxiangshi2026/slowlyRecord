@@ -252,7 +252,6 @@ function onCancel() {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 40rpx 24rpx 200rpx;
 }
 

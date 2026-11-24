@@ -8,7 +8,7 @@
  *    仅整条链全部失败且为用户主动发音时弹一次节流提示（模块侧 3 秒节流）。
  */
 
-import { getTtsAdapter } from '@/adapters/index'
+import { getTtsAdapter, type TtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
 import { buildChineseAudioUrls, buildBaiduTtsUrl, containsChinese, splitChineseSpeechText } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
@@ -68,10 +68,63 @@ export function buildWordAudioUrls(word: string, language: LanguageCode = getAct
 
 /** 完整播放音源链：带预合成连读音频的词库把录音地址放最前（含 jsDelivr 镜像容灾），其后维持原 TTS 兜底链 */
 export function buildPlayUrls(word: string, language: LanguageCode, speechBankId?: string): string[] {
-  const urls = buildWordAudioUrls(word, language)
+  const urls = orderUrlsByEnginePref(buildWordAudioUrls(word, language), language)
   if (!speechBankId) return urls
   const speechUrl = getSpeechAudioUrl(speechBankId, word)
   return speechUrl ? [...cdnUrlVariants(speechUrl), ...urls] : urls
+}
+
+// ---------- 音源偏好（发音统一）：上次成功的引擎下次优先，避免弱网下不同引擎嗓音来回切换 ----------
+
+/** 各语言最近一次播放成功的引擎 host（持久化到本地，重启后仍生效） */
+const ENGINE_PREF_STORAGE_KEY = 'slowlyrecord_tts_engine_pref'
+let enginePrefCache: Record<string, string> | null = null
+
+function loadEnginePref(): Record<string, string> {
+  if (enginePrefCache) return enginePrefCache
+  try {
+    const raw = uni.getStorageSync(ENGINE_PREF_STORAGE_KEY)
+    enginePrefCache = raw && typeof raw === 'object' ? raw : {}
+  } catch {
+    enginePrefCache = {}
+  }
+  return enginePrefCache ?? {}
+}
+
+/** 从音源 URL 提取引擎标识（host）。小程序 JSCore 无 URL 构造器，用正则解析 */
+export function engineHostOf(url: string): string {
+  const m = /^https?:\/\/([^/?#]+)/i.exec(url)
+  return m ? m[1].toLowerCase() : ''
+}
+
+/** 记录某语言本次播放成功的引擎，后续发音优先使用同一引擎（保持嗓音一致） */
+function recordEngineSuccess(language: LanguageCode, url: string): void {
+  const host = engineHostOf(url)
+  if (!host) return
+  const pref = loadEnginePref()
+  if (pref[language] === host) return
+  pref[language] = host
+  try {
+    uni.setStorageSync(ENGINE_PREF_STORAGE_KEY, pref)
+  } catch { /* 偏好持久化失败不影响发音 */ }
+}
+
+/** 按引擎偏好稳定排序：偏好引擎的音源提前，其余相对顺序不变（无偏好或已居首时原样返回） */
+export function orderUrlsByEnginePref(urls: string[], language: LanguageCode): string[] {
+  const host = loadEnginePref()[language]
+  if (!host || urls.length < 2) return urls
+  if (engineHostOf(urls[0]) === host) return urls
+  const preferred = urls.filter(u => engineHostOf(u) === host)
+  if (!preferred.length) return urls
+  return [...preferred, ...urls.filter(u => engineHostOf(u) !== host)]
+}
+
+/** 仅供测试：重置引擎偏好（模块内缓存 + 本地存储） */
+export function __resetTtsEnginePreferenceForTest(): void {
+  enginePrefCache = {}
+  try {
+    uni.removeStorageSync(ENGINE_PREF_STORAGE_KEY)
+  } catch { /* 测试环境无 uni 时忽略 */ }
 }
 
 /**
@@ -92,7 +145,8 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
     }
   }
 
-  const urls = buildPlayUrls(word, language, options.speechBankId)
+  // 缓存优先：链上任一音源已落本地缓存则提到首发，离线/弱网也能即时发音
+  const urls = orderCachedFirst(buildPlayUrls(word, language, options.speechBankId), tts)
   const playAt = (urlIndex: number): void => {
     // 代际丢弃：加载/回退完成前已切词（新的 speakWord 或 stopSpeaking）则不再播
     if (seq !== speakSeq) return
@@ -100,6 +154,8 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
     tts.playAudio(urls[urlIndex], { silent: true, rate: options.rate }).then(
       () => {
         if (seq !== speakSeq) return
+        // 记录本次成功的引擎，让后续发音沿用同一嗓音（见 orderUrlsByEnginePref）
+        recordEngineSuccess(language, urls[urlIndex])
         options.onEnded?.()
       },
       () => {
@@ -114,6 +170,45 @@ export function speakWord(word: string, options: SpeakWordOptions = {}): void {
     )
   }
   playAt(0)
+}
+
+/** 把命中本地缓存的音源提到链首（其余保持原顺序）；无命中或适配器不支持查询时原样返回 */
+function orderCachedFirst(urls: string[], tts: TtsAdapter): string[] {
+  try {
+    if (typeof tts.getCachedPath !== 'function') return urls
+    const hitIndex = urls.findIndex(u => {
+      try {
+        return !!tts.getCachedPath!(u)
+      } catch {
+        return false
+      }
+    })
+    if (hitIndex <= 0) return urls
+    return [urls[hitIndex], ...urls.slice(0, hitIndex), ...urls.slice(hitIndex + 1)]
+  } catch {
+    return urls
+  }
+}
+
+/**
+ * 批量预取接下来若干单词的首选音源（复习/专注连播提前缓存，切词后即时发音）。
+ * 单个词失败静默跳过；适配器不支持预取时整体忽略。
+ */
+export function prefetchWords(
+  words: readonly ({ word?: string | null; speechBankId?: string } | null | undefined)[],
+  language: LanguageCode = getActiveLanguage(),
+): void {
+  try {
+    const tts = getTtsAdapter()
+    if (typeof tts.prefetchAudio !== 'function') return
+    for (const item of words || []) {
+      const text = item?.word
+      if (!text || typeof text !== 'string' || !text.trim()) continue
+      try {
+        tts.prefetchAudio(buildPlayUrls(text, language, item?.speechBankId)[0])
+      } catch { /* 该词构造音源失败，跳过 */ }
+    }
+  } catch { /* 预取能力缺失时忽略 */ }
 }
 
 /** 停止当前发音并作废所有待完成的音源回退（切词/退出页面时调用） */

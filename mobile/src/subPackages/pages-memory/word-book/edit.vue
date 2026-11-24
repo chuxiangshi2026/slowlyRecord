@@ -217,13 +217,13 @@ function confirm() {
   min-height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background: var(--sr-bg);
+  
 }
 
 .summary-card {
   padding: 22rpx;
   border-radius: 18rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
   margin-bottom: 20rpx;
 }
@@ -245,7 +245,7 @@ function confirm() {
 .form-card {
   padding: 22rpx;
   border-radius: 18rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 }
 

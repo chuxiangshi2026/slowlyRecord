@@ -195,7 +195,7 @@ async function importBank(bank: RecommendedBank & { wordCount: number }) {
 </script>
 
 <style scoped>
-.onboarding-container { position: relative; min-height: 100vh; background: linear-gradient(180deg, var(--sr-primary-bg) 0%, var(--sr-bg) 100%); }
+.onboarding-container { position: relative; min-height: 100vh;  }
 .skip-link { position: absolute; top: 40rpx; right: 40rpx; z-index: 10; font-size: 28rpx; color: var(--sr-primary); padding: 12rpx 24rpx; }
 .swiper { height: 100vh; }
 .screen { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80rpx 60rpx 160rpx; box-sizing: border-box; }

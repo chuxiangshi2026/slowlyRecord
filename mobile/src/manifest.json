@@ -37,6 +37,7 @@
     "appid": "",
     "darkmode": true,
     "themeLocation": "theme.json",
+    "requiredBackgroundModes": ["audio"],
     "setting": {
       "urlCheck": false,
       "es6": true,

@@ -20,7 +20,7 @@
         <input 
           class="form-input" 
           v-model="newWord.word"
-          placeholder="输入单词/词组/句子（如：take care）"
+          placeholder="输入英文（如 take care），或中文反查（如：苹果）"
           @confirm="autoTranslate"
           focus
         />
@@ -78,6 +78,7 @@ import { useMobileWords } from '@/stores/useMobileWords'
 import { translateText } from '../utils/translation'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 import { getWordKey } from '@/utils/text-utils'
+import { containsChinese, resolveZhEntry } from '@/utils/zh-entry'
 
 const wordsStore = useMobileWords()
 const translating = ref(false)
@@ -99,10 +100,27 @@ onShow(() => {
   wordsStore.loadWords()
 })
 
+// 中文词条反查：英文作主词、中文作释义（或按设置保留中文主词）
+const resolveChineseEntry = async (zhText: string): Promise<boolean> => {
+  const entry = await resolveZhEntry(zhText, wordsStore.currentLanguage)
+  if (!entry) {
+    uni.showToast({ title: '未查到对应英文，请检查翻译设置或手动填写', icon: 'none', duration: 2000 })
+    return false
+  }
+  newWord.value.word = entry.word
+  newWord.value.meaning = entry.meaning
+  return true
+}
+
 // 执行翻译并填充释义（调用方已处理覆盖确认）
 const doTranslate = async (wordText: string) => {
   translating.value = true
   try {
+    // 英语词库输入中文：按全局设置反查（默认英文主词，中文作释义）
+    if (wordsStore.currentLanguage === 'en' && containsChinese(wordText)) {
+      await resolveChineseEntry(wordText)
+      return
+    }
     const result = await translateText(wordText, wordsStore.currentLanguage, 'zh')
     if (result.success && result.translatedText && result.translatedText !== newWord.value.word) {
       newWord.value.meaning = result.translatedText
@@ -146,7 +164,17 @@ const autoTranslate = async () => {
 }
 
 const addWord = async () => {
-  const wordText = normalizeMobileItemText(newWord.value.word)
+  let wordText = normalizeMobileItemText(newWord.value.word)
+  // 英语词库的中文输入：直接点「确定添加」也先自动反查英文
+  if (wordsStore.currentLanguage === 'en' && wordText && containsChinese(wordText)) {
+    translating.value = true
+    try {
+      if (!(await resolveChineseEntry(wordText))) return
+    } finally {
+      translating.value = false
+    }
+    wordText = normalizeMobileItemText(newWord.value.word)
+  }
   if (!wordText || !newWord.value.meaning.trim()) {
     uni.showToast({ title: '请填写单词/词组/句子和释义', icon: 'none' })
     return
@@ -201,7 +229,6 @@ const goBack = () => {
 .add-word-container {
   padding: 30rpx;
   min-height: 100vh;
-  background: var(--sr-bg);
 }
 
 /* 落点提示条 */

@@ -169,7 +169,7 @@ function removeBook(book: WordBookBook) {
   min-height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background: var(--sr-bg);
+  
 }
 
 .book-header {
@@ -215,7 +215,7 @@ function removeBook(book: WordBookBook) {
   margin-bottom: 20rpx;
   padding: 20rpx 24rpx;
   border-radius: 16rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 }
 
@@ -254,7 +254,7 @@ function removeBook(book: WordBookBook) {
 .chapter-card {
   padding: 24rpx;
   border-radius: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 }
 

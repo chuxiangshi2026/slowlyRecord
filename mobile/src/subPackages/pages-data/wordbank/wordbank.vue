@@ -378,8 +378,8 @@ const goTo = (url: string) => {
 </script>
 
 <style scoped>
-.wordbank-container { min-height: 100vh; background: var(--sr-bg); padding-bottom: 40rpx; }
-.header { background: linear-gradient(135deg, #52796f 0%, #74937d 100%); padding: 60rpx 40rpx; text-align: center; }
+.wordbank-container { min-height: 100vh;  padding-bottom: 40rpx; }
+.header { background: var(--sr-header-grad); padding: 60rpx 40rpx; text-align: center; }
 .title { font-size: 40rpx; font-weight: bold; color: #fff; display: block; }
 .subtitle { font-size: 26rpx; color: rgba(255,255,255,0.8); margin-top: 10rpx; display: block; }
 

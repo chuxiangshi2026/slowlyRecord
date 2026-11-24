@@ -672,14 +672,16 @@ const formatDate = (timestamp: number): string => {
 <style scoped>
 .words-container {
   min-height: 100vh;
-  background: var(--sr-bg);
 }
 
 .bank-selector {
   display: flex;
   align-items: center;
   padding: 16rpx 24rpx;
-  background: var(--sr-card);
+  /* 毛玻璃：透出背景图 */
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-bottom: 1rpx solid var(--sr-border);
 }
 
@@ -703,7 +705,9 @@ const formatDate = (timestamp: number): string => {
 .search-bar {
   display: flex;
   padding: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   gap: 16rpx;
   align-items: center;
 }
@@ -769,7 +773,9 @@ const formatDate = (timestamp: number): string => {
 
 /* 筛选面板 */
 .filter-panel {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   padding: 20rpx 24rpx;
   border-bottom: 1rpx solid var(--sr-border);
 }
@@ -927,7 +933,9 @@ const formatDate = (timestamp: number): string => {
 /* 列表模式切换 */
 .mode-bar {
   display: flex;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   padding: 16rpx 0;
   border-bottom: 1rpx solid var(--sr-border);
 }
@@ -999,7 +1007,8 @@ const formatDate = (timestamp: number): string => {
 }
 
 .word-item {
-  background: var(--sr-card);
+  /* 列表行只用半透明显底色：长列表每行都 backdrop-filter 在低端机会掉帧 */
+  background: var(--sr-card-glass);
   border-radius: 12rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
@@ -1121,7 +1130,7 @@ const formatDate = (timestamp: number): string => {
 
 /* 单词详情弹窗 */
 .detail-content {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border-radius: 16rpx;
   padding: 40rpx;
   width: 620rpx;

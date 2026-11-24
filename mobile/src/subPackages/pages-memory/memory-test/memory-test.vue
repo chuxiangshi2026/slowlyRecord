@@ -273,7 +273,8 @@ onUnmounted(() => {
 <style scoped>
 .memory-test-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  /* 游戏页整体深色沉浸设计（白字/白描边按钮），保留渐变底不随页面背景透出 */
+  background: var(--sr-header-grad);
   padding: 40rpx;
 }
 

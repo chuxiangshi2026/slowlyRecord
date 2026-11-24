@@ -412,7 +412,6 @@ onLoad(async (opt: any) => {
 <style scoped>
 .detail-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   /* 底部安全区补偿：避免最底行被手势条遮挡 */
   box-sizing: border-box;
   padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));

@@ -244,7 +244,6 @@ onLoad((opt: any) => {
 <style scoped>
 .recognition-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }

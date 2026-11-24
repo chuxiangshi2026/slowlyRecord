@@ -578,7 +578,6 @@ const copySyncCode = () => {
 <style scoped>
 .sync-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
 }
 

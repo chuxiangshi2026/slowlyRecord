@@ -76,14 +76,18 @@ onHide(() => {
 </script>
 
 <style>
+/* 磨砂卡片底图变量（生成文件：--sr-card-glass 在此定义为 base64 模糊水墨图 + 兜底色，
+   必须在 page/.theme-dark 变量声明之前 @import 且不重复定义该变量） */
+@import './assets/theme-glass.css';
+
 /* 全局样式 */
 page {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   /* 主题变量（亮色默认）；暗色由 .theme-dark 覆盖（全局混入挂在每页根节点上） */
   --sr-bg: #f5f5f5;
-  --sr-card: #ffffff;
-  --sr-card-glass: rgba(255, 255, 255, 0.72);
-  --sr-card-2: #f5f5f5;
+  /* 卡片底色半透明：让页面水墨背景透出来（全站白底模块统一走此变量） */
+  --sr-card: rgba(255, 255, 255, 0.62);
+  --sr-card-2: rgba(243, 246, 244, 0.55);
   --sr-text: #333333;
   --sr-text-2: #666666;
   --sr-text-3: #999999;
@@ -94,6 +98,9 @@ page {
   --sr-primary-bg: #eaf1ea;
   --sr-on-primary: #ffffff;
   --sr-mask: rgba(0, 0, 0, 0.5);
+  /* 头部渐变与卡片阴影统一走变量：亮色深绿沉一点，暗色用深绿灰避免刺眼 */
+  --sr-header-grad: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  --sr-shadow: 0 2rpx 12rpx rgba(61, 90, 82, 0.07);
   background-color: var(--sr-bg);
   color: var(--sr-text);
 }
@@ -108,9 +115,8 @@ page > view {
 /* 暗色变量覆盖：深绿灰基底 + 玉绿主色（与桌面端深色主题约定一致） */
 .theme-dark {
   --sr-bg: #151a18;
-  --sr-card: #222825;
-  --sr-card-glass: rgba(34, 40, 37, 0.72);
-  --sr-card-2: #2a302d;
+  --sr-card: rgba(34, 40, 37, 0.62);
+  --sr-card-2: rgba(42, 48, 45, 0.55);
   --sr-text: #e4eae7;
   --sr-text-2: #a7b2ad;
   --sr-text-3: #77847e;
@@ -121,6 +127,8 @@ page > view {
   --sr-primary-bg: #26332d;
   --sr-on-primary: #10241e;
   --sr-mask: rgba(0, 0, 0, 0.65);
+  --sr-header-grad: linear-gradient(135deg, #2a3a33 0%, #1a2620 100%);
+  --sr-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.35);
 }
 
 /* 安全区适配 */

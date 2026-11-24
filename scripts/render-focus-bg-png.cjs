@@ -128,15 +128,6 @@ function fretStrip(y) {
   return s;
 }
 
-/** 朱砂印章：右下角圆角方章 + 「静」字（低透明度，作为点睛装饰） */
-function seal() {
-  return `<g transform="translate(598,1120)">
-    <rect x="0" y="0" width="96" height="96" rx="10" fill="none" stroke="${SEAL_RED}" stroke-opacity="0.34" stroke-width="3"/>
-    <rect x="7" y="7" width="82" height="82" rx="6" fill="none" stroke="${SEAL_RED}" stroke-opacity="0.18" stroke-width="1.2"/>
-    <text x="48" y="66" text-anchor="middle" font-family="'Noto Serif CJK SC', serif" font-size="54" fill="${SEAL_RED}" fill-opacity="0.26">静</text>
-  </g>`;
-}
-
 function scene() {
   return `
   <defs>
@@ -158,7 +149,6 @@ function scene() {
   ${mountains()}
   ${fretStrip(40)}
   ${fretStrip(H - 72)}
-  ${seal()}
   <rect width="${W}" height="${H}" fill="url(#vignette)"/>`;
 }
 

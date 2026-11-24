@@ -275,9 +275,9 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
   })
 
   it('缓存清单超过上限时按 LRU 淘汰并删除本地文件', async () => {
-    // 预置 200 个旧条目 + 本次将写入的新条目，上限 200 → 淘汰最旧的一个
+    // 预置 400 个旧条目 + 本次将写入的新条目，上限 400 → 淘汰最旧的一个
     const manifest: Record<string, any> = {}
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 400; i++) {
       manifest[`old${i}`] = { key: `old${i}`, filePath: `saved://old${i}`, lastUsed: i + 1 }
     }
     storage.set('slowlyrecord_audio_cache_manifest', manifest)
@@ -289,7 +289,7 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
     await vi.advanceTimersByTimeAsync(0)
 
     const next = storage.get('slowlyrecord_audio_cache_manifest')
-    expect(Object.keys(next)).toHaveLength(200)
+    expect(Object.keys(next)).toHaveLength(400)
     expect(next['old0']).toBeUndefined()
     expect(uniMock.removeSavedFile).toHaveBeenCalledWith(
       expect.objectContaining({ filePath: 'saved://old0' })

@@ -89,6 +89,7 @@
 import { ref, computed } from 'vue'
 import { onLoad, onUnload } from '@dcloudio/uni-app'
 import { translateText } from '../utils/translation'
+import { containsChinese, resolveZhEntry } from '@/utils/zh-entry'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 import { useMobileWords } from '@/stores/useMobileWords'
@@ -153,8 +154,16 @@ const addWordToBank = async (
   silent = false,
   presetPhonetic = ''
 ): Promise<'added' | 'duplicate' | 'failed'> => {
-  const wordText = normalizeMobileItemText(rawText)
+  let wordText = normalizeMobileItemText(rawText)
   const language = wordsStore.currentLanguage
+  // 中文词条：按全局「中文加词方向」反查（默认英文主词、中文作释义），失败保持原文
+  if (wordText && language === 'en' && containsChinese(wordText)) {
+    const entry = await resolveZhEntry(wordText, language)
+    if (entry) {
+      wordText = entry.word
+      presetMeaning = entry.meaning
+    }
+  }
   if (!wordText || addingKey.value === getWordKey(wordText, language)) return 'failed'
 
   // 确保词库数据已加载，否则判重会失效
@@ -335,7 +344,6 @@ onUnload(() => {
 .translate-container {
   padding: 30rpx;
   min-height: 100vh;
-  background: var(--sr-bg);
 }
 
 .input-section {

@@ -67,9 +67,9 @@
         </text>
       </view>
 
-      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false">
+      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false" :lower-threshold="120" @scrolltolower="poetryShowCount += LIB_PAGE_SIZE">
         <view
-          v-for="poem in filteredPoetry"
+          v-for="poem in displayedPoetry"
           :key="poem.id"
           class="lib-item"
           :class="{ selected: selectedPoetryIds.has(poem.id) }"
@@ -85,6 +85,9 @@
               {{ tag }}
             </text>
           </view>
+        </view>
+        <view v-if="displayedPoetry.length < filteredPoetry.length" class="lib-more-tip">
+          上拉加载更多 · 还有 {{ filteredPoetry.length - displayedPoetry.length }} 篇
         </view>
       </scroll-view>
 
@@ -130,9 +133,9 @@
         </text>
       </view>
 
-      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false">
+      <scroll-view scroll-y class="lib-scroll" :show-scrollbar="false" :lower-threshold="120" @scrolltolower="idiomShowCount += LIB_PAGE_SIZE">
         <view
-          v-for="idiom in filteredIdioms"
+          v-for="idiom in displayedIdioms"
           :key="idiom.id"
           class="lib-item"
           :class="{ selected: selectedIdiomIds.has(idiom.id) }"
@@ -144,6 +147,9 @@
           </view>
           <text class="lib-item-content">{{ idiom.meaning }}</text>
           <text v-if="idiom.source" class="lib-item-extra">出处：{{ idiom.source }}</text>
+        </view>
+        <view v-if="displayedIdioms.length < filteredIdioms.length" class="lib-more-tip">
+          上拉加载更多 · 还有 {{ filteredIdioms.length - displayedIdioms.length }} 条
         </view>
       </scroll-view>
 
@@ -367,6 +373,13 @@ const allPoetrySelected = computed(
     filteredPoetry.value.every((p) => selectedPoetryIds.value.has(p.id)),
 )
 
+// 长列表分页渲染：379+ 篇全量渲染会卡，首屏 60 条、滚到底再追加
+const LIB_PAGE_SIZE = 60
+const poetryShowCount = ref(LIB_PAGE_SIZE)
+const displayedPoetry = computed(() => filteredPoetry.value.slice(0, poetryShowCount.value))
+// 筛选条件变化时回到第一页（watch computed 引用变化即可，无需 deep）
+watch(filteredPoetry, () => { poetryShowCount.value = LIB_PAGE_SIZE })
+
 function togglePoetry(id: string) {
   const next = new Set(selectedPoetryIds.value)
   if (next.has(id)) next.delete(id)
@@ -456,6 +469,11 @@ const allIdiomsSelected = computed(
     filteredIdioms.value.length > 0 &&
     filteredIdioms.value.every((it) => selectedIdiomIds.value.has(it.id)),
 )
+
+// 成语列表同样分页渲染（与诗词共用步长；筛变化时重置回第一页）
+const idiomShowCount = ref(LIB_PAGE_SIZE)
+const displayedIdioms = computed(() => filteredIdioms.value.slice(0, idiomShowCount.value))
+watch(filteredIdioms, () => { idiomShowCount.value = LIB_PAGE_SIZE })
 
 function toggleIdiom(id: string) {
   const next = new Set(selectedIdiomIds.value)
@@ -869,6 +887,13 @@ function handleImportFromMap() {
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
+}
+
+.lib-more-tip {
+  text-align: center;
+  padding: 24rpx;
+  font-size: 24rpx;
+  color: var(--sr-text-3);
 }
 /* H5 隐藏纵向滚动条；小程序由 show-scrollbar=false 控制 */
 .lib-scroll::-webkit-scrollbar {

@@ -86,5 +86,11 @@ export default defineConfig({
     uni(),
     fixChunkFileNames(),
   ],
+  build: {
+    // 产物语法降到 ES2017（微信基础库 2019 年起原生支持 async/await）：
+    // 上传链（miniprogram-ci 等）不做 ES6→ES5 转译，产物里的 ?? / ?. 会让
+    // 老安卓基础库整页解析失败（有 tabBar 无内容的白屏），构建期自己降掉最稳。
+    target: 'es2017',
+  },
   publicDir: resolve(__dirname, 'public'),
 })

@@ -1,6 +1,6 @@
 <template>
   <view class="review-container" :class="themeClass">
-    <!-- 卡片模式专属背景：随主题切换浅/深两版，构图与专注模式不同（右竹+祥云+印章「忆」） -->
+    <!-- 卡片模式专属背景：随主题切换浅/深两版，构图与专注模式不同（右竹+祥云+回纹边） -->
     <image class="card-bg" :src="cardBgSrc" mode="aspectFill" />
     <view v-if="!currentWord" class="empty-state">
       <text class="empty-text">{{ emptyTitle }}</text>
@@ -219,7 +219,7 @@ import { ref, computed, onMounted, onUnmounted, watch, getCurrentInstance } from
 import { onShow, onShareAppMessage } from '@dcloudio/uni-app'
 import { useMobileWords, type MobileWord, snapshotReviewState, type WordReviewState } from '@/stores/useMobileWords'
 import { useSignin } from '@/stores/useSignin'
-import { speakWord, stopSpeaking } from '@/utils/word-audio'
+import { speakWord, stopSpeaking, prefetchWords } from '@/utils/word-audio'
 import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { vibrateOnJudge } from '@/utils/practice-feedback'
 import LevelUpFloat from '@/components/LevelUpFloat.vue'
@@ -620,6 +620,8 @@ const playWord = (userInitiated = false) => {
     speechBankId: currentWord.value?.speechBankId,
     prefetchNextSpeechBankId: next?.speechBankId,
   })
+  // 再往后两个词也提前缓存（适配器按本地缓存去重），弱网下连续翻卡不卡发音
+  prefetchWords(sessionWords.value.slice(currentIndex.value + 2, currentIndex.value + 4))
 }
 
 // 翻面显示释义时自动发音一次；新词出现（isFlipped 归 false）不播，先让用户回忆
@@ -978,7 +980,10 @@ const goAfterReview = (url: string) => {
 .empty-state {
   text-align: center;
   padding: 60rpx;
-  background: var(--sr-card);
+  /* 毛玻璃：透出卡片模式专属背景 */
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 24rpx;
   margin: auto;
 }
@@ -1036,7 +1041,8 @@ const goAfterReview = (url: string) => {
   align-items: center;
   gap: 8rpx;
   padding: 8rpx 20rpx;
-  background: rgba(255,255,255,0.2);
+  /* 卡片背景图上是浅底，改用毛玻璃卡色 + 主色文字，亮暗主题都可读 */
+  background: var(--sr-card-glass);
   border-radius: 30rpx;
 }
 
@@ -1050,19 +1056,20 @@ const goAfterReview = (url: string) => {
 
 .autoplay-label {
   font-size: 22rpx;
-  color: rgba(255,255,255,0.9);
+  color: var(--sr-primary);
 }
 
 .progress-text {
   font-size: 26rpx;
-  color: rgba(255,255,255,0.9);
+  color: var(--sr-primary);
+  font-weight: bold;
   text-align: center;
   display: block;
 }
 
 .progress-track {
   height: 8rpx;
-  background: rgba(255,255,255,0.3);
+  background: var(--sr-card-glass);
   border-radius: 4rpx;
   margin-top: 16rpx;
   overflow: hidden;
@@ -1070,7 +1077,7 @@ const goAfterReview = (url: string) => {
 
 .progress-fill {
   height: 100%;
-  background: #fff;
+  background: var(--sr-primary);
   border-radius: 4rpx;
   transition: width 0.3s;
 }
@@ -1089,8 +1096,8 @@ const goAfterReview = (url: string) => {
   width: 48rpx;
   height: 48rpx;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
-  color: #fff;
+  background: var(--sr-card-glass);
+  color: var(--sr-primary);
   font-size: 28rpx;
   display: flex;
   align-items: center;
@@ -1100,11 +1107,11 @@ const goAfterReview = (url: string) => {
 
 .hint-left, .hint-down, .hint-right {
   font-size: 22rpx;
-  color: rgba(255,255,255,0.7);
+  color: var(--sr-text-3);
 }
 
 .hint-left { color: #e6a23c; }
-.hint-down { color: #83c5a8; }
+.hint-down { color: var(--sr-primary); }
 .hint-right { color: var(--sr-primary); }
 
 /* 卡片容器 */
@@ -1145,7 +1152,7 @@ const goAfterReview = (url: string) => {
 }
 
 .level-badge {
-  background: linear-gradient(135deg, #52796f, #74937d);
+  background: var(--sr-header-grad);
   color: #fff;
   font-size: 22rpx;
   font-weight: bold;
@@ -1358,7 +1365,7 @@ const goAfterReview = (url: string) => {
 }
 
 .complete-card {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border-radius: 24rpx;
   padding: 60rpx;
   text-align: center;
@@ -1412,7 +1419,7 @@ const goAfterReview = (url: string) => {
 }
 
 .btn-done {
-  background: linear-gradient(90deg, #52796f, #74937d);
+  background: var(--sr-header-grad);
   color: #fff;
   border-radius: 50rpx;
   height: 90rpx;

@@ -25,7 +25,7 @@ const routeVariant = computed<BackgroundVariant>(() => {
   return variants[hash % variants.length]
 })
 const activeVariant = computed(() => props.variant || routeVariant.value)
-const src = computed(() => `/static/theme-bg/${activeVariant.value}-${theme.isDark ? 'dark' : 'light'}.png`)
+const src = computed(() => `/static/theme-bg/${activeVariant.value}-${theme.isDark ? 'dark' : 'light'}.jpg`)
 </script>
 
 <style scoped>

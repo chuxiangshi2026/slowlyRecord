@@ -255,7 +255,6 @@ onReady(async () => {
 <style scoped>
 .graph-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
   box-sizing: border-box;
 }

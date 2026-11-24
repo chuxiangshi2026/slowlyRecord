@@ -31,6 +31,10 @@ export class ListenPlayer {
   private session = 0
   /** 当前词剩余重播遍数（发音遍数 >1 时，播完一遍同词重播再推进） */
   private repeatLeft = 1
+  /** 当前词的释义发音队列：单词（含重播）播完后逐段播放，播完再进入词间停顿 */
+  private meaningQueue: string[][] = []
+  /** 当前播放阶段：释义阶段音源失败只静默跳过，不当成整词失败 */
+  private stage: 'word' | 'meaning' = 'word'
 
   constructor(
     private readonly words: string[],
@@ -43,7 +47,9 @@ export class ListenPlayer {
     /** 每词发音遍数，getter 形式同上 */
     private readonly getRepeatCount: () => number = () => 1,
     /** 与 words 对齐的预合成音频词库 id（口语句库词条优先播录音，缺失位置传 undefined） */
-    private readonly speechBankIds: (string | undefined)[] = []
+    private readonly speechBankIds: (string | undefined)[] = [],
+    /** 释义（中文翻译）发音：返回按顺序播放的多个「音源回退链」单元，空数组表示该词不读释义 */
+    private readonly getMeaningUnits?: (index: number) => string[][]
   ) {}
 
   get currentIndex(): number {
@@ -114,11 +120,17 @@ export class ListenPlayer {
       return
     }
     this.repeatLeft = Math.max(1, Math.floor(this.getRepeatCount()))
+    this.stage = 'word'
+    this.meaningQueue = this.getMeaningUnits?.(this.index) ?? []
     this.playWithFallback(buildPlayUrls(word, this.language, this.speechBankIds[this.index]), 0, session)
-    const nextWord = this.words[this.index + 1]
-    if (nextWord) {
-      const nextUrl = buildPlayUrls(nextWord, this.language, this.speechBankIds[this.index + 1])[0]
+    // 预取后续 3 个词的发音与释义首选音源（适配器内部按本地缓存去重，重复预取代价极低）
+    for (let ahead = 1; ahead <= 3; ahead++) {
+      const nextWord = this.words[this.index + ahead]
+      if (!nextWord) break
+      const nextUrl = buildPlayUrls(nextWord, this.language, this.speechBankIds[this.index + ahead])[0]
       if (nextUrl) this.player.prefetchAudio?.(nextUrl)
+      const nextMeaning = this.getMeaningUnits?.(this.index + ahead)?.[0]?.[0]
+      if (nextMeaning) this.player.prefetchAudio?.(nextMeaning)
     }
   }
 
@@ -128,9 +140,19 @@ export class ListenPlayer {
       () => {
         if (session !== this.session || !this.playing) return
         // 遍数未完：同词重播一遍（音频已命中本地缓存，重播无网络开销）
-        if (this.repeatLeft > 1) {
+        if (this.stage === 'word' && this.repeatLeft > 1) {
           this.repeatLeft--
           this.playWithFallback(urls, 0, session)
+          return
+        }
+        // 单词读完轮到释义：逐段连读中文翻译，全部读完再进入词间停顿
+        if (this.stage === 'word' && this.meaningQueue.length > 0) {
+          this.stage = 'meaning'
+          this.playWithFallback(this.meaningQueue.shift()!, 0, session)
+          return
+        }
+        if (this.stage === 'meaning' && this.meaningQueue.length > 0) {
+          this.playWithFallback(this.meaningQueue.shift()!, 0, session)
           return
         }
         this.scheduleNext(session)
@@ -140,11 +162,20 @@ export class ListenPlayer {
         if (urlIndex + 1 < urls.length) {
           // 当前音源失败，换兜底音源重试
           this.playWithFallback(urls, urlIndex + 1, session)
-        } else {
-          // 全部音源失败：跳过该词，不卡住播放队列
-          this.callbacks.onError?.(this.index)
-          this.advance()
+          return
         }
+        if (this.stage === 'meaning') {
+          // 释义音源全失败：静默跳过该段，继续后续段落或进入停顿（不惊动整词失败流程）
+          if (this.meaningQueue.length > 0) {
+            this.playWithFallback(this.meaningQueue.shift()!, 0, session)
+            return
+          }
+          this.scheduleNext(session)
+          return
+        }
+        // 全部音源失败：跳过该词，不卡住播放队列
+        this.callbacks.onError?.(this.index)
+        this.advance()
       }
     )
   }

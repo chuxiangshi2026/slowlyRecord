@@ -538,7 +538,7 @@ function goBack() {
   min-height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background: var(--sr-bg);
+  
 }
 
 .page-header {
@@ -603,7 +603,7 @@ function goBack() {
   padding: 22rpx;
   margin-bottom: 16rpx;
   border-radius: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-primary);
 }
 
@@ -717,7 +717,7 @@ function goBack() {
   margin-bottom: 16rpx;
   padding: 16rpx;
   border-radius: 16rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 }
 
@@ -767,7 +767,7 @@ function goBack() {
 .finish-card {
   padding: 40rpx 24rpx;
   border-radius: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
   text-align: center;
 }
@@ -829,7 +829,7 @@ function goBack() {
 
 .organize-panel {
   margin: 16rpx 24rpx 120rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border-radius: 16rpx;
   padding: 20rpx 24rpx;
   box-sizing: border-box;
@@ -956,7 +956,7 @@ function goBack() {
 .editor-card {
   width: 100%;
   max-width: 640rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border-radius: 16rpx;
   padding: 28rpx;
   box-sizing: border-box;
@@ -1073,7 +1073,7 @@ function goBack() {
   box-sizing: border-box;
   padding: 10rpx 12rpx;
   border-radius: 14rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
   display: flex;
   flex-direction: column;

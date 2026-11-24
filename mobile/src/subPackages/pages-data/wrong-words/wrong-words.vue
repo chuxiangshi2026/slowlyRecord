@@ -196,7 +196,6 @@ const goHome = () => {
 <style scoped>
 .wrong-words-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
   padding: 40rpx;
   display: flex;
   flex-direction: column;

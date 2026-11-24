@@ -380,7 +380,6 @@ const nextMonth = () => {
 <style scoped>
 .signin-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
 }
 
@@ -513,7 +512,7 @@ const nextMonth = () => {
   width: 100%;
   height: 100rpx;
   /* 品牌渐变保持亮色值（暗色下也不变），故文字保留白色 */
-  background: linear-gradient(90deg, #52796f, #74937d);
+  background: var(--sr-header-grad);
   color: #fff;
   border-radius: 50rpx;
   font-size: 36rpx;

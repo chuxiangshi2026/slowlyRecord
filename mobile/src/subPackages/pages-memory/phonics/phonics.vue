@@ -180,7 +180,6 @@ function goPractice(mode: 'blend' | 'listen' | 'split') {
 <style scoped>
 .phonics-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx 24rpx 60rpx;
 }
 

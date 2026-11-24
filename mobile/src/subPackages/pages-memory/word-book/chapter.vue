@@ -160,7 +160,7 @@ function removeChapter(chapter: WordBookChapter) {
   min-height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background: var(--sr-bg);
+  
 }
 
 .book-header {
@@ -225,7 +225,7 @@ function removeChapter(chapter: WordBookChapter) {
 .chapter-card {
   padding: 24rpx;
   border-radius: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 }
 

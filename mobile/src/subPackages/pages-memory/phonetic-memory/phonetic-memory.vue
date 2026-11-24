@@ -226,7 +226,6 @@ function goBreakdown() {
 <style scoped>
 .phonetic-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx 24rpx 60rpx;
 }
 

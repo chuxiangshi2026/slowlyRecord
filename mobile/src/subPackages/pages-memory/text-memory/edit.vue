@@ -199,7 +199,6 @@ function onCancel() {
 <style scoped>
 .edit-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 24rpx 24rpx 200rpx;
 }
 

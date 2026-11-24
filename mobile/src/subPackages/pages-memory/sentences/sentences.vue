@@ -130,6 +130,7 @@ function langLabel(lang: string): string {
 }
 
 function onAdd() {
+  // 句子库按原设计「原句保留、不翻译」：原文与译文按用户输入原样保存
   const created = store.addSentence(newText.value, newTranslation.value)
   if (!created) return
   newText.value = ''
@@ -142,12 +143,11 @@ function onAdd() {
 <style scoped>
 .sentences-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
 .header {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 60rpx 40rpx 40rpx;
   text-align: center;
 }

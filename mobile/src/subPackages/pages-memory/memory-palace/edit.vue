@@ -252,7 +252,6 @@ function confirmImport() {
 <style scoped>
 .edit-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
   padding-bottom: 120rpx;
 }

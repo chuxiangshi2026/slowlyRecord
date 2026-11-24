@@ -363,12 +363,11 @@ onShow(() => store.load())
 <style scoped>
 .page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
 .header {
-  background: linear-gradient(135deg, #52796f 0%, #74937d 100%);
+  background: var(--sr-header-grad);
   padding: 60rpx 40rpx 40rpx;
   text-align: center;
 }

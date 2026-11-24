@@ -138,7 +138,6 @@ const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || 
 <style scoped>
 .features-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
 }
 
@@ -150,10 +149,12 @@ const features = computed(() => allFeatures.filter(item => WORD_BOOK_ENABLED || 
 }
 
 .menu-list {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .menu-item {

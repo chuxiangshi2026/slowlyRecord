@@ -155,7 +155,6 @@ function copyReply() {
 <style scoped>
 .speak-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 24rpx;
 }
 
@@ -202,7 +201,7 @@ function copyReply() {
   background: var(--sr-card);
   border-radius: 20rpx;
   padding: 24rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 .input-area {
   width: 100%;
@@ -247,7 +246,7 @@ function copyReply() {
   background: var(--sr-card);
   border-radius: 20rpx;
   padding: 32rpx 28rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
   border-left: 6rpx solid var(--sr-primary);
 }
 .reply-label {

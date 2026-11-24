@@ -226,7 +226,6 @@ onShow(() => {
 <style scoped>
 .knowledge-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   /* 底部安全区补偿：避免最底行被手势条遮挡 */

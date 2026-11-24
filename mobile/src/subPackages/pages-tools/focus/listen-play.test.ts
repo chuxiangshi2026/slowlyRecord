@@ -172,6 +172,22 @@ describe('ListenPlayer', () => {
     p.destroy()
   })
 
+  it('预取覆盖后续 3 个词，连播切词即时发音', () => {
+    const prefetched: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: () => new Promise<void>(() => {}),
+      prefetchAudio: (url) => { prefetched.push(url) }
+    }
+    const p = new ListenPlayer(['apple', 'banana', 'cherry', 'durian', 'eggplant'], player, () => 1000)
+
+    p.start()
+    expect(prefetched).toHaveLength(3)
+    expect(prefetched[0]).toContain('banana')
+    expect(prefetched[1]).toContain('cherry')
+    expect(prefetched[2]).toContain('durian')
+    p.destroy()
+  })
+
   it('切词后旧播放延迟失败不得回退抢播', async () => {
     const pending: { url: string; reject: () => void }[] = []
     const player: WordAudioPlayer = {
@@ -295,6 +311,66 @@ describe('ListenPlayer', () => {
     expect(played[0]).toContain('spoken-reductions-1')
     // 下一词无 speechBankId：预取走有道音源
     expect(prefetched[0]).toContain('dict.youdao.com')
+    p.destroy()
+  })
+
+  it('单词（含重播）播完后先读释义再进入词间停顿', async () => {
+    const played: string[] = []
+    const player: WordAudioPlayer = {
+      playAudio: (url) => { played.push(url); return Promise.resolve() }
+    }
+    const p = new ListenPlayer(
+      ['apple', 'banana'],
+      player,
+      () => 1000,
+      {},
+      'en',
+      () => 1,
+      () => 2,
+      [undefined, undefined],
+      (i) => (i === 0 ? [['https://tts.example/zh-1'], ['https://tts.example/zh-2']] : [])
+    )
+
+    p.start()
+    await vi.advanceTimersByTimeAsync(0)
+    // apple 播两遍 + 释义两段，释义时才进入停顿
+    expect(played).toHaveLength(4)
+    expect(played.slice(0, 2).every(u => u.includes('apple'))).toBe(true)
+    expect(played[2]).toContain('zh-1')
+    expect(played[3]).toContain('zh-2')
+
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(played[played.length - 1]).toContain('banana')
+    p.destroy()
+  })
+
+  it('释义音源全部失败时静默跳过，不触发整词失败流程', async () => {
+    const played: string[] = []
+    const onError = vi.fn()
+    const player: WordAudioPlayer = {
+      playAudio: (url) => {
+        played.push(url)
+        return url.includes('tts.example') ? Promise.reject(new Error('network')) : Promise.resolve()
+      }
+    }
+    const p = new ListenPlayer(
+      ['apple', 'banana'],
+      player,
+      () => 1000,
+      { onError },
+      'en',
+      () => 1,
+      () => 1,
+      [undefined, undefined],
+      (i) => (i === 0 ? [['https://tts.example/zh-1']] : [])
+    )
+
+    p.start()
+    await vi.advanceTimersByTimeAsync(0)
+    expect(onError).not.toHaveBeenCalled()
+
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(played[played.length - 1]).toContain('banana')
     p.destroy()
   })
 })

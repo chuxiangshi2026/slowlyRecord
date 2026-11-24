@@ -350,8 +350,6 @@ const goToAllFeatures = () => {
 .home-container {
   padding: 20rpx;
   min-height: 100vh;
-  /* 护眼绿渐变底：亮色浅绿→浅灰绿，暗色深绿→深灰绿 */
-  background: linear-gradient(180deg, var(--sr-primary-bg) 0%, var(--sr-bg) 100%);
 }
 
 .header {
@@ -379,14 +377,17 @@ const goToAllFeatures = () => {
 }
 
 .task-main {
-  background: var(--sr-card);
+  /* 毛玻璃卡片：透出背景图，支持 backdrop-filter 的平台呈磨砂质感 */
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 24rpx;
   padding: 40rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 /* 目标达成态：护眼绿底 */
@@ -512,11 +513,13 @@ const goToAllFeatures = () => {
 
 .task-sub {
   flex: 1;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 16rpx;
   padding: 24rpx 0;
   text-align: center;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .task-sub-num {
@@ -550,11 +553,13 @@ const goToAllFeatures = () => {
 }
 
 .stat-card {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 16rpx;
   padding: 30rpx;
   text-align: center;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .stat-num {
@@ -572,11 +577,13 @@ const goToAllFeatures = () => {
 }
 
 .quick-actions {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border-radius: 16rpx;
   padding: 30rpx;
   margin-top: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .action-title-row {
@@ -692,7 +699,9 @@ const goToAllFeatures = () => {
   margin-top: 24rpx;
   padding: 20rpx;
   border-radius: 20rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   border: 1rpx solid var(--sr-border);
 }
 

@@ -75,6 +75,17 @@
           </view>
         </view>
       </view>
+      <view class="setting-row">
+        <text class="setting-label">盲操作</text>
+        <view class="setting-chips">
+          <view class="chip" :class="{ on: settings.tapMark }" @click="toggleTapMark">
+            <text>双击记住</text>
+          </view>
+          <view class="chip" :class="{ on: settings.shakeMark }" @click="toggleShakeMark">
+            <text>摇一摇记住</text>
+          </view>
+        </view>
+      </view>
       <!-- 词间停顿：仅听词模式使用，与「自动翻页」相互独立 -->
       <view v-if="settings.mode === 'listen'" class="setting-row">
         <text class="setting-label">词间停顿</text>
@@ -87,6 +98,15 @@
             @click="setListenPauseSec(opt.value)"
           >
             <text>{{ opt.label }}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 读释义：单词（含重播）读完接着读中文释义，闭眼/锁屏也能跟上词义 -->
+      <view v-if="settings.mode === 'listen'" class="setting-row">
+        <text class="setting-label">读释义</text>
+        <view class="setting-chips">
+          <view class="chip" :class="{ on: settings.readMeaning }" @click="toggleReadMeaning">
+            <text>{{ settings.readMeaning ? '开' : '关' }}</text>
           </view>
         </view>
       </view>
@@ -103,7 +123,7 @@
 
     <!-- 标准模式：逐词轮播（释义直接显示，无需点击揭示） -->
     <view v-else-if="settings.mode === 'standard' && currentWord" class="stage">
-      <view class="word-stage">
+      <view class="word-stage" @click="onStageTap">
         <text class="focus-word">{{ currentWord.word }}</text>
         <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
         <text class="focus-meaning">{{ currentWord.meaning || '暂无释义' }}</text>
@@ -118,13 +138,13 @@
 
     <!-- 连播听词模式：自动连续播放单词发音，屏幕大字显示释义 -->
     <view v-else-if="settings.mode === 'listen' && currentWord" class="stage">
-      <view class="word-stage">
+      <view class="word-stage" @click="onStageTap">
         <text class="listen-state">{{ listenPlaying ? '🔊 连播中' : '⏸ 已暂停' }}</text>
         <text class="focus-word">{{ currentWord.word }}</text>
         <text v-if="currentWord.phonetic" class="focus-phonetic">{{ currentWord.phonetic }}</text>
         <text class="focus-meaning">{{ currentWord.meaning || '暂无释义' }}</text>
         <text v-if="currentWord.example" class="focus-example">{{ currentWord.example }}</text>
-        <text class="listen-hint">亮屏连播，锁屏/退后台会中断</text>
+        <text class="listen-hint">{{ listenHint }}</text>
       </view>
       <view class="listen-controls">
         <button class="listen-btn" @click="listenPrev">⏮</button>
@@ -171,6 +191,11 @@
       </view>
     </view>
 
+    <!-- 盲操作轻反馈：双击/摇一摇/耳机标记记住（不用 toast，避免连点排队） -->
+    <view v-if="markFlash" class="mark-flash">
+      <text>✓ 已记住</text>
+    </view>
+
     <!-- 完成弹层 -->
     <view v-if="showComplete" class="complete-overlay">
       <view class="complete-card">
@@ -205,9 +230,11 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useMobileWords, type MobileWord } from '@/stores/useMobileWords'
 import { getTtsAdapter } from '@/adapters/index'
-import { speakWord, stopSpeaking } from '@/utils/word-audio'
+import { speakWord, stopSpeaking, prefetchWords } from '@/utils/word-audio'
 import { ListenPlayer } from './listen-play'
+import { BackgroundWordPlayer } from './bg-audio-player'
 import { normalizeForCompare } from '@/utils/language'
+import { buildChineseAudioUrls, splitChineseSpeechText } from '@/utils/youdao-tts'
 
 const wordsStore = useMobileWords()
 
@@ -226,6 +253,9 @@ interface FocusSettings {
   autoPlay: boolean       // 自动发音
   repeatCount: number     // 每词发音遍数
   speechRate: number      // 发音语速（0.5–2.0）
+  readMeaning: boolean    // 听词模式：单词播完后读中文释义
+  tapMark: boolean        // 双击屏幕 = 记住（盲操作）
+  shakeMark: boolean      // 摇一摇 = 记住（盲操作）
 }
 
 const modeOptions: { value: FocusMode; label: string }[] = [
@@ -275,11 +305,14 @@ function loadSettings(): FocusSettings {
           : (typeof raw.intervalSec === 'number' && raw.intervalSec > 0 ? raw.intervalSec : 1.5),
         autoPlay: !!raw.autoPlay,
         repeatCount: typeof raw.repeatCount === 'number' && raw.repeatCount >= 1 ? Math.floor(raw.repeatCount) : 1,
-        speechRate: typeof raw.speechRate === 'number' && raw.speechRate >= 0.5 && raw.speechRate <= 2 ? raw.speechRate : 1
+        speechRate: typeof raw.speechRate === 'number' && raw.speechRate >= 0.5 && raw.speechRate <= 2 ? raw.speechRate : 1,
+        readMeaning: typeof raw.readMeaning === 'boolean' ? raw.readMeaning : true,
+        tapMark: typeof raw.tapMark === 'boolean' ? raw.tapMark : true,
+        shakeMark: typeof raw.shakeMark === 'boolean' ? raw.shakeMark : true
       }
     }
   } catch {}
-  return { mode: 'standard', intervalSec: 0, listenPauseSec: 1.5, autoPlay: true, repeatCount: 1, speechRate: 1 }
+  return { mode: 'standard', intervalSec: 0, listenPauseSec: 1.5, autoPlay: true, repeatCount: 1, speechRate: 1, readMeaning: true, tapMark: true, shakeMark: true }
 }
 
 const settings = ref<FocusSettings>(loadSettings())
@@ -313,7 +346,15 @@ function persistSettings() {
 function setMode(mode: FocusMode) {
   settings.value.mode = mode
   persistSettings()
+  applyKeepScreenOn()
   resetWordState()
+}
+
+/** 防熄屏只保到非听词模式：听词走后台音频，锁屏/息屏应可继续连播（常亮反而费电且挡住息屏听） */
+function applyKeepScreenOn() {
+  try {
+    uni.setKeepScreenOn({ keepScreenOn: settings.value.mode !== 'listen' })
+  } catch {}
 }
 
 function setIntervalSec(sec: number) {
@@ -342,6 +383,21 @@ function toggleAutoPlay() {
   settings.value.autoPlay = !settings.value.autoPlay
   persistSettings()
   if (settings.value.autoPlay) playCurrent()
+}
+
+function toggleTapMark() {
+  settings.value.tapMark = !settings.value.tapMark
+  persistSettings()
+}
+
+function toggleReadMeaning() {
+  settings.value.readMeaning = !settings.value.readMeaning
+  persistSettings()
+}
+
+function toggleShakeMark() {
+  settings.value.shakeMark = !settings.value.shakeMark
+  persistSettings()
 }
 
 // ========== 会话状态 ==========
@@ -409,6 +465,8 @@ function playCurrent(userInitiated = false, repeatLeft = settings.value.repeatCo
       }
     }
   })
+  // 再往后两个词也提前缓存（适配器按本地缓存去重），弱网连播不卡发音
+  prefetchWords(wordList.value.slice(currentIndex.value + 2, currentIndex.value + 4))
 }
 
 /** 发音播完自动推进：仅标准/听写模式生效，与「自动翻页」定时器相互独立，先到者生效 */
@@ -424,21 +482,149 @@ function advanceByAudio() {
   }
 }
 
-// ========== 连播听词（亮屏连播，锁屏/退后台由系统中断，不承诺后台播放） ==========
+// ========== 连播听词（微信端走 BackgroundAudioManager：锁屏/退后台仍可连播，锁屏与耳机按键映射为复习操作；其他平台回退亮屏连播） ==========
 let listenPlayer: ListenPlayer | null = null
 const listenPlaying = ref(false)
+/** 后台音频是否生效（决定听词页提示语与锁屏连播能力） */
+const bgAudioActive = ref(false)
+/** 单例后台播放器：BackgroundAudioManager 事件全局只能 on 一次，整个页面生命周期复用同一实例 */
+let bgPlayer: BackgroundWordPlayer | null = null
+/** 最近一次页面主动 stop() 的时间戳：异步 onStop 事件据此豁免对新连播链的误暂停 */
+let lastProgrammaticStopAt = 0
+
+const listenHint = computed(() =>
+  bgAudioActive.value
+    ? '锁屏/耳机可控：⏭=记住，⏮=重听，双击/摇一摇=记住'
+    : '亮屏连播，锁屏/退后台会中断'
+)
+
+function getOrCreateBgPlayer(): BackgroundWordPlayer | null {
+  if (bgPlayer) return bgPlayer.available ? bgPlayer : null
+  if (!BackgroundWordPlayer.isSupported()) return null
+  const player = new BackgroundWordPlayer(
+    {
+      // 锁屏/耳机「下一首」= 记住了并切下一词；「上一首」= 重听当前词
+      onNext: () => markListenRemember(),
+      onPrev: () => {
+        if (listenPlayer) {
+          listenPlayer.prev()
+          listenPlaying.value = listenPlayer.isPlaying
+        }
+      },
+      onPlay: () => {
+        // 锁屏/耳机按播放：连播链处于暂停时续播当前词（正常起播也会触发，此时 isPlaying 已为 true 不重复调度）
+        if (listenPlayer && !listenPlayer.isPlaying) listenPlayer.resume()
+        listenPlaying.value = true
+      },
+      onPause: () => {
+        // 锁屏/耳机暂停必须同时停掉连播调度（词间停顿定时器/推进），否则几秒后音频自动恢复
+        listenPlayer?.pause()
+        listenPlaying.value = false
+      },
+      onStop: () => {
+        // 系统侧停止（锁屏停止键/被掐断）：连播链一并停下，否则播放失败回退会自动重播。
+        // 页面自己调 stop()（重启/退出连播）也会异步触发本事件：1s 内的视作程序化停止，不动新连播链
+        if (Date.now() - lastProgrammaticStopAt > 1000) listenPlayer?.pause()
+        listenPlaying.value = false
+      }
+    },
+    // 预取与 InnerAudioContext 播放器共用同一份本地缓存清单
+    (url) => { try { getTtsAdapter().prefetchAudio?.(url) } catch { /* 静默 */ } }
+  )
+  if (!player.available) return null
+  bgPlayer = player
+  return player
+}
+
+/** 听词模式「记住」标记：双击/摇一摇/耳机下一首共用；标记 SRS 后切到下一词 */
+function markListenRemember() {
+  if (settings.value.mode !== 'listen' || showComplete.value) return
+  const word = wordList.value[currentIndex.value]
+  if (!word) return
+  wordsStore.markAsRemembered(word.id)
+  rememberCount.value++
+  flashMark()
+  if (listenPlayer) {
+    listenPlayer.next()
+    listenPlaying.value = listenPlayer.isPlaying
+  }
+}
+
+/** 盲操作轻反馈：轻振动 + 屏上短暂「✓ 已记住」（锁屏时以振动为准，亮屏时以浮层为准） */
+const markFlash = ref(false)
+let markFlashTimer: ReturnType<typeof setTimeout> | null = null
+
+function flashMark() {
+  try { uni.vibrateShort?.({ type: 'light' } as any) } catch { /* 不支持振动的平台静默 */ }
+  markFlash.value = true
+  if (markFlashTimer) clearTimeout(markFlashTimer)
+  markFlashTimer = setTimeout(() => { markFlash.value = false }, 600)
+}
+
+/** 双击舞台区/摇一摇的快速标记入口：标准模式走完整标记流程，听词模式标记并切词 */
+function quickMarkRemember() {
+  if (showComplete.value) return
+  if (settings.value.mode === 'standard') {
+    markCurrent(true)
+    flashMark()
+  } else if (settings.value.mode === 'listen') {
+    markListenRemember()
+  }
+}
+
+// 双击检测：小程序无双击事件，按时间窗口手动判定；单击不做任何事，避免误触
+let lastStageTapAt = 0
+function onStageTap() {
+  if (!settings.value.tapMark) return
+  if (settings.value.mode !== 'standard' && settings.value.mode !== 'listen') return
+  const now = Date.now()
+  if (now - lastStageTapAt < 350) {
+    lastStageTapAt = 0
+    quickMarkRemember()
+  } else {
+    lastStageTapAt = now
+  }
+}
+
+// 摇一摇检测（仅前台亮屏可用；锁屏请用锁屏/耳机按键）
+let lastShakeAt = 0
+function onAccelerometer(res: { x: number; y: number; z: number }) {
+  if (!settings.value.shakeMark) return
+  if (settings.value.mode !== 'standard' && settings.value.mode !== 'listen') return
+  if (showComplete.value) return
+  const now = Date.now()
+  if (now - lastShakeAt < 1000) return
+  // 静止时三轴绝对值之和约为 1（重力），明显摇晃时显著超过阈值
+  if (Math.abs(res.x) + Math.abs(res.y) + Math.abs(res.z) > 3.2) {
+    lastShakeAt = now
+    quickMarkRemember()
+  }
+}
 
 /** 词间停顿：使用听词模式独立的停顿设置 */
 function listenPauseMs(): number {
   return settings.value.listenPauseSec * 1000
 }
 
+/** 释义读音源单元：去掉词性缩写（n./v./adj. 等）后按句切段，每段给一条中文 TTS 回退链 */
+function buildMeaningUnits(index: number): string[][] {
+  if (!settings.value.readMeaning) return []
+  const raw = wordList.value[index]?.meaning || ''
+  // 去词性缩写：段首/分隔符后的 "n." "v." "adj." "prep." 等不读出来
+  const text = raw.replace(/(^|[；;，,。！？\s])[a-zA-Z]{1,8}\.\s*/g, '$1').trim()
+  if (!text) return []
+  return splitChineseSpeechText(text).map(seg => buildChineseAudioUrls(seg))
+}
+
 function startListen() {
   if (settings.value.mode !== 'listen' || showComplete.value || wordList.value.length === 0) return
   stopListenPlayer()
+  // 优先后台音频（锁屏可连播、锁屏/耳机按键可控）；不支持的平台回退亮屏连播
+  const bg = getOrCreateBgPlayer()
+  bgAudioActive.value = !!bg
   listenPlayer = new ListenPlayer(
     wordList.value.map(w => w.word),
-    getTtsAdapter(),
+    bg || getTtsAdapter(),
     listenPauseMs,
     {
       onIndexChange: (i) => { currentIndex.value = i },
@@ -454,7 +640,8 @@ function startListen() {
     wordsStore.currentLanguage,
     () => settings.value.speechRate,
     () => settings.value.repeatCount,
-    wordList.value.map(w => w.speechBankId)
+    wordList.value.map(w => w.speechBankId),
+    buildMeaningUnits
   )
   listenPlaying.value = true
   listenPlayer.start()
@@ -465,6 +652,10 @@ function stopListenPlayer() {
     listenPlayer.destroy()
     listenPlayer = null
   }
+  // 后台音频也要收掉（InnerAudioContext 由 getTtsAdapter().stop() 负责，两者互不影响）。
+  // 程序化 stop 的异步 onStop 事件可能落在下一条连播链上，记录时间戳供事件侧豁免
+  if (bgPlayer) lastProgrammaticStopAt = Date.now()
+  bgPlayer?.stop()
   listenPlaying.value = false
 }
 
@@ -476,6 +667,8 @@ function toggleListenPlay() {
   if (listenPlaying.value) {
     listenPlayer.pause()
     try { getTtsAdapter().stop() } catch { /* 静默 */ }
+    // 后台音频用 pause 而非 stop：保留锁屏控制条，从锁屏/耳机可直接恢复
+    bgPlayer?.pause()
     listenPlaying.value = false
   } else {
     listenPlaying.value = true
@@ -616,10 +809,10 @@ function exitFocus() {
 
 // ========== 生命周期 ==========
 onMounted(async () => {
-  // 防熄屏
-  try {
-    uni.setKeepScreenOn({ keepScreenOn: true })
-  } catch {}
+  // 防熄屏（听词模式除外：留给后台音频，允许息屏连播）
+  applyKeepScreenOn()
+  // 摇一摇 = 记住（盲操作；页面卸载时注销）
+  try { uni.onAccelerometerChange?.(onAccelerometer) } catch {}
   measureCapsule()
   // 数据由首页加载，这里兜底调用（幂等）
   await wordsStore.loadWords()
@@ -631,6 +824,8 @@ onUnmounted(() => {
   clearAutoTimer()
   stopListenPlayer()
   try { getTtsAdapter().stop() } catch { /* 静默 */ }
+  try { uni.offAccelerometerChange?.(onAccelerometer) } catch {}
+  if (markFlashTimer) clearTimeout(markFlashTimer)
   try {
     uni.setKeepScreenOn({ keepScreenOn: false })
   } catch {}
@@ -640,7 +835,6 @@ onUnmounted(() => {
 <style scoped>
 .focus-page {
   min-height: 100vh;
-  background: #10241e;
   display: flex;
   flex-direction: column;
   color: #eaf1ea;
@@ -1009,6 +1203,23 @@ onUnmounted(() => {
   color: #10241e;
 }
 
+/* 盲操作轻反馈：屏上短暂「✓ 已记住」（锁屏时以振动反馈为主） */
+.mark-flash {
+  position: fixed;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  z-index: 900;
+  padding: 18rpx 44rpx;
+  border-radius: 44rpx;
+  background: rgba(131, 197, 168, 0.92);
+  color: #10241e;
+  font-size: 30rpx;
+  font-weight: bold;
+  pointer-events: none;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.3);
+}
+
 /* 完成弹层 */
 .complete-overlay {
   position: fixed;
@@ -1088,5 +1299,12 @@ onUnmounted(() => {
   font-size: 30rpx;
   border: none;
   width: 100%;
+}
+</style>
+
+<style>
+/* 页面级底色兜底：背景图未就绪时保持深色沉浸（scoped 样式命中不了 page 元素） */
+page {
+  background: #10241e;
 }
 </style>

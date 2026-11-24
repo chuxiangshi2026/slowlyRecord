@@ -304,7 +304,6 @@ function confirmDelete(article: MobileTextArticle) {
 <style scoped>
 .text-memory-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding-bottom: 40rpx;
   /* 建立层叠上下文，让内部 z-index:-1 的水墨背景压在页面底色之上 */
   position: relative;
@@ -320,7 +319,7 @@ function confirmDelete(article: MobileTextArticle) {
 }
 
 .header {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 60rpx 40rpx 40rpx;
   text-align: center;
 }
@@ -580,7 +579,7 @@ function confirmDelete(article: MobileTextArticle) {
   box-sizing: border-box;
   width: 100%;
   max-height: 70vh;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border-radius: 20rpx;
   padding: 32rpx;
   display: flex;

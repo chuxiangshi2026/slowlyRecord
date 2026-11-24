@@ -298,7 +298,6 @@ onLoad(() => {
 <style scoped>
 .breakdown-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }

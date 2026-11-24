@@ -3,7 +3,7 @@
  * 小程序复习卡片模式（review.vue）专属背景图预渲染管线。
  *
  * 与专注模式（scripts/render-focus-bg-png.cjs，深绿单版）同一手法、不同构图：
- * 双版跟随主题 —— 浅色为米绿宣纸底（暖墨远山+祥云+回纹+印章「忆」），
+ * 双版跟随主题 —— 浅色为米绿宣纸底（暖墨远山+祥云+回纹），
  * 深色为墨绿夜色（月+山影+云纹），输出到主包 static/theme-bg/：
  *   mobile/src/static/theme-bg/card-bg-light.jpg / card-bg-dark.jpg
  * （渐变+模糊的 PNG 体积大，统一输出 q82 JPEG，单张约 60–90KB）
@@ -99,15 +99,6 @@ function fretStrip(y, ink) {
   return s;
 }
 
-/** 朱砂印章「忆」 */
-function seal(sealColor, fillOp) {
-  return `<g transform="translate(56,1140)">
-    <rect x="0" y="0" width="92" height="92" rx="10" fill="none" stroke="${sealColor}" stroke-opacity="${0.3 * fillOp}" stroke-width="3"/>
-    <rect x="7" y="7" width="78" height="78" rx="6" fill="none" stroke="${sealColor}" stroke-opacity="${0.16 * fillOp}" stroke-width="1.2"/>
-    <text x="46" y="63" text-anchor="middle" font-family="'Noto Serif CJK SC', serif" font-size="50" fill="${sealColor}" fill-opacity="${0.24 * fillOp}">忆</text>
-  </g>`;
-}
-
 function mists(ink, op) {
   return `<rect x="0" y="820" width="${W}" height="260" fill="${ink}" fill-opacity="${0.035 * op}" filter="url(#mistBlur)"/>
   <defs><filter id="mistBlur" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="14"/></filter></defs>`;
@@ -120,7 +111,6 @@ const VARIANTS = {
     ink: '#52796f',
     strength: 1,
     op: 1,
-    seal: '#b45454',
     moon: null,
   },
   // 深色：墨绿夜色，玉绿远山 + 小月
@@ -129,7 +119,6 @@ const VARIANTS = {
     ink: '#83c5a8',
     strength: 0.9,
     op: 0.85,
-    seal: '#c8616a',
     moon: { cx: 150, cy: 200, r: 58, op: 0.32 },
   },
 };
@@ -158,8 +147,7 @@ function scene(v) {
   ${mountains(v.ink, v.strength)}
   ${mists(v.ink, v.op)}
   ${fretStrip(40, v.ink)}
-  ${fretStrip(H - 72, v.ink)}
-  ${seal(v.seal, 1)}`;
+  ${fretStrip(H - 72, v.ink)}`;
 }
 
 async function launchBrowser(puppeteer) {

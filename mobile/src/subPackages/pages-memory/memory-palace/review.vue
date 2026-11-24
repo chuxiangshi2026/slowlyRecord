@@ -247,7 +247,6 @@ watch(recallMode, () => {
 <style scoped>
 .palace-review-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
 }
@@ -335,7 +334,7 @@ watch(recallMode, () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .locus-image {

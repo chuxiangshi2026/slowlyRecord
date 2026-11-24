@@ -442,6 +442,8 @@ export interface TtsAdapter {
   playAudio(url: string, options?: PlayAudioOptions): Promise<void>
   /** 预取音频到本地缓存（可选实现）：播当前词时提前缓存下一个词，降低切词后的发音延迟 */
   prefetchAudio?(url: string): void
+  /** 查询某音源地址是否已有本地缓存（可选实现）：命中时调用方可优先播缓存，离线/弱网即时发音 */
+  getCachedPath?(url: string): string | null
 }
 
 // ---------- 音频本地缓存（纯函数部分，便于单测）----------
@@ -507,9 +509,9 @@ export function parseAudioCacheWord(url: string): string | null {
 /** 缓存清单在 Storage 中的 key */
 const AUDIO_CACHE_MANIFEST_KEY = 'slowlyrecord_audio_cache_manifest'
 /** 本地音频缓存文件数上限，超出按最久未用淘汰 */
-const AUDIO_CACHE_MAX_FILES = 200
-/** 本地音频缓存总字节上限：小程序用户数据目录同样有 10MB 级配额，防顶满 */
-const AUDIO_CACHE_MAX_BYTES = 5 * 1024 * 1024
+const AUDIO_CACHE_MAX_FILES = 400
+/** 本地音频缓存总字节上限：微信本地持久文件与用户数据共用约 10MB 配额，留出余量防顶满 */
+const AUDIO_CACHE_MAX_BYTES = 8 * 1024 * 1024
 
 /** 存储配额告警阈值：currentSize/limitSize 超过此比例时提示清理 */
 const STORAGE_QUOTA_RATIO = 0.8
@@ -621,6 +623,17 @@ class MiniProgramTtsAdapter implements TtsAdapter {
       return
     }
     this.downloadAndCache(url, key).catch(() => { /* 预取失败静默，播放时仍走在线地址 */ })
+  }
+
+  /** 查询音源地址的本地缓存路径（命中即离线可播）；任何异常返回 null */
+  getCachedPath(url: string): string | null {
+    try {
+      const word = parseAudioCacheWord(url)
+      if (!word) return null
+      return this.readCachePath(hashAudioCacheKey(word))
+    } catch {
+      return null
+    }
   }
 
   /** 单次播放：出错或「长时间无进展」视为失败，由上层决定是否重试（可带断点续播） */

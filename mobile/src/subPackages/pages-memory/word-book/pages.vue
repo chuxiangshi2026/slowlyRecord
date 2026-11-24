@@ -129,7 +129,7 @@ function removePage(page: WordBookPage) {
   min-height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background: var(--sr-bg);
+  
 }
 
 .book-header {
@@ -216,7 +216,7 @@ function removePage(page: WordBookPage) {
 .page-card {
   padding: 22rpx;
   border-radius: 18rpx;
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
   border: 1rpx solid var(--sr-border);
 
   &.completed {

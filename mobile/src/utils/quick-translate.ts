@@ -147,18 +147,35 @@ function translateWithBilibili(text: string): Promise<QuickTranslateResult> {
   return chatWithBilibili(SYSTEM_PROMPT, text)
 }
 
-/** 按当前翻译引擎设置把中文全文译成英文（保留行结构） */
+/** MyMemory 免费兜底：未配密钥或引擎不可用时保证「中文加词」可用（公共接口，可能限流） */
+async function translateWithMyMemory(text: string): Promise<QuickTranslateResult> {
+  const res = await request({
+    url: `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=zh-CN|en-US`,
+    method: 'GET',
+    timeout: 30000,
+  })
+  if (!isHttpOk(res)) return { ok: false, error: `MyMemory 请求失败：${errMsg(res)}` }
+  const data: any = res.data
+  const out: string = data?.responseData?.translatedText || ''
+  // 免费额度用尽时接口会返回告警文案而非译文
+  if (!out || /MYMEMORY WARNING|QUERY LENGTH LIMIT/i.test(out)) {
+    return { ok: false, error: 'MyMemory 免费额度已用尽，请稍后再试或配置翻译引擎密钥' }
+  }
+  return { ok: true, text: out.trim() }
+}
+
+/** 按当前翻译引擎设置把中文全文译成英文（保留行结构）；引擎不可用时落到免费接口 */
 export async function quickTranslateToEnglish(text: string): Promise<QuickTranslateResult> {
   const platform = getTranslationPlatform()
   const channel = quickTranslateChannel(platform)
-  if (channel === 'ai') return translateWithAi(platform, text)
-  if (channel === 'youdao') return translateWithYoudao(text)
-  if (channel === 'baidu') return translateWithBaidu(text)
-  if (channel === 'bilibili') return translateWithBilibili(text)
-  return {
-    ok: false,
-    error: '当前翻译引擎暂不支持在线译英文，请到「设置 → 翻译」切换为 B站 / GLM / DeepSeek / 千问 / Kimi / 有道 / 百度',
-  }
+  const attempt = channel === 'ai' ? translateWithAi(platform, text)
+    : channel === 'youdao' ? translateWithYoudao(text)
+    : channel === 'baidu' ? translateWithBaidu(text)
+    : channel === 'bilibili' ? translateWithBilibili(text)
+    : null
+  const result = attempt ? await attempt : null
+  if (result?.ok) return result
+  return translateWithMyMemory(text)
 }
 
 /** 生成式 AI 通道：仅 AI 引擎与 B站（有道/百度为纯机器翻译接口，不支持自定义提示词） */

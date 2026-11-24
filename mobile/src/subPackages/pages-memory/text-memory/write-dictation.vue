@@ -177,7 +177,6 @@ function goBack() {
 <style scoped>
 .dictation-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -185,7 +184,7 @@ function goBack() {
 }
 
 .article-head {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 50rpx 40rpx 32rpx;
 }
 .article-title {

@@ -285,12 +285,11 @@ function formatNumbers(nums: string): string {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding-bottom: 40rpx;
 }
 
 .quiz-head {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 50rpx 40rpx 32rpx;
   display: flex;
   align-items: flex-end;

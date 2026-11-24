@@ -150,7 +150,6 @@ function confirmDelete(palaceId: string, name: string) {
 <style scoped>
 .palace-list-container {
   min-height: 100vh;
-  background: var(--sr-bg);
   padding: 20rpx;
 }
 
@@ -327,7 +326,7 @@ function confirmDelete(palaceId: string, name: string) {
   background: var(--sr-card);
   border-radius: 16rpx;
   padding: 30rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sr-shadow);
 }
 
 .palace-main {

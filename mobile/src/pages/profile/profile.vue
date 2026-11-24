@@ -63,6 +63,13 @@
         <text class="menu-value">{{ currentTranslationPlatform }}</text>
         <text class="menu-arrow">›</text>
       </view>
+      <!-- 中文加词方向：中文输入默认译为英文主词，或保留中文主词 -->
+      <view class="menu-item" @click="showZhEntryMode">
+        <text class="menu-icon">Z</text>
+        <text class="menu-text">中文加词</text>
+        <text class="menu-value">{{ zhEntryModeText }}</text>
+        <text class="menu-arrow">›</text>
+      </view>
       <!-- 导出 -->
       <view class="menu-item" @click="exportData">
         <text class="menu-icon">E</text>
@@ -184,6 +191,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { getZhEntryMode, setZhEntryMode } from '@/utils/zh-entry'
 import { onShow } from '@dcloudio/uni-app'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { askImportTargetBank } from '@/utils/wordbank-import-target'
@@ -280,6 +288,21 @@ const currentTranslationPlatform = computed(() => {
   translationRefreshTick.value // 强制依赖
   return platformNames[getTranslationPlatform()] || 'MyMemory 免费翻译'
 })
+
+// 中文加词方向（中文 → 英文主词 / 保留中文主词）
+const zhEntryMode = ref(getZhEntryMode())
+const zhEntryModeText = computed(() => (zhEntryMode.value === 'zh2en' ? '译为英文主词' : '保留中文主词'))
+
+function showZhEntryMode() {
+  uni.showActionSheet({
+    itemList: ['译为英文主词（推荐）', '保留中文主词'],
+    success: (res) => {
+      const mode = res.tapIndex === 1 ? 'keep-zh' : 'zh2en'
+      setZhEntryMode(mode)
+      zhEntryMode.value = mode
+    }
+  })
+}
 
 // 翻译引擎设置弹窗
 const showTranslationSettingsModal = ref(false)
@@ -538,11 +561,10 @@ const showAbout = () => {
 <style scoped>
 .profile-container {
   min-height: 100vh;
-  background: var(--sr-bg);
 }
 
 .header {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 80rpx 40rpx;
   text-align: center;
 }
@@ -578,7 +600,10 @@ const showAbout = () => {
   display: flex;
   justify-content: space-around;
   padding: 30rpx 20rpx;
-  background: var(--sr-card);
+  /* 毛玻璃：透出背景图 */
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   margin: -30rpx 20rpx 20rpx;
   border-radius: 16rpx;
   box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
@@ -605,7 +630,9 @@ const showAbout = () => {
 }
 
 .menu-list {
-  background: var(--sr-card);
+  background: var(--sr-card-glass);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
   margin-top: 20rpx;
 }
 

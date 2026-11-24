@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { speakWord, stopSpeaking, buildWordAudioUrls, speakChineseLongText, type SpeakWordOptions } from '@/utils/word-audio'
+import { speakWord, stopSpeaking, buildWordAudioUrls, speakChineseLongText, prefetchWords, __resetTtsEnginePreferenceForTest, type SpeakWordOptions } from '@/utils/word-audio'
 import { setTtsAdapter } from '@/adapters/index'
 import { setActiveLanguage } from '@/utils/language'
 
@@ -44,6 +44,7 @@ beforeEach(() => {
   env = createControllableAdapter()
   setTtsAdapter(env.adapter as any)
   setActiveLanguage('en')
+  __resetTtsEnginePreferenceForTest()
 })
 
 describe('buildWordAudioUrls', () => {
@@ -270,6 +271,51 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches).toEqual([
       'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3',
     ])
+  })
+})
+
+describe('发音统一与缓存优先', () => {
+  it('兜底音源播放成功后，后续单词优先使用同一引擎（嗓音一致）', async () => {
+    speakWord('hello')
+    env.calls[0].reject(new Error('net error'))
+    await flushMicrotasks()
+    expect(env.calls[1].url).toContain('fanyi.baidu.com')
+    env.calls[1].resolve()
+    await flushMicrotasks()
+
+    speakWord('world')
+    expect(env.calls[2].url).toContain('fanyi.baidu.com')
+    env.calls[2].resolve()
+  })
+
+  it('首选引擎成功时不改变原有音源顺序', async () => {
+    speakWord('hello')
+    env.calls[0].resolve()
+    await flushMicrotasks()
+    speakWord('world')
+    expect(env.calls[1].url).toContain('dict.youdao.com')
+    env.calls[1].resolve()
+  })
+
+  it('链上靠后音源命中本地缓存时优先播放缓存（离线即时发音）', () => {
+    ;(env.adapter as any).getCachedPath = vi.fn((url: string) =>
+      url.includes('fanyi.baidu.com') ? '/wx-cache/baidu.mp3' : null,
+    )
+    speakWord('hello')
+    expect(env.calls[0].url).toContain('fanyi.baidu.com')
+  })
+
+  it('无缓存命中时仍从首选音源开始', () => {
+    ;(env.adapter as any).getCachedPath = vi.fn(() => null)
+    speakWord('hello')
+    expect(env.calls[0].url).toContain('dict.youdao.com')
+  })
+
+  it('prefetchWords 批量预取后续单词首选音源，空项跳过', () => {
+    prefetchWords([{ word: 'apple' }, null, { word: '  ' }, { word: 'banana' }])
+    expect(env.prefetches).toHaveLength(2)
+    expect(env.prefetches[0]).toContain('apple')
+    expect(env.prefetches[1]).toContain('banana')
   })
 })
 

@@ -311,7 +311,6 @@ function goBack() {
 <style scoped>
 .recall-page {
   min-height: 100vh;
-  background: var(--sr-bg);
   display: flex;
   flex-direction: column;
   /* 建立层叠上下文，让内部 z-index:-1 的水墨背景压在页面底色之上 */
@@ -320,7 +319,7 @@ function goBack() {
 }
 
 .article-head {
-  background: linear-gradient(135deg, #52796f 0%, #3d5a52 100%);
+  background: var(--sr-header-grad);
   padding: 50rpx 40rpx 32rpx;
 }
 .article-title {
