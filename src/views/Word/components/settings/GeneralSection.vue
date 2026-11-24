@@ -75,6 +75,18 @@
 
     <div>
       <div class="setting-item">
+        <div class="content">中文加词</div>
+        <el-select class="shorcut-desc" :model-value="zhEntryMode"
+                   @update:model-value="onZhEntryModeChange"
+                   style="width:150px">
+          <el-option label="译为英文主词" value="zh2en" />
+          <el-option label="保留中文主词" value="keep-zh" />
+        </el-select>
+      </div>
+    </div>
+
+    <div>
+      <div class="setting-item">
         <div class="content">记忆牢固度</div>
         <el-select class="shorcut-desc" :model-value="wordsStore.memoryFirmness"
                    @update:model-value="wordsStore.setMemoryFirmness"
@@ -222,9 +234,18 @@ import {ElMessage} from 'element-plus'
 import {isScheduleSupported, applyScheduleSetting, applyScheduleTimes, REMINDER_TIME_OPTIONS, MAX_REMINDER_TIMES} from "@/utils/schedule-reminder.ts";
 import type {ReminderKind} from "@/utils/schedule-reminder.ts";
 import {useSyncStore} from "@/stores/sync";
+import {getZhEntryMode, setZhEntryMode, type ZhEntryMode} from "@/utils/zh-entry";
 import PrivacyDialog from "@/components/PrivacyDialog.vue";
 
 const wordsStore = useWordsStore();
+
+// 中文加词方向：中文输入默认译为英文主词，或保留中文主词
+const zhEntryMode = ref<ZhEntryMode>(getZhEntryMode())
+function onZhEntryModeChange(mode: string | number | boolean | undefined) {
+  const value: ZhEntryMode = mode === 'keep-zh' ? 'keep-zh' : 'zh2en'
+  setZhEntryMode(value)
+  zhEntryMode.value = value
+}
 const uiStore = useUiStore();
 const syncStore = useSyncStore();
 

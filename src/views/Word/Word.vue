@@ -54,10 +54,11 @@
         <el-input
             v-model="emptyAddText"
             size="small"
-            placeholder="输入单词或句子，回车添加"
+            placeholder="输入单词或句子：回车加入单词列表，或点「收藏句子」"
             @keyup.enter="handleEmptyAdd"
         />
-        <el-button type="primary" size="small" @click="handleEmptyAdd">添加</el-button>
+        <el-button type="primary" size="small" @click="handleEmptyAdd">加入单词列表</el-button>
+        <el-button size="small" @click="collectEmptySentence">收藏句子</el-button>
       </div>
     </template>
     <!-- 今日复习完成态 -->
@@ -418,10 +419,11 @@
           <el-input
               v-model="emptyAddText"
               size="small"
-              placeholder="输入单词或句子，回车添加"
+              placeholder="输入单词或句子：回车加入单词列表，或点「收藏句子」"
               @keyup.enter="handleEmptyAdd"
           />
-          <el-button type="primary" size="small" @click="handleEmptyAdd">添加</el-button>
+          <el-button type="primary" size="small" @click="handleEmptyAdd">加入单词列表</el-button>
+          <el-button size="small" @click="collectEmptySentence">收藏句子</el-button>
         </div>
       </el-popover>
 
@@ -493,6 +495,7 @@ import {isPhrase, getWordCount} from "@/utils/text-utils";
 import {RecycleScroller} from 'vue-virtual-scroller'
 import {addWord, batchAddWords, batchTranslateAndAddWords} from "@/utils/str-util.ts";
 import {ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
+import {useSentencesStore} from "@/stores/sentences";
 import {
   Loading,
   Warning,
@@ -2445,6 +2448,22 @@ const handleEmptyAdd = async () => {
     ElMessage.info('单词已存在')
   } else {
     ElMessage.error(result.message || '添加失败')
+  }
+}
+
+/** 手动添加框：收录句子到句子库（保留原句、不翻译，供摘抄收藏） */
+const collectEmptySentence = async () => {
+  const text = emptyAddText.value.trim()
+  if (!text) {
+    ElMessage.warning('请输入要收藏的句子')
+    return
+  }
+  const res = await useSentencesStore().add(text)
+  if (res.success) {
+    emptyAddText.value = ''
+    ElMessage.success('已收藏到句子库')
+  } else {
+    ElMessage.warning(res.message || '收藏失败')
   }
 }
 

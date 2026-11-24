@@ -301,15 +301,16 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
 
     const {appkey, key} = getOcrApiKey(ocrPlatform);
 
-    // 取图走截图适配器：uTools 调系统截图（先隐藏主窗口）；Electron/Web 降级为选择图片文件
+    // 取图走截图适配器：uTools 调系统截图（尽量先隐藏主窗口，失败也继续，绝不关闭窗口）
     if (checkIsUtools()) {
-        const hidden = (window as any).utools?.hideMainWindow?.();
-        if (!hidden) {
-            (window as any).utools?.sendToParent?.('close')
-        }
+        try { (window as any).utools?.hideMainWindow?.(); } catch { /* 分离窗口等场景隐藏失败，截图仍应继续 */ }
     }
     const {getCaptureAdapterAsync} = await import('@/adapters/capture');
-    const shot = await (await getCaptureAdapterAsync()).capture();
+    const shot = await withTimeout(
+        (await getCaptureAdapterAsync()).capture(),
+        120000,
+        '截图超时或未返回图片，请重试'
+    );
     // 截图/选图成功才计次（用户取消不消耗免费额度）
     if (isFreeOcr) {
         incrementUsageCounter(counterKey);
@@ -320,6 +321,7 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
         throw new Error('截图数据格式异常，请重新截图');
     }
 
+    const engineTask = (async (): Promise<OcrResult> => {
     let result: OcrResult;
     if (ocrPlatform === 'youdao') {
         const from = toEngineLang('youdao', getActiveLanguage(), 'ocr');
@@ -358,6 +360,23 @@ export async function ocrTranslateMultiPlatform(): Promise<OcrResult> {
         result = {errorCode: '500', resRegions: []};
     }
     return result;
+    })();
+    return withTimeout(
+        engineTask,
+        ocrPlatform === 'local' ? 300000 : 120000,
+        `OCR 识别超时（引擎：${ocrPlatform}），请检查网络或更换 OCR 引擎`
+    );
+}
+
+/** Promise 超时守卫：截图/OCR 任何环节悬挂都必须落到可见错误，不能静默无响应 */
+function withTimeout<T>(p: Promise<T>, ms: number, message: string): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error(message)), ms);
+        p.then(
+            (v) => { clearTimeout(timer); resolve(v); },
+            (e) => { clearTimeout(timer); reject(e); }
+        );
+    });
 }
 
 // 百度OCR翻译实现

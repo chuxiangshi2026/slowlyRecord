@@ -123,6 +123,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import {containsChinese} from '@/utils/zh-entry';
 import { useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Search, Plus, Star, StarFilled, Edit, Delete, Close } from '@element-plus/icons-vue';
@@ -186,8 +187,9 @@ async function addSentence() {
   adding.value = true;
   try {
     let translation = addForm.value.translation.trim();
+    // 句子库按原设计「原句保留、不翻译」：中文句子按原文入库，仅英文句子补中文译文
     // 英文句子未填译文时自动翻译，失败静默留空
-    if (!translation && !/[一-龥]/.test(text)) {
+    if (!translation && !containsChinese(text)) {
       try {
         const res = await wordsStore.translateWithPlatform(text);
         if (res.success && res.explains) translation = res.explains;

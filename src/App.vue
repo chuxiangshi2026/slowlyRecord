@@ -17,6 +17,8 @@
         :text-content="textContent"
         @close="closeTextPanel"
         @select="handleSelectTextItems"
+        @add-whole="handleAddWholeText"
+        @collect-sentence="handleCollectWholeText"
     />
 
     <!-- 调试面板 -->
@@ -40,7 +42,8 @@ import {useWordsStore} from "@/stores/words.ts";
 import {useUiStore} from "@/stores/ui.ts";
 // import {storeToRefs} from "pinia";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
-import {addWord, addTextAuto, batchAddWords} from "@/utils/str-util.ts";
+import {addWord, batchAddWords} from "@/utils/str-util.ts";
+import {useSentencesStore} from "@/stores/sentences";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
   ocrTranslate,
@@ -69,7 +72,7 @@ import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
 import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
-import { isSentenceLike } from '@/utils/text-utils';
+import { containsChinese } from '@/utils/zh-entry';
 import { reconcileSchedules } from '@/utils/schedule-reminder';
 
 const wordsStore = useWordsStore();
@@ -345,6 +348,23 @@ async function handleUtoolsEnter(action: any) {
 
   }
 
+  // 超级面板「收藏句子」：原句进句子库，不翻译、不参与复习
+  if (action.code === 'overSentence') {
+    if (isUTools()) (window as any).utools?.showMainWindow?.()
+    const text = typeof action.payload === 'string' ? action.payload.trim() : ''
+    if (!text) {
+      ElMessage.warning('未获取到选中的文本')
+    } else {
+      const res = await useSentencesStore().add(text)
+      if (res.success) {
+        ElMessage.success('已收藏到句子库')
+        router.push('/sentences')
+      } else {
+        ElMessage.warning(res.message || '收藏失败')
+      }
+    }
+  }
+
 
   if (action.code === 'huaci' && action.from === 'hotkey') {
     // autocopy 模式下 uTools 会把选中内容作为 payload 传入，优先使用，避免再读一次剪贴板（受权限/时序影响）；
@@ -375,11 +395,18 @@ async function handleUtoolsEnter(action: any) {
     });
   }
 
-  // 划词翻译：读取系统选中文本，直接进入翻译页
+  // 划词翻译：优先用 uTools 派发的选中文本（autocopy 模式 payload），读不到再模拟复制
   if (action.code === 'huaciTranslate') {
     try {
-      const selected = (await getSelectedTextFromSystem()).trim();
-      if (!selected) return;
+      let selected = typeof action.payload === 'string' ? action.payload.trim() : '';
+      if (!selected && action.from === 'hotkey') {
+        try { selected = ((await navigator.clipboard.readText()) || '').trim(); } catch { /* 读不到再走模拟复制 */ }
+      }
+      if (!selected) selected = (await getSelectedTextFromSystem()).trim();
+      if (!selected) {
+        ElMessage.warning('未获取到选中的文本，请先选中要翻译的内容');
+        return;
+      }
       if (selected === '使用此功能，请先关闭自动分离') {
         ElMessage.error(selected);
         return;
@@ -453,6 +480,8 @@ async function handleUtoolsEnter(action: any) {
         // 使用 ElMessage 替代 alert，在 uTools 环境中更可靠
         ElMessage.error(err.message || '截图识别失败，请检查网络连接或OCR配置');
       }
+    } finally {
+      restoreUtoolsMainWindow();
     }
   }
   // }
@@ -486,6 +515,9 @@ async function handleUtoolsEnter(action: any) {
       debugLog('截图翻译失败:', e);
       if (e?.message?.includes('截图取消')) return;
       ElMessage.error(e?.message || '截图翻译失败，请重试');
+    } finally {
+      // 任何出口都恢复主窗口（OCR 前已隐藏），否则报错/空结果的 toast 用户看不见
+      restoreUtoolsMainWindow();
     }
   }
 
@@ -524,7 +556,7 @@ async function handleUtoolsEnter(action: any) {
 
   // 其他情况（直接点击插件图标）- 尝试恢复上次状态
   // 排除添加单词相关操作，这些操作已在上面处理并跳转到单词列表
-  const addWordActions = ['over', 'huaci', 'jietu', 'paste', 'selection']
+  const addWordActions = ['over', 'overSentence', 'huaci', 'jietu', 'paste', 'selection']
   if (!['review', 'numMemory', 'translate', 'shortcutMemory', 'focusMode', 'textMemory', 'palace', 'knowledge', 'huaciTranslate', 'jietuTranslate', ...addWordActions].includes(action.code)) {
     handlePluginDefaultEnter()
   }
@@ -658,6 +690,13 @@ async function ocrExistingImage(base64: string): Promise<OcrResult> {
 
 
 
+/** 截图/OCR 完成后兜底恢复主窗口：窗口隐藏状态下的 toast 与路由切换用户都看不见 */
+function restoreUtoolsMainWindow() {
+  if (isUTools()) {
+    try { (window as any).utools?.showMainWindow?.(); } catch { /* 静默 */ }
+  }
+}
+
 /**
  * 显示OCR识别结果供用户选择和保存
  */
@@ -695,22 +734,9 @@ function handleSelectOCRItem(region: any) {
   if (word) {
     console.log('待添加的选中文本' + `[${word}]`)
     const text = `${word}`.trim();
-    if (isSentenceLike(text)) {
-      // 句子分流进句子库
-      addTextAuto(text).then(res => {
-        if (res.success) {
-          ElMessage.success(res.message);
-          router.push('/sentences');
-        } else if (res.message) {
-          ElMessage.warning(res.message);
-        }
-      });
-    } else {
-      batchAddWords([text]);
-      // 添加单词后跳转到单词列表
-      router.push('/word')
-    }
-    // ElMessage.success(`已保存: ${word} - ${translation}`);
+    // 入口即单词列表：句子作为词条条目进入复习队列（收藏走句子库独立入口）
+    batchAddWords([text]);
+    router.push('/word')
   } else {
     ElMessage.warning('单词或翻译内容为空');
   }
@@ -720,21 +746,11 @@ function handleSelectOCRItem(region: any) {
  * 选择所有OCR识别项
  */
 function handleSelectAllItems(items: any[]) {
-  let sentenceCount = 0;
   const wordTexts: string[] = [];
   items.forEach(region => {
     const word = region.context || '';
-    // const translation = region.tranContent || '';
-
     if (word) {
-      const text = `${word}`.trim();
-      if (isSentenceLike(text)) {
-        // 句子分流进句子库
-        sentenceCount++;
-        addTextAuto(text);
-      } else {
-        wordTexts.push(text);
-      }
+      wordTexts.push(`${word}`.trim());
     }
   });
 
@@ -743,9 +759,7 @@ function handleSelectAllItems(items: any[]) {
   }
 
   if (items.length > 0) {
-    ElMessage.success(sentenceCount > 0
-      ? `已保存 ${wordTexts.length} 个单词、${sentenceCount} 条句子`
-      : `已保存全部 ${items.length} 个单词`);
+    ElMessage.success(`已保存全部 ${items.length} 项到单词列表`);
     // 添加后跳转到单词列表
     router.push('/word')
   }
@@ -757,39 +771,6 @@ function handleSelectAllItems(items: any[]) {
 function closeOCRPanel() {
   showOCRPanel.value = false;
   ocrResults.value = [];
-}
-
-/**
- * 校验剪切板中的单词
- * @param text
- */
-function checkAddWork(text: string) {
-  // 长文本若是句子，分流进句子库
-  const trimmed = text.trim();
-  if (trimmed && isSentenceLike(trimmed)) {
-    addTextAuto(trimmed).then(res => {
-      if (res.success) {
-        ElMessage.success(res.message);
-        router.push('/sentences');
-      } else if (res.message) {
-        ElMessage.warning(res.message);
-      }
-    });
-    return;
-  }
-  // 5. 判断逻辑（根据你的场景调整阈值）
-  const textError = (
-      text.length <= 0 ||
-      text.endsWith('\n') ||          // 以换行符结尾（整行复制的典型特征）
-      text.length > 25                // 长度超过合理选中范围
-  );
-  if (textError) {
-    ElMessage.error('请先用光标选中单词');
-  } else {
-    addWord(text).then(err => {
-      ElMessage.warning(err.message)
-    });
-  }
 }
 
 // ==================== 核心：静默获取选中文本 ====================
@@ -875,35 +856,22 @@ function checkShearBoardAddWork(text: string) {
   // 去除首尾空格并替换多个连续空格为单个空格
   let processedText = text.trim().replace(/\s{2,}/g, ' ');
 
-  // 长文本若是句子，分流进句子库
-  if (processedText && isSentenceLike(processedText)) {
-    addTextAuto(processedText).then(res => {
-      if (res.success) {
-        ElMessage.success(res.message);
-        router.push('/sentences');
-      } else if (res.message) {
-        ElMessage.warning(res.message);
-      }
-    });
-    return;
-  }
-
   // 检查是否为空字符串或仅包含空格
   if (!processedText) {
     ElMessage.error('请选中有效文本');
     return;
   }
 
-  // 长段落/多词按「划段」模式展示选择面板，让用户挑选单词
+  // 长段落/句子/多词按「划段」模式展示选择面板：可挑词入词库，也可整句入词库或收藏句子
   const profile = getActiveProfile();
-  const isLongText = processedText.length > 50 || processedText.includes('\n') || processedText.split(/\s+/).filter(Boolean).length > 3;
+  const isLongText = processedText.length > 25 || processedText.includes('\n') || processedText.split(/\s+/).filter(Boolean).length > 3;
   if (isLongText) {
     displayTextSelection(processedText);
     return;
   }
 
-  // 字符集按当前词库语言判定（支持日/俄/西/法）
-  if (!isWordText(processedText, profile)) {
+  // 字符集按当前词库语言判定（支持日/俄/西/法）；中文直接放行，由 addWord 按「中文加词方向」反查处理
+  if (!containsChinese(processedText) && !isWordText(processedText, profile)) {
     ElMessage.error('请选中单个有效单词或短语');
     return;
   }
@@ -940,6 +908,35 @@ function handleSelectTextItems(words: string[], platform?: string) {
     router.push('/word')
   } else {
     ElMessage.warning('单词内容为空');
+  }
+}
+
+/** 划段面板：整段原文加入单词列表（句子作为词条参与复习） */
+async function handleAddWholeText(text: string) {
+  const trimmed = (text || '').trim();
+  if (!trimmed) return;
+  closeTextPanel();
+  const res = await addWord(trimmed);
+  if (res.success) {
+    ElMessage.success(res.message || '已加入单词列表');
+  } else if (res.message && res.message.includes('已存在')) {
+    ElMessage.info('单词已存在');
+  } else {
+    ElMessage.error(res.message || '加入失败');
+  }
+  router.push('/word');
+}
+
+/** 划段面板：整段原文收藏到句子库（保留原句、不翻译） */
+async function handleCollectWholeText(text: string) {
+  const trimmed = (text || '').trim();
+  if (!trimmed) return;
+  closeTextPanel();
+  const res = await useSentencesStore().add(trimmed);
+  if (res.success) {
+    ElMessage.success('已收藏到句子库');
+  } else {
+    ElMessage.warning(res.message || '收藏失败');
   }
 }
 
@@ -1165,31 +1162,6 @@ function handlePluginFocusMode() {
     path: '/word',
     query: { openFocus: '1' }
   })
-}
-
-/**
- * 隐藏主界面,并添加单词
- */
-async function handlePluginAddWord(payload: string) {
-  // const needclose = !!utoolsSettingRef.current?.closeAfterAddWord
-  // 隐藏主窗口
-  // if (needclose) window.utools.hideMainWindow()
-
-  // console.log('addWord====================', action.payload)
-  // 传入 scrollToWordByText 作为回调函数
-  // 句子自动分流进句子库，单词/词组走批量添加
-  if (isSentenceLike(payload)) {
-    await addTextAuto(payload);
-  } else {
-    await batchAddWords([payload])
-  }
-
-//   退出插件
-
-  // 检查快捷键是否启用
-  if (wordsStore.pluginStatus) {
-    if (isUTools()) (window as any).utools?.hideMainWindow?.();
-  }
 }
 
 /**

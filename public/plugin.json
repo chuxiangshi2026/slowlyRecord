@@ -19,11 +19,22 @@
     },
     {
       "code": "over",
-      "explain": "添加单词/句子",
+      "explain": "加入复习列表",
       "cmds": [
         {
           "type": "over",
           "label": "加入复习列表",
+          "minLength": 1
+        }
+      ]
+    },
+    {
+      "code": "overSentence",
+      "explain": "收藏句子",
+      "cmds": [
+        {
+          "type": "over",
+          "label": "收藏句子",
           "minLength": 1
         }
       ]

@@ -7,9 +7,9 @@ import {ElMessage} from "element-plus";
 import {useWordsStore} from "@/stores/words.ts";
 import {log} from "@/utils/logger.ts";
 import {queryLocalDictionaryAsync} from "@/utils/local-dictionary";
-import {normalizeItemText, inferItemType, isSentenceLike} from "@/utils/text-utils";
-import {useSentencesStore} from "@/stores/sentences";
+import {normalizeItemText, inferItemType} from "@/utils/text-utils";
 import {UserActionEvents} from "@/utils/stats";
+import {containsChinese, resolveZhEntry} from "@/utils/zh-entry";
 
 /**
  * 初始化单词状态
@@ -41,6 +41,75 @@ const getInitWord = (text: string, explains: string, pronunciation: string, imag
 }
 
 /**
+ * 中文词条入库：按全局「中文加词方向」反查英文（默认英文主词/中文释义），
+ * 复用与英文加词一致的查重、释义补全与定位语义。
+ */
+const addChineseEntry = async (originalText: string): Promise<{success: boolean, message: string,text:string}> => {
+    const wordsStore = useWordsStore()
+    let entry: Awaited<ReturnType<typeof resolveZhEntry>>
+    try {
+        entry = await resolveZhEntry(originalText)
+    } catch (e) {
+        console.warn('中文反查英文失败:', e)
+        entry = null
+    }
+    if (!entry) {
+        return {success: false, message: '中文译英失败，请检查翻译引擎设置', text: originalText}
+    }
+    const wordText = entry.word
+    log.i('中文加词', originalText, '->', wordText)
+    wordsStore.lastFocusWordText = wordText
+
+    // 英文主词的音标尽量从本地词典补齐（中文主词没有音标）
+    let phonetic = ''
+    try {
+        const localEntry = await queryLocalDictionaryAsync(wordText)
+        phonetic = localEntry?.phonetic || ''
+    } catch { /* 缺音标不影响入库 */ }
+
+    const findWord = wordsStore.findWord(wordText)
+    if (findWord) {
+        if (findWord.explains && findWord.explains.trim()) {
+            findWord.isReview = true
+            findWord.remember = false
+            findWord.explainedHidden = false
+            try {
+                await wordsStore.addAndUpdateWord(findWord)
+            } catch {
+                return {success: false, message: '保存失败，请重试', text: wordText}
+            }
+            wordsStore.setLastAddedWordText(wordText)
+            return {success: false, message: '单词已存在', text: wordText}
+        }
+        // 已存在但无释义：补上反查得到的释义
+        findWord.explains = entry.explains
+        findWord.isReview = true
+        findWord.remember = false
+        findWord.level = 1
+        if (!findWord.phonetic && phonetic) findWord.phonetic = phonetic
+        try {
+            await wordsStore.addAndUpdateWord(findWord)
+        } catch {
+            wordsStore.setLastAddedWordText('')
+            return {success: false, message: '保存失败，请重试', text: wordText}
+        }
+        wordsStore.setLastAddedWordText(wordText)
+        ElMessage.success('更新成功')
+        return {success: true, message: '更新成功', text: wordText}
+    }
+
+    const newWords = getInitWord(wordText, entry.explains, '', '', phonetic)
+    const saved = await wordsStore.addAndUpdateWords([newWords])
+    if (!saved) {
+        wordsStore.setLastAddedWordText('')
+        return {success: false, message: '保存失败，请重试', text: wordText}
+    }
+    UserActionEvents.addWord()
+    wordsStore.setLastAddedWordText(wordText)
+    return {success: true, message: '', text: wordText}
+}
+
+/**
  * 添加单词
  */
 const addWord = async (wordText: string): Promise<{success: boolean, message: string,text:string}> => {
@@ -56,6 +125,11 @@ const addWord = async (wordText: string): Promise<{success: boolean, message: st
     if (wordText.length <= 0) {
         // ElMessage.warning("不能添加空单词")
         return {success: false, message: "不能添加空单词",text:wordText}
+    }
+    // 中文加词（仅英语词库）：按全局方向反查英文（默认英文作主词，中文作释义）；
+    // 其他语言词库保持原流程，交给翻译引擎按目标语言处理
+    if (containsChinese(wordText) && wordsStore.currentLanguage === 'en') {
+        return await addChineseEntry(wordText)
     }
     wordsStore.lastFocusWordText=wordText
     let findWord = wordsStore.findWord(wordText)
@@ -201,10 +275,23 @@ const batchTranslateAndAddWords = async (
         ElMessage.warning("没有可添加单词");
         return;
     }
-    wordsStore.lastFocusWordText = <string>uniqueWords.at(-1)
+    // 中文条目逐条按方向反查入库（addWord 内部处理译英与查重），失败统一上报
+    const zhWords = uniqueWords.filter(w => containsChinese(w));
+    const latinWords = uniqueWords.filter(w => !containsChinese(w));
+    const zhFailed: string[] = [];
+    for (const zhText of zhWords) {
+        const res = await addWord(zhText);
+        if (!res.success && res.message !== '单词已存在') zhFailed.push(zhText);
+    }
+    if (zhFailed.length > 0) {
+        const preview = zhFailed.slice(0, 5).join('、');
+        ElMessage.warning(`以下 ${zhFailed.length} 条中文译英失败：${preview}${zhFailed.length > 5 ? ' 等' : ''}`);
+    }
+    if (latinWords.length === 0) return;
+    wordsStore.lastFocusWordText = <string>latinWords.at(-1)
 
     // 过滤掉已存在且有翻译的单词
-    const wordsToProcess = uniqueWords.filter(wordText => {
+    const wordsToProcess = latinWords.filter(wordText => {
         const existingWord = wordsStore.findWord(wordText);
         // 如果单词不存在，或者存在但没有翻译，则需要处理
         return !existingWord || !existingWord.explains || existingWord.explains.trim().length === 0;
@@ -215,7 +302,7 @@ const batchTranslateAndAddWords = async (
         return;
     }
 
-    const totalCount = uniqueWords.length;
+    const totalCount = latinWords.length;
     let processedCount = 0;
 
     const errWords: string[] = [];
@@ -309,29 +396,4 @@ const batchAddWords = async (wordTexts: string[]) => {
   });
 };
 
-/**
- * 录入自动分流：句子进句子库，单词/词组进单词库
- * 英文句子顺带用当前翻译平台补译文，失败静默留空
- */
-const addTextAuto = async (text: string): Promise<{type: 'word' | 'sentence', success: boolean, message: string, text: string}> => {
-    if (!isSentenceLike(text)) {
-        const res = await addWord(text);
-        return {type: 'word', success: res.success, message: res.message, text: res.text};
-    }
-    const sentencesStore = useSentencesStore();
-    // 英文句子尝试补译文，失败不影响入库
-    let translation: string | undefined;
-    try {
-        const wordsStore = useWordsStore();
-        const res = await wordsStore.translateWithPlatform(normalizeItemText(text));
-        if (res.success && res.explains) {
-            translation = res.explains;
-        }
-    } catch (e) {
-        log.i('句子补译文失败，忽略', e);
-    }
-    const res = await sentencesStore.add(text, translation ? {translation} : {});
-    return {type: 'sentence', success: res.success, message: res.message, text: normalizeItemText(text)};
-};
-
-export {getInitWord, addWord, batchAddWords, batchTranslateAndAddWords, addTextAuto}
+export {getInitWord, addWord, batchAddWords, batchTranslateAndAddWords}

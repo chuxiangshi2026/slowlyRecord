@@ -51,7 +51,9 @@
             <button @click="invertSelection" class="invert-btn">反选</button>
             <button @click="clearSelection" class="clear-btn">清空</button>
             <button @click="removeNonEnglishWords" class="remove-non-english-btn">筛选英文</button>
-            <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加到单词列表</button>
+            <button @click="addSelectedWords" class="add-btn" :disabled="selectedWords.length === 0">添加所选到单词列表</button>
+            <button @click="addWholeText" class="add-btn whole-btn" :disabled="!textContent.trim()">整句加入单词列表</button>
+            <button @click="collectSentence" class="collect-btn" :disabled="!textContent.trim()">收藏句子</button>
             <button @click="closePanel" class="cancel-btn">关闭</button>
           </div>
         </div>
@@ -81,6 +83,10 @@ interface Emits {
   (e: 'close'): void;
   (e: 'select', items: string[]): void;
   (e: 'select', items: string[], platform: string): void;
+  /** 整段原文加入单词列表（句子作为词条参与复习） */
+  (e: 'add-whole', text: string): void;
+  /** 整段原文收藏到句子库（保留原句） */
+  (e: 'collect-sentence', text: string): void;
 }
 
 const props = defineProps<Props>();
@@ -212,6 +218,18 @@ const removeNonEnglishWords = () => {
 };
 
 // 添加选中的单词到单词列表
+const addWholeText = () => {
+  const text = props.textContent.trim();
+  if (!text) return;
+  emit('add-whole', text);
+};
+
+const collectSentence = () => {
+  const text = props.textContent.trim();
+  if (!text) return;
+  emit('collect-sentence', text);
+};
+
 const addSelectedWords = () => {
   if (selectedWords.value.length === 0) {
     ElMessage.warning('请先选择要添加的单词');
@@ -457,7 +475,7 @@ const copyTranslation = async () => {
   padding: 15px 20px 20px;
 }
 
-.select-btn, .invert-btn, .clear-btn, .remove-non-english-btn, .add-btn, .cancel-btn {
+.select-btn, .invert-btn, .clear-btn, .remove-non-english-btn, .add-btn, .collect-btn, .cancel-btn {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -489,9 +507,19 @@ const copyTranslation = async () => {
   color: white;
 }
 
-.add-btn:disabled {
+.add-btn:disabled, .collect-btn:disabled {
   background-color: var(--utools-text-disabled);
   cursor: not-allowed;
+}
+
+/* 收藏句子：与加词操作同权重的实心主色按钮 */
+.collect-btn {
+  background-color: var(--utools-primary);
+  color: white;
+}
+
+.whole-btn {
+  background-color: var(--utools-primary);
 }
 
 .cancel-btn {
