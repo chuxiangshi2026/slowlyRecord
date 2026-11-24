@@ -42,6 +42,17 @@ vi.mock('@/utils/stats', () => ({
   }
 }))
 
+// Mock zh-entry：containsChinese 用真实正则实现，resolveZhEntry 由用例控制
+const mockContainsChinese = vi.fn((t: string) => /[一-鿿鿿㐀-䶿]/.test(t))
+const mockResolveZhEntry = vi.fn()
+vi.mock('@/utils/zh-entry', () => ({
+  containsChinese: (t: string) => mockContainsChinese(t),
+  resolveZhEntry: (...args: any[]) => mockResolveZhEntry(...args)
+}))
+
+// 词库语言状态（用例可改写，验证中文反查的语言门控）
+const mockStoreState = { currentLanguage: 'en' }
+
 import { queryLocalDictionaryAsync } from '@/utils/local-dictionary'
 import { ElMessage } from 'element-plus'
 
@@ -62,7 +73,8 @@ vi.mock('@/stores/words', () => ({
     translateBatchWithPlatform: mockTranslateBatchWithPlatform,
     setLastAddedWordText: mockSetLastAddedWordText,
     lastFocusWordText: '',
-    words: []
+    words: [],
+    get currentLanguage() { return mockStoreState.currentLanguage }
   }))
 }))
 
@@ -72,6 +84,7 @@ const { getInitWord, addWord, batchAddWords, batchTranslateAndAddWords } = await
 describe('str-util', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockStoreState.currentLanguage = 'en'
     mockFindWord.mockReturnValue(null)
     mockAddAndUpdateWords.mockResolvedValue(true)
     mockTranslateWithPlatform.mockResolvedValue({
@@ -389,6 +402,67 @@ describe('str-util', () => {
       await batchAddWords(['word1', 'word2'])
 
       expect(mockTranslateWithPlatform).toHaveBeenCalled()
+    })
+  })
+
+  describe('中文加词门控', () => {
+    it('英语词库中文输入：按方向反查英文主词入库', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockResolveZhEntry.mockResolvedValue({ word: 'beautiful', explains: '美好', mode: 'zh2en' })
+
+      const result = await addWord('美好')
+
+      expect(mockResolveZhEntry).toHaveBeenCalledWith('美好')
+      expect(result.success).toBe(true)
+      expect(mockAddAndUpdateWords).toHaveBeenCalledWith([
+        expect.objectContaining({ text: 'beautiful', explains: '美好' })
+      ])
+      // 走了反查就不再走通用翻译流程
+      expect(mockTranslateWithPlatform).not.toHaveBeenCalled()
+    })
+
+    it('非英语词库中文输入：不走反查，保持原翻译流程', async () => {
+      mockStoreState.currentLanguage = 'ja'
+      mockFindWord.mockReturnValue(null)
+
+      const result = await addWord('苹果')
+
+      expect(mockResolveZhEntry).not.toHaveBeenCalled()
+      expect(mockTranslateWithPlatform).toHaveBeenCalledWith('苹果')
+      expect(result.success).toBe(true)
+    })
+
+    it('反查失败：返回可见失败消息，不入库', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockResolveZhEntry.mockResolvedValue(null)
+
+      const result = await addWord('美好')
+
+      expect(result.success).toBe(false)
+      expect(result.message).toContain('中文译英失败')
+      expect(mockAddAndUpdateWords).not.toHaveBeenCalled()
+    })
+
+    it('keep-zh：反查结果中文主词直接入库', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockResolveZhEntry.mockResolvedValue({ word: '美好', explains: 'beautiful', mode: 'keep-zh' })
+
+      const result = await addWord('美好')
+
+      expect(result.success).toBe(true)
+      expect(mockAddAndUpdateWords).toHaveBeenCalledWith([
+        expect.objectContaining({ text: '美好', explains: 'beautiful' })
+      ])
+    })
+
+    it('批量：中文译英失败统一上报不静默丢词，英文条目不受影响', async () => {
+      mockFindWord.mockReturnValue(null)
+      mockResolveZhEntry.mockResolvedValue(null)
+
+      await batchTranslateAndAddWords(['苹果', 'hello'])
+
+      expect(ElMessage.warning).toHaveBeenCalledWith(expect.stringContaining('中文译英失败'))
+      expect(mockTranslateBatchWithPlatform).toHaveBeenCalledWith(['hello'])
     })
   })
 })

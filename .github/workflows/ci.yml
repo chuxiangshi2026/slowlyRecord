@@ -91,3 +91,13 @@ jobs:
 
       - name: WeChat mini program build
         run: npm run build:mp-weixin
+
+      - name: Install Chrome for E2E
+        run: npx puppeteer browsers install chrome
+
+      # L2 黑盒 E2E：对三端真实构建产物逐路由加载 + 交互断言（退出码即失败数）
+      - name: Blackbox E2E（uTools / Web / Electron 渲染层产物）
+        run: |
+          node scripts/e2e/blackbox.cjs --dist dist
+          node scripts/e2e/blackbox.cjs --dist dist-web
+          node scripts/e2e/blackbox.cjs --dist dist-electron
