@@ -1,0 +1,254 @@
+{
+  "note": "从 public/datafile/english 移除的仍在保护期或译文无署名的条目，仅用于溯源",
+  "removedAt": "2026-11-27",
+  "speeches": [
+    {
+      "id": "eng_speech_002",
+      "title": "I Have a Dream (Excerpt)",
+      "author": "Martin Luther King Jr.",
+      "content": "I say to you today, my friends, so even though we face the difficulties of today and tomorrow, I still have a dream. It is a dream deeply rooted in the American dream.\n\nI have a dream that one day this nation will rise up and live out the true meaning of its creed: \"We hold these truths to be self-evident, that all men are created equal.\"\n\nI have a dream that one day on the red hills of Georgia, the sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood.\n\nI have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice.\n\nI have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream today!\n\nI have a dream that one day every valley shall be exalted, and every hill and mountain shall be made low, the rough places will be made plain, and the crooked places will be made straight; \"and the glory of the Lord shall be revealed and all flesh shall see it together.\"\n\nAnd when this happens, and when we allow freedom ring, when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of God's children, black men and white men, Jews and Gentiles, Protestants and Catholics, will be able to join hands and sing in the words of the old Negro spiritual: \"Free at last! Free at last! Thank God Almighty, we are free at last!\"",
+      "tags": [
+        "演讲",
+        "民权",
+        "梦想"
+      ],
+      "source": "March on Washington, August 28, 1963",
+      "year": 1963,
+      "language": "en",
+      "location": "华盛顿"
+    },
+    {
+      "id": "eng_speech_003",
+      "title": "Inaugural Address (Excerpt)",
+      "author": "John F. Kennedy",
+      "content": "Let every nation know, whether it wishes us well or ill, that we shall pay any price, bear any burden, meet any hardship, support any friend, oppose any foe to assure the survival and the success of liberty.\n\nThis much we pledge—and more.\n\nTo those old allies whose cultural and spiritual origins we share, we pledge the loyalty of faithful friends. United there is little we cannot do in a host of cooperative ventures. Divided there is little we can do—for we dare not meet a powerful challenge at odds and split asunder.\n\nTo those new states whom we welcome to the ranks of the free, we pledge our word that one form of colonial control shall not have passed away merely to be replaced by a far more iron tyranny. We shall not always expect to find them supporting our view. But we shall always hope to find them strongly supporting their own freedom—and to remember that, in the past, those who foolishly sought power by riding the back of the tiger ended up inside.\n\nAnd so, my fellow Americans: ask not what your country can do for you—ask what you can do for your country.\n\nMy fellow citizens of the world: ask not what America will do for you, but what together we can do for the freedom of man.",
+      "tags": [
+        "演讲",
+        "爱国",
+        "责任"
+      ],
+      "source": "Washington, D.C., January 20, 1961",
+      "year": 1961,
+      "language": "en",
+      "location": "华盛顿"
+    },
+    {
+      "id": "eng_speech_004",
+      "title": "Stanford Commencement Address (Excerpt: Stay Hungry, Stay Foolish)",
+      "author": "Steve Jobs",
+      "content": "When I was young, there was an amazing publication called The Whole Earth Catalog, which was one of the bibles of my generation. It was created by a fellow named Stewart Brand not far from here in Menlo Park, and he brought it to life with his poetic touch. This was in the late 1960s, before personal computers and desktop publishing, so it was all made with typewriters, scissors and Polaroid cameras. It was sort of like Google in paperback form, 35 years before Google came along: it was idealistic, overflowing with neat tools and great notions.\n\nStewart and his team put out several issues of The Whole Earth Catalog, and then when it had run its course, they put out a final issue. It was the mid-1970s, and I was your age. On the back cover of their final issue was a photograph of an early morning country road, the kind you might find yourself hitchhiking on if you were so adventurous. Beneath it were the words: \"Stay Hungry. Stay Foolish.\" It was their farewell message as they signed off. Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.\n\nStay Hungry. Stay Foolish.\n\nThank you all very much.",
+      "tags": [
+        "演讲",
+        "励志",
+        "人生"
+      ],
+      "source": "Stanford University, June 12, 2005",
+      "year": 2005,
+      "language": "en",
+      "location": "帕洛阿尔托"
+    },
+    {
+      "id": "eng_speech_005",
+      "title": "We Shall Fight on the Beaches (Excerpt)",
+      "author": "Winston Churchill",
+      "content": "We shall go on to the end. We shall fight in France, we shall fight on the seas and oceans, we shall fight with growing confidence and growing strength in the air, we shall defend our Island, whatever the cost may be. We shall fight on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets, we shall fight in the hills; we shall never surrender, and if, which I do not for a moment believe, this Island or a large part of it were subjugated and starving, then our Empire beyond the seas, armed and guarded by the British Fleet, would carry on the struggle, until, in God's good time, the New World, with all its power and might, steps forth to the rescue and the liberation of the old.",
+      "tags": [
+        "演讲",
+        "勇气",
+        "二战"
+      ],
+      "source": "House of Commons, London, June 4, 1940",
+      "year": 1940,
+      "language": "en",
+      "location": "伦敦"
+    },
+    {
+      "id": "eng_speech_006",
+      "title": "Election Night Victory Speech \"Yes We Can\" (Excerpt)",
+      "author": "Barack Obama",
+      "content": "If there is anyone out there who still doubts that America is a place where all things are possible; who still wonders if the dream of our founders is alive in our time; who still questions the power of our democracy, tonight is your answer.\n\nIt's the answer told by lines that stretched around schools and churches in numbers this nation has never seen; by people who waited three hours and four hours, many for the very first time in their lives, because they believed that this time must be different; that their voice could be that difference.\n\nIt's the answer spoken by young and old, rich and poor, Democrat and Republican, black, white, Latino, Asian, Native American, gay, straight, disabled and not disabled—Americans who sent a message to the world that we have never been a collection of red states and blue states; we are, and always will be, the United States of America.\n\nIt's the answer that led those who have been told for so long by so many to be cynical, and fearful, and doubtful of what we can achieve to put their hands on the arc of history and bend it once more toward the hope of a better day.\n\nBecause of what we did on this day, in this election, at this defining moment, change has come to America.",
+      "tags": [
+        "演讲",
+        "希望",
+        "变革"
+      ],
+      "source": "Grant Park, Chicago, November 4, 2008",
+      "year": 2008,
+      "language": "en",
+      "location": "芝加哥"
+    },
+    {
+      "id": "eng_speech_008",
+      "title": "The Great Dictator: Final Speech (Excerpt)",
+      "author": "Charlie Chaplin",
+      "content": "I'm sorry, but I don't want to be an emperor. That's not my business. I don't want to rule or conquer anyone. I should like to help everyone if possible—Jew, Gentile, black man, white. We all want to help one another. Human beings are like that. We want to live by each other's happiness, not by each other's misery. We don't want to hate and despise one another. In this world there's room for everyone, and the good earth is rich and can provide for everyone. The way of life can be free and beautiful, but we have lost the way.\n\nGreed has poisoned men's souls, has barricaded the world with hate, has goose-stepped us into misery and bloodshed. We have developed speed, but we have shut ourselves in. Machinery that gives abundance has left us in want. Our knowledge has made us cynical. Our cleverness, hard and unkind. We think too much and feel too little. More than machinery we need humanity. More than cleverness we need kindness and gentleness. Without these qualities, life will be violent and all will be lost.\n\nThe airplane and the radio have brought us closer together. The very nature of these inventions cries out for the goodness in men, cries out for universal brotherhood, for the unity of us all. Even now my voice is reaching millions throughout the world—millions of despairing men, women, and little children—victims of a system that makes men torture and imprison innocent people.\n\nTo those who can hear me, I say—do not despair. The misery that is now upon us is but the passing of greed, the bitterness of men who fear the way of human progress. The hate of men will pass, and dictators die, and the power they took from the people will return to the people. And so long as men die, liberty will never perish.",
+      "tags": [
+        "演讲",
+        "人性",
+        "和平"
+      ],
+      "source": "The Great Dictator (film), 1940",
+      "year": 1940,
+      "language": "en"
+    },
+    {
+      "id": "eng_speech_010",
+      "title": "Never Give In",
+      "author": "Winston Churchill",
+      "content": "Almost a year has passed since I came down here at your Head Master's kind invitation in order to cheer myself and cheer the hearts of a few of my friends by singing some of our own songs. The ten months that have passed have seen very terrible catastrophic events in the world—ups and downs, misfortunes—but can anyone sitting here this afternoon, this October afternoon, fail to be drawn by the past year's events from their ordinary way of thinking? I feel sure that the past year has made us all follow the march of events with far more intense and far more responsible acceleration.\n\nThe strange, unaccountable thing is that the deterrents displayed at the beginning of the month have not prevented or stopped what has happened. I want to speak to you—and I speak with greater freedom because I am here as a friend, and not as a Minister in what I may say—about the crisis through which we are passing.\n\nThere is no doubt, a very harmful mistake was made. But I can say that, at whatever cost, it will be repaired. Never give in, never give in, never, never, never, never—in nothing, great or small, large or petty—never give in except to convictions of honour and good sense. Never yield to force; never yield to the apparently overwhelming might of the enemy. We stood all alone a year ago, and to many countries it may have seemed that our account was closed, we were finished. But we are carrying on, and the great pulse of the British nation remains beating.",
+      "tags": [
+        "演讲",
+        "勇气",
+        "二战"
+      ],
+      "source": "Harrow School, London, October 29, 1941",
+      "year": 1941,
+      "language": "en",
+      "location": "伦敦"
+    }
+  ],
+  "essays": [
+    {
+      "id": "eng_essay_002",
+      "title": "What I Have Lived For",
+      "author": "Bertrand Russell",
+      "content": "Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a deep ocean of anguish, reaching to the very verge of despair.\n\nI have sought love, first, because it brings ecstasy—ecstasy so great that I would often have sacrificed all the rest of life for a few hours of this joy. I have sought it, next, because it relieves loneliness—that terrible loneliness in which one shivering consciousness looks over the rim of the world into the cold unfathomable lifeless abyss. I have sought it finally, because in the union of love I have seen, in a mystic miniature, the prefiguring vision of the heaven that saints and poets have imagined. This is what I sought, and though it might seem too good for human life, this is what—at last—I have found.\n\nWith equal passion I have sought knowledge. I have wished to understand the hearts of men. I have wished to know why the stars shine. And I have tried to apprehend the Pythagorean power by which number holds sway above the flux. A little of this, but not much, I have achieved.\n\nLove and knowledge, so far as they were possible, led upward toward the heavens. But always pity brought me back to earth. Echoes of cries of pain reverberate in my heart. Children in famine, victims tortured by oppressors, helpless old people a hated burden to their sons, and the whole world of loneliness, poverty, and pain make a mockery of what human life should be. I long to alleviate the evil, but I cannot, and I too suffer.\n\nThis has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.",
+      "tags": [
+        "散文",
+        "人生",
+        "哲理"
+      ],
+      "source": "The Autobiography of Bertrand Russell, Prologue",
+      "year": 1967,
+      "language": "en",
+      "location": "英国"
+    },
+    {
+      "id": "eng_essay_007",
+      "title": "Once More to the Lake (Excerpt)",
+      "author": "E. B. White",
+      "content": "We had good times there in summer, passing into and out of each other's lives and paying no heed or sign. I wonder whether the evenness of the summer day, and the long stretches of time from meal to meal, did not help me to a more patient and receptive mood than I can command now, when the clock is always ticking and the mind races at its own whim.\n\nWe set out one summer morning in a car with the windows down and the air of the countryside streaming in. We were going to the lake in Maine, the same lake we had gone to when I was a boy. It was a place of reeds and snags and a wooden dock, where the larches grew at the water's edge. The lake remained, in large part, exactly as I had remembered it: the same water, clear to the sandy bottom, the same afternoon stillness, broken only by the distant sound of an outboard motor.\n\nI watched my son, at about the age I had been when I first came, and I had the strange conviction that I was my own father entering, once again, the water that had closed over me as a boy. There was a continuity that the turning years had not broken: I went to the water, and he came after me, and we were, for a moment, one person, two ages of the same soul.\n\nI kept thinking of another thing—that wherever this lake lay, in the heart of a boy it was forever the same lake, and it was I, not the world, that had grown old. For a time, the two of us were sustained there on the quiet water, and the past and the present were, for that enchanted afternoon, one and the same.",
+      "tags": [
+        "散文",
+        "自然",
+        "亲情"
+      ],
+      "source": "Harper's Magazine, August 1941",
+      "year": 1941,
+      "language": "en",
+      "location": "缅因州"
+    }
+  ],
+  "poems": [
+    {
+      "id": "eng_poem_006",
+      "title": "Do Not Go Gentle into That Good Night",
+      "author": "Dylan Thomas",
+      "content": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light.\n\nThough wise men at their end know dark is right,\nBecause their words had forked no lightning they\nDo not go gentle into that good night.\n\nGood men, the last wave by, crying how bright\nTheir frail deeds might have danced in a green bay,\nRage, rage against the dying of the light.\n\nWild men who caught and sang the sun in flight,\nAnd learn, too late, they grieved it on its way,\nDo not go gentle into that good night.\n\nGrave men, near death, who see with blinding sight\nBlind eyes could blaze like meteors and be gay,\nRage, rage against the dying of the light.\n\nAnd you, my father, there on the sad height,\nCurse, bless, me now with your fierce tears, I pray.\nDo not go gentle into that good night.\nRage, rage against the dying of the light.",
+      "tags": [
+        "诗歌",
+        "生命",
+        "抗争"
+      ],
+      "source": "Botteghe Oscure, 1951",
+      "year": 1951,
+      "language": "en",
+      "location": "威尔士"
+    }
+  ],
+  "french": [
+    {
+      "id": "fr_002",
+      "title": "Le Petit Prince ・ 第 1 章（節録）",
+      "author": "Antoine de Saint-Exupéry",
+      "content": "Quand j'avais six ans j'ai vu, une fois, une magnifique image, dans un livre sur la Forêt Vierge qui s'appelait « Histoires vécues ». Ça représentait un serpent boa qui avalait un fauve.\n\nLes grandes personnes m'ont conseillé de laisser de côté les dessins de serpents boas ouverts ou fermés, et de m'intéresser plutôt à la géographie, à l'histoire, au calcul et à la grammaire. C'est ainsi que j'ai abandonné, à six ans, une magnifique carrière de peintre. J'avais été découragé par l'insuccès de mon dessin numéro 1 et de mon dessin numéro 2. Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant, pour les enfants, de toujours et toujours leur donner des explications.",
+      "tags": [
+        "conte",
+        "enfance",
+        "imagination"
+      ],
+      "source": "Le Petit Prince, 1943",
+      "year": 1943,
+      "language": "fr",
+      "location": "纽约"
+    }
+  ],
+  "bilingualItems": [],
+  "translations": [
+    {
+      "id": "bil_001",
+      "title": "The Gettysburg Address / 葛底斯堡演说",
+      "translation": "八十七年以前，我们的祖先在这片大陆上缔造了一个新的国家，孕育于自由之中，致力于人人生而平等的信念。\n\n现在我们正陷入一场伟大的内战，以考验这个国家，或任何同类孕育并致力于这一信念的国家，能否长久存续。我们在这片战场前来，是要把它的土地的一角奉献给那些为国捐躯、使此国得以存续的人作为最后的安息之所。我们这样做是完全恰当、完全应当的。\n\n但从更广的意义上说，我们无法奉献、无法圣化、无法神化这片土地。那些曾在此浴血奋战的勇士们，不论健在抑或牺牲，早已将这片土地神圣化了，远非我们凡俗之力所能增减。世人不会注意，也不会长久记住我们在此说的话，却永远不会忘记他们在这里所做的事。"
+    },
+    {
+      "id": "bil_002",
+      "title": "Declaration of Independence ・ Preamble / 独立宣言序言",
+      "translation": "在人类事务的进程中，当一个民族必须解除其与另一个民族之间所建立的政治联系，并在世界列国中依照自然法则和自然之神的意旨，取得独立与平等的地位时，出于对人类舆论的尊重，应当把促使他们独立的原因予以宣布。\n\n我们认为下述真理是不言而喻的：人人生而平等，造物者赋予他们若干不可剥夺的权利，其中包括生命权、自由权和追求幸福的权利。为了保障这些权利，人类才在他们之间建立政府，而政府的正当权力，则来自被统治者的同意。"
+    },
+    {
+      "id": "bil_004",
+      "title": "Of Studies (Excerpt) / 论读书（节选）",
+      "translation": "读书的用处有三：一是陶冶情趣，二是为谈吐增添风采，三是增长才干。情趣上的收获，多见于独处静养之时；风采上的收获，多见于与人交谈之中；才干上的收获，则见于对事务的判断与料理。\n\n读书不是为了挑剔驳斥，也不是照单全收，更不是为了积攒谈资，而是要用心掂量、细细思量。\n\n读书让人渊博，交谈让人机敏，动笔让人严谨。"
+    },
+    {
+      "id": "bil_005",
+      "title": "Sonnet 18 / 十四行诗 第十八首",
+      "translation": "我能否将你比作夏天？\n你却比它更加可爱更加温婉：\n狂风会摧残五月娇柔的花蕾，\n夏日的光阴转瞬便过于短暂；\n有时天日高悬灼热难当，\n又常被淡淡阴翳遮暗容颜；\n一切美好终会随岁月凋残，\n或为机遇所褪，或为自然所改观；\n可你永恒的夏天却不会消逝，\n拥有的美好也不会就此衰残；\n死神也无法夸口你在他的荫下彷徨，\n当你在永恒的诗行中将岁月绵延：\n只要人类还在呼吸，眼睛还能看见，\n此诗便将长存，并赋予你以生命。"
+    },
+    {
+      "id": "bil_006",
+      "title": "Ode to the West Wind (Final Stanza) / 西风颂（末节）",
+      "translation": "把我当作你的竖琴吧，犹如树林：\n纵然我的叶落纷纷，又有何妨！\n你浩荡的谐律奏出的天籁之音，\n将带着深刻的秋意，从两者中回荡，\n虽含几分悲伤。狂暴的精灵啊，\n愿你成为我的精神！愿你成为我，迅猛的一身！\n\n把我死灭的思想吹遍寰宇四方，\n像吹落枯叶，以催发新的生机！\n借这诗篇的咒语，\n像从不灭的炉膛里，\n把我言语的灰烬与火花，撒向人间！\n借我的嘴唇，向沉睡的大地\n\n吹起那预言号角！啊，西风，\n若是冬天已经来了，春天还会远吗？"
+    }
+  ],
+  "bilingual": [
+    {
+      "id": "bil_003",
+      "title": "I Have a Dream (Excerpt) / 我有一个梦想（节选）",
+      "author": "Martin Luther King Jr.",
+      "content": "I say to you today, my friends, so even though we face the difficulties of today and tomorrow, I still have a dream. It is a dream deeply rooted in the American dream.\n\nI have a dream that one day this nation will rise up and live out the true meaning of its creed: \"We hold these truths to be self-evident, that all men are created equal.\"\n\nI have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream today!",
+      "translation": "今天，我要对你们说，尽管今天和明天我们仍将面对重重困难，但我仍然怀有一个梦想。这个梦想深深植根于美国之梦中。\n\n我有一个梦想：总有一天，这个国家将会奋起，实现其立国信条的真谛——我们认为这些真理是不言而喻的：人人生而平等。\n\n我有一个梦想：我的四个年幼的孩子，总有一天将生活在一个不以肤色、而以品格的优劣来评判他们的国度里。今天，我有一个梦想！",
+      "tags": [
+        "演讲",
+        "民权",
+        "对照"
+      ],
+      "source": "March on Washington, August 28, 1963",
+      "year": 1963,
+      "language": "en",
+      "location": "华盛顿"
+    },
+    {
+      "id": "bil_007",
+      "title": "The Little Prince ・ The Fox / 小王子・狐狸的名言",
+      "author": "Antoine de Saint-Exupéry",
+      "content": "It is only with the heart that one can see rightly; what is essential is invisible to the eye.\n\nIt is the time you have wasted for your rose that makes your rose so important.\n\nYou become responsible, forever, for what you have tamed. You are responsible for your rose.",
+      "translation": "只有用心才能看得清。真正重要的东西，用眼睛是看不见的。\n\n正是你为你的玫瑰花费的时间，才使你的玫瑰变得如此重要。\n\n你要永远对你驯养过的一切负责。你要对你的玫瑰负责。",
+      "tags": [
+        "童话",
+        "哲理",
+        "对照"
+      ],
+      "source": "Le Petit Prince, 1943（英译本）",
+      "year": 1943,
+      "language": "en",
+      "location": "纽约"
+    },
+    {
+      "id": "bil_008",
+      "title": "The Old Man and the Sea (Excerpt) / 老人与海（节选）",
+      "author": "Ernest Hemingway",
+      "content": "It was then that the old man realized that he could not be beaten. But, he thought, what is it, this thing that defeats a man? I know I am not defeated now, he told himself. I have that big fish on my line, and I will not let it go.\n\nBut man is not made for defeat. A man can be destroyed but not defeated.",
+      "translation": "直到这时，老人才发觉自己并没有被打垮。不过他心里想：能把一个人打垮的，究竟是什么东西呢？我很清楚，眼下我还没有输，他对自己说。那条大鱼还在我的钓线上，我绝不会松手。\n\n但人生在世，本不是为了认输。肉身可以被毁掉，人却不因此就被战胜。",
+      "tags": [
+        "小说",
+        "意志",
+        "对照"
+      ],
+      "source": "The Old Man and the Sea, 1952",
+      "year": 1952,
+      "language": "en",
+      "location": "古巴"
+    }
+  ]
+}

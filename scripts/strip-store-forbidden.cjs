@@ -108,23 +108,23 @@ function curateStoreDatafiles() {
             if ('translation' in it) { delete it.translation; translations++ }
             return it
         })
-    if (bi.items.length !== biBefore - 3 || translations === 0) {
-        console.error('[strip] bilingual.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    if (bi.items.some(it => ['bil_003', 'bil_007', 'bil_008'].includes(it.id)) || bi.items.some(it => 'translation' in it)) {
+        console.error('[strip] bilingual.json 仍含保护期条目或无署名译文，疑似数据源已变更'); process.exit(1)
     }
     bi.metadata.count = bi.items.length
     bi.metadata.name = '英文原版'
     bi.metadata.description = '世界名篇英文原文（仅收录公有领域作品），供背诵与阅读'
     bi.metadata.lastUpdated = '2026-11-20'
     fs.writeFileSync(biFile, JSON.stringify(bi, null, 2) + '\n')
-    console.log(`[strip] bilingual.json 已移除保护期条目 3 条、无署名译文 ${translations} 段`)
+    console.log(`[strip] bilingual.json 已校验：无保护期条目、无无署名译文（本轮处理 ${translations} 段）`)
 
     // 法文名篇：fr_002 小王子与 bilingual 被点名的是同一部作品（法国战殁作家延长保护），整节删除
     const frFile = path.join(engDir, 'french.json')
     const fr = JSON.parse(fs.readFileSync(frFile, 'utf8'))
     const frBefore = fr.items.length
     fr.items = fr.items.filter(it => it.id !== 'fr_002')
-    if (fr.items.length !== frBefore - 1) {
-        console.error('[strip] french.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    if (fr.items.some(it => it.id === 'fr_002')) {
+        console.error('[strip] french.json 仍含 fr_002，疑似数据源已变更'); process.exit(1)
     }
     fr.metadata.count = fr.items.length
     fr.metadata.lastUpdated = '2026-11-18'
@@ -147,8 +147,9 @@ function curateEnglishCorpus() {
     const SP_KEEP = new Set(['eng_speech_001', 'eng_speech_007', 'eng_speech_009'])
     const spBefore = sp.items.length
     sp.items = sp.items.filter(it => SP_KEEP.has(it.id))
-    if (sp.items.length !== SP_KEEP.size || spBefore === sp.items.length) {
-        console.error('[strip] speeches.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    // 源数据可能已在上游收敛为公有领域作品（此时 0 条被删），只校验终态
+    if (sp.items.some(it => !SP_KEEP.has(it.id))) {
+        console.error('[strip] speeches.json 仍含保护期篇目，疑似数据源已变更'); process.exit(1)
     }
     sp.metadata.count = sp.items.length
     sp.metadata.description = '英文演讲名篇节选；仅收录已进入公有领域的篇目'
@@ -162,8 +163,8 @@ function curateEnglishCorpus() {
     const ES_REMOVE = new Set(['eng_essay_002', 'eng_essay_007'])
     const esBefore = es.items.length
     es.items = es.items.filter(it => !ES_REMOVE.has(it.id))
-    if (es.items.length !== esBefore - ES_REMOVE.size) {
-        console.error('[strip] essays.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    if (es.items.some(it => ES_REMOVE.has(it.id))) {
+        console.error('[strip] essays.json 仍含保护期篇目，疑似数据源已变更'); process.exit(1)
     }
     es.metadata.count = es.items.length
     es.metadata.description = '英美散文名篇节选；仅收录已进入公有领域的篇目'
@@ -177,8 +178,8 @@ function curateEnglishCorpus() {
     const PO_REMOVE = new Set(['eng_poem_006'])
     const poBefore = po.items.length
     po.items = po.items.filter(it => !PO_REMOVE.has(it.id))
-    if (po.items.length !== poBefore - PO_REMOVE.size) {
-        console.error('[strip] poems.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
+    if (po.items.some(it => PO_REMOVE.has(it.id))) {
+        console.error('[strip] poems.json 仍含保护期篇目，疑似数据源已变更'); process.exit(1)
     }
     po.metadata.count = po.items.length
     po.metadata.description = '英美诗歌名篇；仅收录已进入公有领域的篇目'

@@ -137,7 +137,10 @@ Speeches, poems, essays and the japanese/french/russian selections are
 public-domain originals (e.g. Lincoln, Shakespeare, Shelley, Bacon,
 清少納言、松尾芭蕉、プルースト、モーテーニュ、ボードレール、プーシキン).
 The bilingual category ships English originals only; no translated text is
-bundled without a named translator.
+bundled without a named translator. Works that are still under copyright in
+China (or whose Chinese translation has no named translator) are excluded
+from every build, not only the store build; the removed entries are kept in
+archive/restricted-content/english/ for traceability.
 
 movie-scripts.json (short quotations from films) is not included in any
 build; the file has been moved to archive/restricted-content/ because the

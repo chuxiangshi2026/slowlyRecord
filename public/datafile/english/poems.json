@@ -2,10 +2,10 @@
   "metadata": {
     "category": "poems",
     "name": "英文经典诗歌",
-    "description": "英美诗歌名篇：十四行诗、抒情诗、现代诗与哲理短章",
-    "count": 10,
+    "description": "英美诗歌名篇；仅收录已进入公有领域的篇目",
+    "count": 9,
     "version": "1.0",
-    "lastUpdated": "2026-09-08"
+    "lastUpdated": "2026-11-27"
   },
   "items": [
     {
@@ -81,21 +81,6 @@
       "source": "The Southern Literary Messenger, 1849",
       "year": 1849,
       "language": "en"
-    },
-    {
-      "id": "eng_poem_006",
-      "title": "Do Not Go Gentle into That Good Night",
-      "author": "Dylan Thomas",
-      "content": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light.\n\nThough wise men at their end know dark is right,\nBecause their words had forked no lightning they\nDo not go gentle into that good night.\n\nGood men, the last wave by, crying how bright\nTheir frail deeds might have danced in a green bay,\nRage, rage against the dying of the light.\n\nWild men who caught and sang the sun in flight,\nAnd learn, too late, they grieved it on its way,\nDo not go gentle into that good night.\n\nGrave men, near death, who see with blinding sight\nBlind eyes could blaze like meteors and be gay,\nRage, rage against the dying of the light.\n\nAnd you, my father, there on the sad height,\nCurse, bless, me now with your fierce tears, I pray.\nDo not go gentle into that good night.\nRage, rage against the dying of the light.",
-      "tags": [
-        "诗歌",
-        "生命",
-        "抗争"
-      ],
-      "source": "Botteghe Oscure, 1951",
-      "year": 1951,
-      "language": "en",
-      "location": "威尔士"
     },
     {
       "id": "eng_poem_007",

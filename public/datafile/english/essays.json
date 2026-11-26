@@ -2,10 +2,10 @@
   "metadata": {
     "category": "essays",
     "name": "英文经典散文",
-    "description": "英美散文名篇节选：论学、人生、自然与青春",
-    "count": 7,
+    "description": "英美散文名篇节选；仅收录已进入公有领域的篇目",
+    "count": 5,
     "version": "1.0",
-    "lastUpdated": "2026-09-08"
+    "lastUpdated": "2026-11-27"
   },
   "items": [
     {
@@ -22,21 +22,6 @@
       "year": 1625,
       "language": "en",
       "location": "伦敦"
-    },
-    {
-      "id": "eng_essay_002",
-      "title": "What I Have Lived For",
-      "author": "Bertrand Russell",
-      "content": "Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a deep ocean of anguish, reaching to the very verge of despair.\n\nI have sought love, first, because it brings ecstasy—ecstasy so great that I would often have sacrificed all the rest of life for a few hours of this joy. I have sought it, next, because it relieves loneliness—that terrible loneliness in which one shivering consciousness looks over the rim of the world into the cold unfathomable lifeless abyss. I have sought it finally, because in the union of love I have seen, in a mystic miniature, the prefiguring vision of the heaven that saints and poets have imagined. This is what I sought, and though it might seem too good for human life, this is what—at last—I have found.\n\nWith equal passion I have sought knowledge. I have wished to understand the hearts of men. I have wished to know why the stars shine. And I have tried to apprehend the Pythagorean power by which number holds sway above the flux. A little of this, but not much, I have achieved.\n\nLove and knowledge, so far as they were possible, led upward toward the heavens. But always pity brought me back to earth. Echoes of cries of pain reverberate in my heart. Children in famine, victims tortured by oppressors, helpless old people a hated burden to their sons, and the whole world of loneliness, poverty, and pain make a mockery of what human life should be. I long to alleviate the evil, but I cannot, and I too suffer.\n\nThis has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.",
-      "tags": [
-        "散文",
-        "人生",
-        "哲理"
-      ],
-      "source": "The Autobiography of Bertrand Russell, Prologue",
-      "year": 1967,
-      "language": "en",
-      "location": "英国"
     },
     {
       "id": "eng_essay_003",
@@ -97,21 +82,6 @@
       "year": 1859,
       "language": "en",
       "location": "伦敦"
-    },
-    {
-      "id": "eng_essay_007",
-      "title": "Once More to the Lake (Excerpt)",
-      "author": "E. B. White",
-      "content": "We had good times there in summer, passing into and out of each other's lives and paying no heed or sign. I wonder whether the evenness of the summer day, and the long stretches of time from meal to meal, did not help me to a more patient and receptive mood than I can command now, when the clock is always ticking and the mind races at its own whim.\n\nWe set out one summer morning in a car with the windows down and the air of the countryside streaming in. We were going to the lake in Maine, the same lake we had gone to when I was a boy. It was a place of reeds and snags and a wooden dock, where the larches grew at the water's edge. The lake remained, in large part, exactly as I had remembered it: the same water, clear to the sandy bottom, the same afternoon stillness, broken only by the distant sound of an outboard motor.\n\nI watched my son, at about the age I had been when I first came, and I had the strange conviction that I was my own father entering, once again, the water that had closed over me as a boy. There was a continuity that the turning years had not broken: I went to the water, and he came after me, and we were, for a moment, one person, two ages of the same soul.\n\nI kept thinking of another thing—that wherever this lake lay, in the heart of a boy it was forever the same lake, and it was I, not the world, that had grown old. For a time, the two of us were sustained there on the quiet water, and the past and the present were, for that enchanted afternoon, one and the same.",
-      "tags": [
-        "散文",
-        "自然",
-        "亲情"
-      ],
-      "source": "Harper's Magazine, August 1941",
-      "year": 1941,
-      "language": "en",
-      "location": "缅因州"
     }
   ]
 }
