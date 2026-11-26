@@ -97,8 +97,9 @@
       </div>
     </div>
 
-    <!-- 地图容器 -->
+    <!-- 地图容器：无在线底图，仅绘制经纬度示意 -->
     <div ref="mapContainer" class="map-container">
+      <div class="map-note">{{ hasBasemap ? TDT_ATTRIBUTION : '示意图：按经纬度标注位置，不含地图底图' }}</div>
       <!-- 生平轨迹统计面板：可折叠，结构化分行展示，作品最多/停留最久附作品名，转折点含年龄，可滚动 -->
       <div v-if="routeStats" class="route-stats-panel">
         <div class="stats-header" @click="statsCollapsed = !statsCollapsed">
@@ -391,6 +392,52 @@ const routeStats = computed<RouteStats | null>(() => {
 
 // ==================== 地图初始化 ====================
 
+/** 天地图浏览器端 key（构建期从 .env.local 注入，不写进仓库）；uTools 商店包不注入，产物里不留第三方 key */
+const TDT_KEY = (__PLATFORM__ === 'utools' && __STORE_BUILD__ ? '' : (import.meta.env.VITE_TDT_KEY as string | undefined))?.trim() || ''
+/** 底图版权与审图号，必须与天地图控制台给出的服务声明一致，不允许被遮挡 */
+const TDT_ATTRIBUTION = (import.meta.env.VITE_TDT_ATTRIBUTION as string | undefined)?.trim() || '© 天地图'
+/** 底图是否已成功出图：决定右下角显示版权还是「示意图」提示 */
+const hasBasemap = ref(false)
+
+/**
+ * 挂天地图底图（矢量底图 vec_w + 中文注记 cva_w）。
+ * 天地图是 CGCS2000，与本项目 WGS84 坐标基本重合，不做纠偏；高德是 GCJ-02，会偏几百米。
+ * 任一瓦片连续失败即整体撤下，避免半张图半张灰。
+ */
+function attachBasemap() {
+  // 天地图 key 只校验浏览器 UA（不绑 Referer），三端都能用；商店包按既有密钥策略不注入底图：
+  // 发行物里可被提取的第三方 key 一律不带，审核也不用解释。失败由下方 tileerror 兜底退回示意图。
+  if (!map || !TDT_KEY || (__PLATFORM__ === 'utools' && __STORE_BUILD__)) return
+  const layers: L.TileLayer[] = []
+  let errors = 0
+  let loaded = 0
+  const base = 'https://t{s}.tianditu.gov.cn/{path}/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0'
+    + '&LAYER={layer}&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles'
+    + '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=' + encodeURIComponent(TDT_KEY)
+
+  for (const layer of ['vec', 'cva']) {
+    const tiles = L.tileLayer(
+      base.replace(/\{path\}/g, `${layer}_w`).replace(/\{layer\}/g, layer),
+      {
+      subdomains: '01234567',
+      minZoom: 3,
+      maxZoom: 18,
+    })
+    tiles.on('tileload', () => {
+      if (loaded++ === 0) hasBasemap.value = true
+    })
+    tiles.on('tileerror', () => {
+      // 偶发单张失败不处理；连续失败说明 key 无效（域名白名单/配额/file:// referer）
+      if (++errors < 3) return
+      for (const l of layers) map?.removeLayer(l)
+      hasBasemap.value = false
+      console.warn('[PoetryMap] 天地图瓦片加载失败，已退回示意图（检查 key、授权域名与配额）')
+    })
+    tiles.addTo(map)
+    layers.push(tiles)
+  }
+}
+
 function initMap() {
   if (!mapContainer.value) return;
 
@@ -402,18 +449,13 @@ function initMap() {
     shadowUrl: 'static/leaflet/marker-shadow.png',
   });
 
-  map = L.map(mapContainer.value).setView([35.0, 105.0], 4);
+  map = L.map(mapContainer.value, {
+    // 底图按需加载：配置了天地图 key 时显示官方底图（已审图，标注审图号）；
+    // 未配置或加载失败时退回纯示意（无底图、无外部请求），离线与 file:// 环境不受影响
+    attributionControl: false,
+  }).setView([35.0, 105.0], 4);
 
-  // 使用高德地图瓦片（国内可访问）
-  L.tileLayer(
-    'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
-    {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; 高德地图',
-      subdomains: '1234',
-    }
-  ).addTo(map);
+  attachBasemap();
 
   // 初始化图层组
   markerLayer = L.layerGroup().addTo(map);
@@ -1301,6 +1343,19 @@ onUnmounted(() => {
   min-height: 400px;
   background: #f0f0f0;
   position: relative;
+}
+
+.map-note {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  z-index: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #6b7d76;
+  font-size: 12px;
+  pointer-events: none;
 }
 
 .poetry-detail {
