@@ -10,11 +10,11 @@
 import type { KnowledgePackInfo } from '@/stores/useUtils/types'
 
 export const PEG_PACK_LIST: KnowledgePackInfo[] = [
-  {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身是考点', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 3},
-  {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身是考点', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
+  {id: 'solar-terms-24', name: '二十四节气', description: '二十四节气及其日期与物候，顺序本身即记忆线索', itemCount: 24, ordered: true, usableAsPeg: true, category: 'text', version: 4},
+  {id: 'zodiac-12', name: '十二生肖', description: '十二生肖及其对应地支，顺序本身即记忆线索', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 4},
   {id: 'number-pegs-12', name: '数字桩（1-12）', description: '经典数字形象桩，1-6 号位提供多个备选桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
   {id: 'home-route-12', name: '家居路线桩（12 桩）', description: '按进门后的巡视路线排列的家居地点桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
-  {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身是考点，按日期顺序可作 12 桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 2},
+  {id: 'constellations-12', name: '十二星座', description: '十二星座及其日期范围，顺序本身即记忆线索，按日期顺序可作 12 桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 3},
   {id: 'body-pegs-12', name: '身体桩', description: '从头顶到脚底 12 个身体部位，按从上到下的固定顺序用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
   {id: 'earthly-branches-12', name: '十二地支', description: '十二地支及其时辰时段、生肖、五行、阴阳与方位', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},
   {id: 'room-pegs-12', name: '房间桩', description: '典型户型 12 个房间，按进出动线排列用作记忆桩', itemCount: 12, ordered: true, usableAsPeg: true, category: 'text', version: 1},

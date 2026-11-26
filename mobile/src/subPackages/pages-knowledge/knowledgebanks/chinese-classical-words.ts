@@ -1,12 +1,12 @@
 /**
- * 内置知识包：文言文常见实词虚词（由 public/knowledgebanks/chinese-classical-words.json 转换生成，请勿手改）
+ * 内置知识包：高频文言虚词（由 public/knowledgebanks/chinese-classical-words.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "chinese-classical-words",
-  "name": "文言文常见实词虚词",
-  "description": "中考高频文言虚词 8 个 + 古今异义实词 12 个",
+  "name": "高频文言虚词",
+  "description": "高频文言虚词 8 个 + 古今异义实词 12 个",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

@@ -2,8 +2,8 @@
   "name": "中华诗词文章库",
   "version": "2.2",
   "description": "按朝代分类的经典诗词文章合集。中文系研究生参考选篇。",
-  "totalCount": 456,
-  "lastUpdated": "2026-11-13",
+  "totalCount": 414,
+  "lastUpdated": "2026-11-27",
   "dynasties": [
     {
       "code": "xianqin",
@@ -82,8 +82,8 @@
       "name": "近现代",
       "period": "1912-至今",
       "file": "xiandai.json",
-      "count": 45,
-      "description": "现代诗歌、新诗"
+      "count": 3,
+      "description": "现代诗歌、新诗（公有领域作品）"
     }
   ],
   "schema": {

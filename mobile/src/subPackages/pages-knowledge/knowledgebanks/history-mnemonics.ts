@@ -20,7 +20,7 @@ const pack: KnowledgePack = {
     },
     {
       "id": "history-mnemonics-2",
-      "question": "朝代歌（人教版）",
+      "question": "朝代歌（另一通行版本）",
       "answer": "三皇五帝始，尧舜禹相传；夏商与西周，东周分两段；春秋和战国，一统秦两汉；三分魏蜀吴，两晋前后延；南北朝并立，隋唐五代传；宋元明清后，王朝至此完。",
       "extras": {
         "类别": "朝代歌"

@@ -6,7 +6,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "math-formulas",
   "name": "常用数学公式",
-  "description": "小学到高中入门常用数学公式与函数 33 条",
+  "description": "入门常用数学公式与函数 33 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

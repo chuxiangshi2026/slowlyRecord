@@ -59,8 +59,12 @@ export const useWordsStore =
             // 初始化词库信息
             async function initWordBankInfo() {
                 try {
-                    currentWordBankId.value = await getCurrentWordBankId()
-                    currentWordBank.value = await getWordBank(currentWordBankId.value)
+                    const resolvedId = await getCurrentWordBankId()
+                    currentWordBankId.value = resolvedId
+                    currentWordBank.value = await getWordBank(resolvedId)
+                    // 持久化的 currentWordBankId 可能指向已不存在的词库（换端/清库/同步残留）；
+                    // getCurrentWordBankId 已回退到默认库，这里把纠正结果写回 localStorage，避免下次再踩
+                    if (resolvedId) setCurrentWordBankId(resolvedId)
                 } catch (e) {
                     console.error('初始化词库信息失败,回退默认词库:', e)
                     currentWordBankId.value = 'default'
@@ -106,9 +110,9 @@ export const useWordsStore =
                 local: {appkey: '', key: ''},
             })
             const userApiKeys: Ref<Record<TranslationPlatform, { appkey: string, key: string }>> = ref(createUserApiKeys());
-            // 内置免费翻译额度开关：商店版默认关闭（审核建议：默认只用用户自配密钥的引擎，内置额度做成显式开启项），
-            // 其他端默认开启；首次使用时仍会弹窗告知数据流向
-            const builtinFreeTranslate = ref(!(__PLATFORM__ === 'utools' && __STORE_BUILD__));
+            // 内置免费翻译额度开关：默认关闭，由用户在设置里显式开启（内置额度消耗作者的共享密钥，
+            // 涉及第三方服务条款与生成式 AI 合规，不应默认替用户发起请求）；首次开启时会弹窗告知数据流向
+            const builtinFreeTranslate = ref(false);
             const createUserOcrApiKeys = (): Record<OcrPlatform, { appkey: string, key: string }> => ({
                 tencent: {appkey: '', key: ''},
                 ali: {appkey: '', key: ''},
@@ -742,10 +746,17 @@ export const useWordsStore =
                         await initWordBankInfo()
                     }
 
+                    // 持久化的词库 id 可能已不存在（换端、清库、同步残留）：
+                    // 先按 id 读取，读不到再走 initWordBankInfo 回退默认库并写回 localStorage
+                    let bankIdAtStart = currentWordBankId.value
+                    let bank = await getWordBank(bankIdAtStart)
+                    if (!bank && bankIdAtStart) {
+                        await initWordBankInfo()
+                        bankIdAtStart = currentWordBankId.value
+                        bank = await getWordBank(bankIdAtStart)
+                    }
+
                     // 竞态守卫：await 期间用户可能已切换词库，记录起始词库ID，写回前校验
-                    const bankIdAtStart = currentWordBankId.value
-                    // 从当前词库获取单词
-                    const bank = await getWordBank(currentWordBankId.value)
                     if (currentWordBankId.value !== bankIdAtStart) {
                         // 词库已切换，放弃本次结果，避免旧词库覆盖新词库列表
                         return words.value

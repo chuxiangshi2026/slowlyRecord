@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中生物核心概念（由 public/knowledgebanks/biology-basics.json 转换生成，请勿手改）
+ * 内置知识包：生物常识（由 public/knowledgebanks/biology-basics.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "biology-basics",
-  "name": "初中生物核心概念",
-  "description": "初中生物核心概念 20 条（细胞、生理、遗传、生态）",
+  "name": "生物常识",
+  "description": "生物常识 20 条（细胞、生理、遗传、生态）",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

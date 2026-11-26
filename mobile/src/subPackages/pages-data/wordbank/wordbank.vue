@@ -61,7 +61,7 @@
       <text class="section-add" @click="refreshRemoteIndex">{{ refreshing ? '刷新中…' : '刷新' }}</text>
     </view>
     <view class="remote-tools">
-      <input class="remote-search" v-model="remoteKeyword" placeholder="搜索词库，如：四级 / 老友记">
+      <input class="remote-search" v-model="remoteKeyword" placeholder="搜索词库，如：四级 / 口语 / 日语">
     </view>
     <scroll-view scroll-x class="cat-tabs" :show-scrollbar="false">
       <view class="cat-tab" :class="{ active: activeCat === 'all' }" @click="activeCat = 'all'">全部</view>

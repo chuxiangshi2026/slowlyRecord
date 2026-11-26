@@ -46,6 +46,7 @@
       <text class="reply-label">地道口语</text>
       <text class="reply-en" @click="speakReply">{{ replyEn }}</text>
       <text v-if="replyZh" class="reply-zh">{{ replyZh }}</text>
+      <text class="reply-ai">AI 生成，仅供参考</text>
       <view class="reply-actions">
         <view class="action-chip" @click="speakReply"><text>🔊 再读一遍</text></view>
         <view class="action-chip" @click="generate"><text>🔁 换一句</text></view>
@@ -268,6 +269,13 @@ function copyReply() {
   margin-top: 14rpx;
   display: block;
   line-height: 1.6;
+}
+.reply-ai {
+  font-size: 22rpx;
+  color: var(--sr-text-3);
+  margin-top: 8rpx;
+  display: block;
+  opacity: 0.8;
 }
 .reply-actions {
   display: flex;

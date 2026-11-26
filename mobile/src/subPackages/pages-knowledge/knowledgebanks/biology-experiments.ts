@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中生物实验（由 public/knowledgebanks/biology-experiments.json 转换生成，请勿手改）
+ * 内置知识包：生物实验常识（由 public/knowledgebanks/biology-experiments.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "biology-experiments",
-  "name": "初中生物实验",
-  "description": "初中常见生物实验 15 个",
+  "name": "生物实验常识",
+  "description": "常见生物实验 15 个",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

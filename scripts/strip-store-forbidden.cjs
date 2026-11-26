@@ -76,7 +76,8 @@ function curateStoreDatafiles() {
     const XD_KEEP = new Set(['xiandai_001', 'xiandai_002', 'xiandai_013'])
     const xdBefore = xd.poems.length
     xd.poems = xd.poems.filter(p => XD_KEEP.has(p.id))
-    if (xd.poems.length !== XD_KEEP.size || xdBefore === xd.poems.length) {
+    // 源数据可能已在上游收敛为公有领域作品（此时 0 条被删），只校验结构
+    if (xd.poems.length !== XD_KEEP.size) {
         console.error('[strip] xiandai.json 结构与预期不符，疑似数据源已变更'); process.exit(1)
     }
     xd.metadata.count = xd.poems.length
@@ -346,6 +347,21 @@ function builtinSecrets() {
 const FORBIDDEN = [
     // 内置密钥明文（来自 src/config.ts，商店构建必须被 __STORE_BUILD__ 置空并被 DCE 消除）
     ...builtinSecrets(),
+    // 教育/培训属性表述（按工具类目送审，产物中不得回潮）
+    '课标',
+    '人教版',
+    '小学必背',
+    '初中必背',
+    '高中必背',
+    '初中生物',
+    '初中化学',
+    '初中物理',
+    '初中地理',
+    '高中物理',
+    '刷题',
+    '权威词库',
+    '背单词',
+    'Anki 式',
     // Bing 网页版翻译特征（审核第 1 条：未授权抓取网页内部接口）
     'ttranslatev3',
     'params_AbusePreventionHelper',

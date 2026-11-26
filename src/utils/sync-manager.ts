@@ -6,7 +6,7 @@
  */
 import type { SyncData, SyncWordBank, SyncUserSettings, SyncTextMemory, SyncNumberMemory, SyncShortcutMemory, SyncLetterMemory, SyncKnowledgeMemory, SyncPhoneticMemory, SyncSignin, SyncMemoryPalace, SyncSentences, ConflictStrategy } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { deleteWordBank, getAllWordBanks, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
+import { deleteWordBank, getAllWordBanks, getAllWordBankMetas, saveWordBank, setCurrentWordBankId, type WordBank } from '@/utils/wordbank-manager'
 import type { Word } from '@/types/words'
 import type { MemoryFirmnessType } from '@/types/words'
 import type { NumberMemoryEntry, NumberMemoryNote, NumberMemoryPrompt, NumberImageAssociation, TrainingResult } from '@/types/number-memory'
@@ -636,9 +636,13 @@ async function restoreWordBanks(
     }
   }
 
-  // 恢复当前词库选择
+  // 恢复当前词库选择：远端 id 可能因墓碑/筛选未恢复，校验后再写，避免留下不存在的当前词库
   if (currentBankId) {
-    setCurrentWordBankId(currentBankId)
+    const restored = await getAllWordBankMetas()
+    const target = restored.some(b => b.id === currentBankId)
+      ? currentBankId
+      : (restored.find(b => b.isDefault)?.id || restored[0]?.id)
+    if (target) setCurrentWordBankId(target)
   }
 }
 

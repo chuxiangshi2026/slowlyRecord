@@ -1,7 +1,7 @@
 {
   "id": "primes-under-100",
   "name": "100 以内质数表",
-  "description": "100 以内 25 个质数及其序位，顺序本身是考点",
+  "description": "100 以内 25 个质数及其序位，顺序本身即记忆线索",
   "ordered": true,
   "usableAsPeg": false,
   "items": [

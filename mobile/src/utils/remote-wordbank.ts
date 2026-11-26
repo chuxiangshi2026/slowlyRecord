@@ -42,7 +42,6 @@ export const BANK_CATEGORIES: BankCategory[] = [
   { id: 'exam', label: '考试' },
   { id: 'level', label: '分级' },
   { id: 'oral', label: '口语句型' },
-  { id: 'media', label: '影视台词' },
   { id: 'dev', label: '程序员' },
   { id: 'life', label: '生活场景' },
   { id: 'other', label: '其他' },
@@ -64,11 +63,6 @@ const EN_CATEGORY_BY_ID: Record<string, string> = {
   'spoken-reductions-1': 'oral', 'spoken-reactions-1': 'oral',
   'spoken-reductions-2': 'oral', 'spoken-elision-1': 'oral',
   'spoken-liaison-1': 'oral', 'spoken-reactions-2': 'oral',
-  // 影视台词与名言
-  'girl-meets-world': 'media', 'friends-tv': 'media', 'modern-family': 'media',
-  'big-bang-theory': 'media', sherlock: 'media', 'the-crown': 'media',
-  'pursuit-of-happyness': 'media', 'forrest-gump': 'media',
-  'shawshank-redemption': 'media', 'movie-lines': 'media', 'famous-quotes': 'media',
   // 程序员
   'tech-vocab': 'dev', 'dev-phrases': 'dev', 'dev-status': 'dev',
   'dev-debugging': 'dev', 'dev-reading': 'dev', 'dev-discussion': 'dev',

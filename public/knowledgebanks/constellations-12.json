@@ -1,7 +1,7 @@
 {
   "id": "constellations-12",
   "name": "十二星座",
-  "description": "十二星座及其日期范围，顺序本身是考点，按日期顺序可作 12 桩",
+  "description": "十二星座及其日期范围，顺序本身即记忆线索，按日期顺序可作 12 桩",
   "ordered": true,
   "usableAsPeg": true,
   "items": [

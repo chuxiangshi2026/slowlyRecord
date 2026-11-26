@@ -18,7 +18,7 @@
             <span class="g-icon">📚</span>
             <div>
               <div class="g-title">导入内置词库</div>
-              <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+              <div class="g-desc">30+ 主题词表，即刻开始复习</div>
             </div>
           </div>
         </template>
@@ -41,7 +41,7 @@
             <span class="g-icon">📚</span>
             <div>
               <div class="g-title">导入内置词库</div>
-              <div class="g-desc">四级 / 六级 / 考研 / 雅思等现成词库，即刻开始复习</div>
+              <div class="g-desc">30+ 主题词表，即刻开始复习</div>
             </div>
           </div>
         </template>

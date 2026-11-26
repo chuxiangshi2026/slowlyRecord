@@ -217,8 +217,8 @@ describe('knowledge-pack-service', () => {
         expect(info).toBeDefined()
         // 分类归属：物理公式/定律/实验与生物实验归数理化（math），地理核心概念归地理（geo）
         expect(info!.category).toBe(id === 'geography-concepts' ? 'geo' : 'math')
-        // 物理定律/实验与生物实验此前因归入数理化升到 2；地理概念因扩充到 41 条升到 2
-        expect(info!.version ?? 1).toBe(2)
+        // 物理定律/实验与生物实验此前因归入数理化升到 2；地理概念因扩充到 41 条升到 2；本轮去学段措辞 → 3
+        expect(info!.version ?? 1).toBe(3)
         // 相对本文件定位 public/knowledgebanks（src/utils → 项目根目录 → public/knowledgebanks）
         const raw = readFileSync(
           fileURLToPath(new URL('../../public/knowledgebanks/' + id + '.json', import.meta.url)),
@@ -287,8 +287,9 @@ describe('knowledge-pack-service', () => {
         expect(info!.category).toBe(category)
         expect(info!.ordered).toBe(ordered)
         expect(info!.usableAsPeg).toBe(usableAsPeg)
-        // dynasties-china 因史实修正（夏创立者/东周止年）升到 2；common-units 扩充到 35 条升到 2
-        expect(info!.version).toBe(id === 'dynasties-china' || id === 'common-units' ? 2 : 1)
+        // dynasties-china 因史实修正（夏创立者/东周止年）升到 2；common-units 扩充到 35 条升到 2；
+        // math-formulas-2 本轮去学段措辞升到 2
+        expect(info!.version).toBe(['dynasties-china', 'common-units', 'math-formulas-2'].includes(id) ? 2 : 1)
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)
@@ -326,17 +327,18 @@ describe('knowledge-pack-service', () => {
     it('各包数据版本符合预期，未显式声明版本的包默认 1', () => {
       // elements 拼音修正 + 扩到 118 号元素 → 4；追加 19 条经典记忆口诀 → 5
       expect(getKnowledgePackInfo('elements')?.version).toBe(5)
-      expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(3)
-      expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(3)
+      // 节气/生肖/星座本轮去「考点」措辞 → 分别升 1 级
+      expect(getKnowledgePackInfo('solar-terms-24')?.version).toBe(4)
+      expect(getKnowledgePackInfo('zodiac-12')?.version).toBe(4)
       expect(getPackVersion('elements')).toBe(5)
-      expect(getPackVersion('solar-terms-24')).toBe(3)
-      expect(getPackVersion('zodiac-12')).toBe(3)
+      expect(getPackVersion('solar-terms-24')).toBe(4)
+      expect(getPackVersion('zodiac-12')).toBe(4)
       // 从未声明过 version 的包，追加 imageUrl 后升到 2
       expect(getPackVersion('number-pegs-12')).toBe(2)
       expect(getPackVersion('home-route-12')).toBe(2)
-      // math-formulas 追加函数/方程条目与图像映射 → 4；追加面积体积推导图与推导文字 → 5
-      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(5)
-      expect(getPackVersion('math-formulas')).toBe(5)
+      // math-formulas 追加函数/方程条目与图像映射 → 4；追加面积体积推导图与推导文字 → 5；本轮去学段措辞 → 6
+      expect(getKnowledgePackInfo('math-formulas')?.version).toBe(6)
+      expect(getPackVersion('math-formulas')).toBe(6)
       // 微积分/线代/概率三包补 latex 源码 + 预渲染公式图 → 2
       expect(getPackVersion('math-calculus')).toBe(2)
       expect(getPackVersion('math-linalg')).toBe(2)
@@ -345,18 +347,25 @@ describe('knowledge-pack-service', () => {
       expect(getPackVersion('multiplication-9x9')).toBe(2)
       // multiplication-19x19 追加大九九口诀 mnemonics → 2
       expect(getPackVersion('multiplication-19x19')).toBe(2)
-      // constellations-12 追加星座符号 emoji imageUrl → 2
-      expect(getPackVersion('constellations-12')).toBe(2)
+      // constellations-12 追加星座符号 emoji imageUrl → 2；本轮去「考点」措辞 → 3
+      expect(getPackVersion('constellations-12')).toBe(3)
       // dynasties-china 史实修正 → 2
       expect(getKnowledgePackInfo('dynasties-china')?.version).toBe(2)
       expect(getPackVersion('dynasties-china')).toBe(2)
       // 其余历史包与本轮新增的 6 个包均为 1（common-units/world-capitals-40 已扩充升到 2）
+      // 本轮去学段/去考点措辞后升到 2 的包
+      ;['math-formulas-2', 'primes-under-100', 'thirty-six-stratagems',
+        'physics-formulas-high', 'history-mnemonics',
+        'chinese-classical-words', 'biology-basics'].forEach(id => {
+        expect(getKnowledgePackInfo(id)?.version).toBe(2)
+        expect(getPackVersion(id)).toBe(2)
+      })
+      // 仍为 1 的包
       ;['body-pegs-12', 'earthly-branches-12', 'room-pegs-12',
-        'colors-12', 'musical-notes', 'math-formulas-2',
-        'squares-cubes-powers', 'primes-under-100', 'poker-pegs-52',
-        'alphabet-pegs-26', 'thirty-six-stratagems',
-        'physics-formulas-high', 'chemistry-valences', 'history-mnemonics',
-        'english-roots-affixes', 'chinese-classical-words', 'biology-basics', 'world-geography-records',
+        'colors-12', 'musical-notes',
+        'squares-cubes-powers', 'poker-pegs-52',
+        'alphabet-pegs-26', 'chemistry-valences',
+        'english-roots-affixes', 'world-geography-records',
         'geography-china'].forEach(id => {
         expect(getKnowledgePackInfo(id)?.version).toBe(1)
         expect(getPackVersion(id)).toBe(1)
@@ -380,8 +389,8 @@ describe('knowledge-pack-service', () => {
         expect(info!.category).toBe(category)
         expect(info!.ordered).toBe(ordered)
         expect(info!.usableAsPeg).toBe(usableAsPeg)
-        // world-capitals-40 扩充到 100 条升到 2，其余仍为 1
-        expect(info!.version).toBe(id === 'world-capitals-40' ? 2 : 1)
+        // world-capitals-40 扩充到 100 条升到 2；primes-under-100 / thirty-six-stratagems 本轮去「考点」措辞升到 2
+        expect(info!.version).toBe(['world-capitals-40', 'primes-under-100', 'thirty-six-stratagems'].includes(id) ? 2 : 1)
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)
@@ -419,7 +428,10 @@ describe('knowledge-pack-service', () => {
         const info = getKnowledgePackInfo(id)
         expect(info).toBeDefined()
         expect(info!.category).toBe(category)
-        expect(info!.version).toBe(1)
+        // 本轮去学段措辞后：physics-formulas-high / history-mnemonics / chinese-classical-words / biology-basics 升到 2
+        expect(info!.version).toBe(
+          ['physics-formulas-high', 'history-mnemonics', 'chinese-classical-words', 'biology-basics'].includes(id) ? 2 : 1,
+        )
 
         const pack = readPackFile(id)
         expect(pack.id).toBe(id)
@@ -570,9 +582,9 @@ describe('knowledge-pack-service', () => {
       const result = await fetchKnowledgePack('math-formulas')
       expect(fetchMock).toHaveBeenCalled()
       expect(result.items).toHaveLength(24)
-      // 新缓存写入 version 5
+      // 新缓存写入 version 6
       const cached = JSON.parse(localStorageMock.getItem('slowlyrecord-knowledgebank-math-formulas')!)
-      expect(cached.version).toBe(5)
+      expect(cached.version).toBe(6)
     })
 
     it('无 version 字段的老缓存在包升级后同样失效', async () => {

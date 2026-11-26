@@ -64,12 +64,12 @@ beforeEach(() => {
 describe('getPackVersion', () => {
   it('注册表显式声明 version 的包取声明值', () => {
     expect(getPackVersion('elements')).toBe(5)
-    expect(getPackVersion('solar-terms-24')).toBe(3)
-    expect(getPackVersion('math-formulas')).toBe(5)
+    expect(getPackVersion('solar-terms-24')).toBe(4)
+    expect(getPackVersion('math-formulas')).toBe(6)
     expect(getPackVersion('multiplication-9x9')).toBe(2)
     expect(getPackVersion('dynasties-china')).toBe(2)
     expect(getPackVersion('world-capitals-40')).toBe(2)
-    expect(getPackVersion('geography-concepts')).toBe(2)
+    expect(getPackVersion('geography-concepts')).toBe(3)
     expect(getPackVersion('common-units')).toBe(2)
     // multiplication-19x19 追加大九九口诀 mnemonics → 2
     expect(getPackVersion('multiplication-19x19')).toBe(2)

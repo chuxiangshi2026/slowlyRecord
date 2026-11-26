@@ -230,7 +230,7 @@
                     </div>
                     <pre class="example-content">标题：静夜思
 作者：李白
-标签：唐诗,古诗,必背
+标签：唐诗,古诗,常背篇目
 ---
 床前明月光，
 疑是地上霜。
@@ -529,21 +529,21 @@
               </div>
             </el-tab-pane>-->
 
-      <!-- 考试资料库 -->
-      <!--      <el-tab-pane label="考试资料" name="exam">
+      <!-- 资料库 -->
+      <!--      <el-tab-pane label="资料库" name="exam">
               <el-form :model="examForm" label-width="100px">
-                <el-form-item label="考试类型">
-                  <el-select v-model="examForm.type" placeholder="选择考试类型" clearable @change="handleExamTypeChange">
+                <el-form-item label="资料类型">
+                  <el-select v-model="examForm.type" placeholder="选择资料类型" clearable @change="handleExamTypeChange">
                     <el-option label="专升本" value="专升本" />
                     <el-option label="考研" value="考研" />
                     <el-option label="考公/行测" value="考公" />
-                    <el-option label="职称考试" value="职称" />
-                    <el-option label="英语四六级" value="四六级" />
+                    <el-option label="职称" value="职称" />
+                    <el-option label="英语等级" value="四六级" />
                     <el-option label="考研英语" value="考研英语" />
                   </el-select>
                 </el-form-item>
-                <el-form-item label="科目">
-                  <el-select v-model="examForm.subject" placeholder="选择科目" clearable :disabled="!examForm.type">
+                <el-form-item label="分类">
+                  <el-select v-model="examForm.subject" placeholder="选择分类" clearable :disabled="!examForm.type">
                     <el-option
                       v-for="subject in examSubjects"
                       :key="subject"
@@ -555,7 +555,7 @@
                 <el-form-item label="搜索">
                   <el-input
                     v-model="examForm.keyword"
-                    placeholder="输入关键词搜索考试资料..."
+                    placeholder="输入关键词搜索资料..."
                   >
                     <template #append>
                       <el-button @click="handleExamSearch">搜索</el-button>
@@ -565,7 +565,7 @@
               </el-form>
 
               <div v-if="examResults.length > 0" class="exam-results">
-                <h4>考试资料：</h4>
+                <h4>资料：</h4>
                 <el-scrollbar height="300px">
                   <el-card
                     v-for="(item, index) in examResults"
@@ -591,11 +591,11 @@
               </div>
 
               <div v-else class="exam-placeholder">
-                <el-empty description="请选择考试类型或输入关键词搜索">
+                <el-empty description="请选择资料类型或输入关键词搜索">
                   <template #description>
-                    <p>请选择考试类型或输入关键词搜索</p>
+                    <p>请选择资料类型或输入关键词搜索</p>
                     <p style="font-size: 12px; color: #999; margin-top: 8px">
-                      支持：专升本、考研、考公、职称、四六级等考试资料
+                      支持：学历提升、公职、职称、语言等级等资料
                     </p>
                   </template>
                 </el-empty>
@@ -790,7 +790,7 @@
           </div>
         </div>
 
-        <!-- 英文经典：演讲/诗歌/散文/电影片段 -->
+        <!-- 英文经典：演讲/诗歌/散文 -->
         <div v-else-if="libTab === 'english'">
           <el-form :model="englishForm" label-width="60px" size="small">
             <el-form-item label="分类">
@@ -971,7 +971,7 @@
           <!-- AI 生成 -->
           <div v-else>
             <el-alert title="AI 批量生成历史事件" type="info" :closable="false" style="margin-bottom: 12px">
-              输入主题或年代范围（如「唐代大事」「工业革命」「一战」），AI 自动整理一批事件供挑选导入。可在下方选择 AI，未填 API Key 时使用「单词列表 → 设置」中的默认配置。
+              输入主题或年代范围（如「唐代大事」「工业革命」「一战」），AI 自动整理一批事件供挑选导入。生成内容由 AI 提供，仅供参考，请自行核对史实。可在下方选择 AI，未填 API Key 时使用「单词列表 → 设置」中的默认配置。
             </el-alert>
             <el-form :model="timelineAiForm" label-width="70px" size="small" style="margin-bottom: 12px">
               <el-form-item label="AI 提供商">
@@ -2222,7 +2222,7 @@ async function handleExamSearch() {
   const {type, subject, keyword} = examForm.value;
 
   if (!type && !keyword) {
-    ElMessage.warning('请选择考试类型或输入关键词');
+    ElMessage.warning('请选择资料类型或输入关键词');
     return;
   }
 

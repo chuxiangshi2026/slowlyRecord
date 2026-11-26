@@ -46,7 +46,7 @@ function normalizeAnswer(value: string): string {
         .split('')
         .map(c => {
             const code = c.charCodeAt(0);
-            // 全角数字/字母统一转半角（小学生中文输入法常见场景）
+            // 全角数字/字母统一转半角（中文输入法常见场景）
             if (code >= 0xFF10 && code <= 0xFF19) return String.fromCharCode(code - 0xFEE0);
             if (code >= 0xFF21 && code <= 0xFF3A) return String.fromCharCode(code - 0xFEE0);
             if (code >= 0xFF41 && code <= 0xFF5A) return String.fromCharCode(code - 0xFEE0);

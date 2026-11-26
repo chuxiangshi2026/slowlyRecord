@@ -75,6 +75,7 @@ import {
   getWordBank,
   saveWordBank,
   getCurrentWordBankId,
+  setCurrentWordBankId,
   updateWordInBankChunk,
   type WordBank
 } from '@/utils/wordbank-manager.ts'
@@ -991,6 +992,22 @@ describe('useWordsStore', () => {
       await store.listWords()
 
       expect(store.currentWordBankId).toBe('auto-bank')
+    })
+
+    it('持久化的词库 id 已失效时回退默认库并写回 localStorage', async () => {
+      const store = useWordsStore()
+      const word = createWord()
+      const defaultBank = createWordBank({ id: 'default', words: [word], isDefault: true })
+
+      vi.mocked(getWordBank).mockImplementation(async (id: string) => id === 'ghost-bank' ? null : defaultBank)
+      vi.mocked(getCurrentWordBankId).mockResolvedValue('default')
+
+      store.currentWordBankId = 'ghost-bank'
+      const result = await store.listWords()
+
+      expect(store.currentWordBankId).toBe('default')
+      expect(result.length).toBe(1)
+      expect(vi.mocked(setCurrentWordBankId)).toHaveBeenCalledWith('default')
     })
 
     it('非默认词库且非空时应该直接加载', async () => {

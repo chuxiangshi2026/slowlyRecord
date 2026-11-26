@@ -458,7 +458,7 @@ export interface KnowledgePack {
   id: string
   name: string
   description: string
-  /** 是否是有序列表（顺序本身是考点） */
+  /** 是否是有序列表（顺序本身即记忆线索） */
   ordered: boolean
   /** 是否可作为记忆宫殿的桩库 */
   usableAsPeg: boolean

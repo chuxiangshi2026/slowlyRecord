@@ -6,7 +6,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "math-formulas-2",
   "name": "常用数学公式（进阶篇）",
-  "description": "高中与竞赛方向的数列、几何、圆锥曲线、微积分与概率公式",
+  "description": "数列、几何、圆锥曲线、微积分与概率公式",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

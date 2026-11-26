@@ -6,7 +6,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "thirty-six-stratagems",
   "name": "三十六计",
-  "description": "三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身是考点",
+  "description": "三十六计全目，按六套（胜战/敌战/攻战/混战/并战/败战）顺序排列，顺序本身即记忆线索",
   "ordered": true,
   "usableAsPeg": false,
   "mnemonics": [

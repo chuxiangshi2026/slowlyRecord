@@ -1,6 +1,6 @@
 /**
  * 外文经典库服务
- * 管理外文经典（演讲/诗歌/散文/电影片段 + 日/法/俄文 + 中英对照）的加载、缓存和查询
+ * 管理外文经典（演讲/诗歌/散文 + 日/法/俄文 + 中英对照）的加载、缓存和查询
  */
 
 // 外文经典支持的语言（与 TextArticle.language 保持一致）
@@ -39,10 +39,6 @@ export const ENGLISH_CATEGORIES: EnglishClassicCategory[] = [
   { code: 'speeches', name: '经典演讲', file: 'speeches.json', description: '影响世界的英文演讲名篇', language: 'en' },
   { code: 'poems', name: '经典诗歌', file: 'poems.json', description: '英美诗歌名篇', language: 'en' },
   { code: 'essays', name: '散文名篇', file: 'essays.json', description: '论学、人生、自然与青春', language: 'en' },
-  // 电影片段（台词版权未明，商店构建不下发该分类与数据文件）
-  ...((__PLATFORM__ === 'utools' && __STORE_BUILD__) ? [] : [
-    { code: 'movies' as const, name: '电影片段', file: 'movie-scripts.json', description: '经典电影独白与名段', language: 'en' as const },
-  ]),
   { code: 'japanese', name: '日文名篇', file: 'japanese.json', description: '日本经典随笔、俳句小诗与演说', language: 'ja' },
   { code: 'french', name: '法文名篇', file: 'french.json', description: '法国经典散文、诗歌与短文', language: 'fr' },
   { code: 'russian', name: '俄文名篇', file: 'russian.json', description: '俄罗斯经典诗歌与散文', language: 'ru' },

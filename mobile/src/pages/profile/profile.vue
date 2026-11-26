@@ -555,7 +555,7 @@ const showAbout = () => {
     title: '关于慢记',
     // 始终展示当前构建版本；wx.getAccountInfoSync 在开发/预览环境没有 version，
     // 只读它会导致关于页长期没有版本号或停留旧值
-    content: `慢记 v${manifest.versionName} · ${envText}\n\n一款专注于单词记忆与复习的工具应用`,
+    content: `慢记 v${manifest.versionName} · ${envText}\n\n本地优先的记忆训练工具，按遗忘曲线安排复习。\n不提供课程、教学或培训服务，与任何考试机构、出版机构无关联。`,
     showCancel: false,
   })
 }

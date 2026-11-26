@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中物理实验（由 public/knowledgebanks/physics-experiments.json 转换生成，请勿手改）
+ * 内置知识包：物理实验常识（由 public/knowledgebanks/physics-experiments.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "physics-experiments",
-  "name": "初中物理实验",
-  "description": "初中常见物理实验 15 个",
+  "name": "物理实验常识",
+  "description": "常见物理实验 15 个",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

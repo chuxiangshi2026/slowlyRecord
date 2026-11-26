@@ -21,8 +21,8 @@ const ORIGIN = (process.env.SITE_ORIGIN || '').replace(/\/+$/, '')
 const PREVIEW_WORDS = 100
 
 const BANKS = [
-  { id: 'zhongkao', name: '中考词汇', desc: '初中课标核心词汇（中考）' },
-  { id: 'gaokao', name: '高考词汇', desc: '高中课标 3500 词汇（高考）' },
+  { id: 'zhongkao', name: '中考词汇', desc: '1780 词 · 中考常见词表' },
+  { id: 'gaokao', name: '高考词汇', desc: '3746 词 · 高中常见词表' },
   { id: 'cet4', name: '四级词汇', desc: '大学英语四级核心词汇' },
   { id: 'cet6', name: '六级词汇', desc: '大学英语六级核心词汇' },
   { id: 'bec', name: '商务英语', desc: '商务英语考试核心词汇' },

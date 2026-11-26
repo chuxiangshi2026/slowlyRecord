@@ -309,7 +309,7 @@ function getBankType(level: WordBankLevel): WordBankType | undefined {
 // 当前语言的等级表（en=CET~GRE，ja=JLPT，ru/es/fr=CEFR），只保留有词库的等级
 const LEVELS = getWordBankLevels(ACTIVE_LANGUAGE).filter(getBankType);
 const BANK_HINT = ACTIVE_LANGUAGE === 'en'
-  ? '基于权威词库（CET4/6、雅思、托福、GRE等）'
+  ? '基于内置考试词表（CET4/6、雅思、托福、GRE 等）'
   : `基于内置 ${LANGUAGE_NAME} 分级词库`;
 import {
   Collection,

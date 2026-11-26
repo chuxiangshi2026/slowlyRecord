@@ -595,7 +595,14 @@ export async function getCurrentWordBankId(): Promise<string> {
   // 返回默认词库ID
   const banks = await getAllWordBankMetas();
   const defaultBank = banks.find(b => b.isDefault);
-  return defaultBank?.id || banks[0]?.id || '';
+  const fallbackId = defaultBank?.id || banks[0]?.id || '';
+  // 持久化 id 已失效时把纠正结果写回，避免每次启动都拿旧 id 去查库
+  if (fallbackId) {
+    try {
+      localStorage.setItem(CURRENT_WORDBANK_KEY, fallbackId);
+    } catch { /* ignore */ }
+  }
+  return fallbackId;
 }
 
 /**

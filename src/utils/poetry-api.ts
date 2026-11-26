@@ -190,7 +190,7 @@ function getMinimalFallbackData(): PoetryData[] {
       author: '李白',
       dynasty: 'tang',
       content: '床前明月光，\n疑是地上霜。\n举头望明月，\n低头思故乡。',
-      tags: ['唐诗', '李白', '思乡', '小学必背']
+      tags: ['唐诗', '李白', '思乡', '常背篇目']
     },
     {
       _id: '2',
@@ -198,7 +198,7 @@ function getMinimalFallbackData(): PoetryData[] {
       author: '苏轼',
       dynasty: 'song',
       content: '明月几时有？把酒问青天。\n不知天上宫阙，今夕是何年。',
-      tags: ['宋词', '苏轼', '中秋', '高中必背']
+      tags: ['宋词', '苏轼', '中秋', '常背篇目']
     },
     {
       _id: '3',
@@ -206,7 +206,7 @@ function getMinimalFallbackData(): PoetryData[] {
       author: '佚名',
       dynasty: 'xianqin',
       content: '关关雎鸠，在河之洲。\n窈窕淑女，君子好逑。',
-      tags: ['诗经', '爱情', '初中必背']
+      tags: ['诗经', '爱情', '常背篇目']
     }
   ];
 }

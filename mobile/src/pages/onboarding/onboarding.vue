@@ -41,9 +41,9 @@
           <text class="screen-title">从哪儿开始？</text>
           <text class="screen-subtitle">选一个方向马上开始，其余功能之后随时可用</text>
           <scroll-view scroll-y class="start-scroll">
-            <!-- 单词区 -->
+            <!-- 词表区 -->
             <view class="start-section">
-              <text class="section-label">📖 背单词</text>
+              <text class="section-label">📖 词表记忆</text>
               <view
                 v-for="bank in recommendedBanks"
                 :key="bank.sourceId"

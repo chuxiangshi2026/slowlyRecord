@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中化学式与方程式（由 public/knowledgebanks/chemistry-formulas.json 转换生成，请勿手改）
+ * 内置知识包：化学式与方程式（由 public/knowledgebanks/chemistry-formulas.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "chemistry-formulas",
-  "name": "初中化学式与方程式",
-  "description": "初中常见化学式、化学方程式与计算式 22 条",
+  "name": "化学式与方程式",
+  "description": "常见化学式、化学方程式与计算式 22 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

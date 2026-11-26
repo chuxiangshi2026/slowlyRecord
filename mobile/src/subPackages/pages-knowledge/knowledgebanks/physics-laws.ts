@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中物理定律与原理（由 public/knowledgebanks/physics-laws.json 转换生成，请勿手改）
+ * 内置知识包：物理定律与原理（由 public/knowledgebanks/physics-laws.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "physics-laws",
-  "name": "初中物理定律与原理",
-  "description": "初中物理常见定律与原理 15 条",
+  "name": "物理定律与原理",
+  "description": "常见物理定律与原理 15 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -18,7 +18,7 @@ const pack: KnowledgePack = {
     {
       "id": "physics-laws-2",
       "question": "牛顿第二定律",
-      "answer": "物体加速度的大小与所受合外力成正比、与质量成反比，方向与合外力方向相同，表达式 F=ma。（高中定量内容，初中作定性了解）"
+      "answer": "物体加速度的大小与所受合外力成正比、与质量成反比，方向与合外力方向相同，表达式 F=ma。（进阶定量内容，入门阶段作定性了解）"
     },
     {
       "id": "physics-laws-3",
@@ -67,13 +67,13 @@ const pack: KnowledgePack = {
     },
     {
       "id": "physics-laws-12",
-      "question": "电荷守恒（初中表述）",
+      "question": "电荷守恒（入门表述）",
       "answer": "电荷既不会凭空产生，也不会凭空消失，只能从一个物体转移到另一个物体，或从物体的一部分转移到另一部分。摩擦起电的本质是电子的转移（得到电子的物体带负电，失去电子的物体带正电），而不是创造了电荷。"
     },
     {
       "id": "physics-laws-13",
       "question": "楞次定律",
-      "answer": "感应电流具有这样的方向：感应电流的磁场总要阻碍引起感应电流的磁通量的变化。（超出初中范围，作了解即可）"
+      "answer": "感应电流具有这样的方向：感应电流的磁场总要阻碍引起感应电流的磁通量的变化。（超出入门范围，作了解即可）"
     },
     {
       "id": "physics-laws-14",

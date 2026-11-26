@@ -324,3 +324,4 @@ test-results/night-validation-2026-11-26/<run-id>/
 | 密钥专项 | 按用户决定暂停，不作为本轮中断条件 |
 | uTools 商店收口计划 | 晚间验收后执行 `docs/utools-store-review-hardening-plan-2026-11-26.md` |
 | 最终报告 | `docs/night-validation-report-2026-11-26.md`（已创建；结论：部分完成，不可作为发布依据） |
+| 重跑门禁（2026-11-27） | HEAD `d6183152`（版本 1.3.13）：226 文件 / 3525 用例、三组类型检查、diff check 通过；utools/web/electron/mp-weixin/store 五份构建 exit 0；三端 E2E 各 47/47；商店闸门通过；证据 `test-results/night-validation-2026-11-26/20261127-recheck/` |

@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中物理公式（由 public/knowledgebanks/physics-formulas.json 转换生成，请勿手改）
+ * 内置知识包：物理常用公式（由 public/knowledgebanks/physics-formulas.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "physics-formulas",
-  "name": "初中物理公式",
-  "description": "初中物理常用公式 21 条",
+  "name": "物理常用公式",
+  "description": "物理常用公式 21 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [
@@ -151,7 +151,7 @@ const pack: KnowledgePack = {
       "question": "凸透镜成像公式",
       "answer": "1/u+1/v=1/f",
       "extras": {
-        "说明": "u 为物距，v 为像距，f 为焦距；初中主要要求成像的定性规律，此式供定量计算了解"
+        "说明": "u 为物距，v 为像距，f 为焦距；成像的定性规律为主，此式供定量计算了解"
       }
     },
     {

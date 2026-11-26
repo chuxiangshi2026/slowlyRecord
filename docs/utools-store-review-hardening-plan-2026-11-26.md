@@ -342,6 +342,8 @@ Blocker/Major：
 
 按 §6「缺少 uTools 实机：自动化通过可以交付代码/产物部分完成，不能写商店验收通过」执行。
 
+> 2026-11-27 状态说明：统计域名迁移已在 9.5 记录完成，本轮复核 `stats.slowrecap.cn` DNS/TLS/HTTP 均正常；本表 9.1 的“旧统计域名随外部阻塞保留”与“域名 + 实机待补”属当时历史结论，域名项不应再按未实施排期。实机部分仍缺 uTools 宿主与真机证据，见 `docs/next-closeout-report-2026-11-27.md`。
+
 ### 9.2 改动文件（本计划相关）
 
 - `src/utils/stats.ts`：默认关闭口径（`sr_stats_optin` 正向同意标记，`statsExcluded` 兼容读写），`applyPersistedStatsPrefs` 增加 `optedIn` 迁移。
@@ -482,6 +484,8 @@ Web 构建（`npm run dev:web`，`http://lvh.me:3000/` 使 hostname 非 localhos
 4. 再次重载：无引导、无告知弹窗 → 不重弹。
 
 uTools 侧未再取一次截图（该副本的 user-set 已写入 `statsNoticeShown`，无法在不进开发者工具的情况下重置），但弹层层级与触发时序是同一份代码，Web 端结论可直接沿用。
+
+> 2026-11-27 说明：上述“可直接沿用”仅指共享代码层面的证据；uTools 宿主内的告知弹层遮挡与统计请求时序仍未复测，本轮宿主项记为 BLOCKED，见 `docs/next-closeout-report-2026-11-27.md` 第 4 节。
 
 ### 9.7 待补动作
 

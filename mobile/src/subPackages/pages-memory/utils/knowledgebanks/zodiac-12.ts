@@ -7,7 +7,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "zodiac-12",
   "name": "十二生肖",
-  "description": "十二生肖及其对应地支，顺序本身是考点",
+  "description": "十二生肖及其对应地支，顺序本身即记忆线索",
   "ordered": true,
   "usableAsPeg": true,
   "mnemonics": [

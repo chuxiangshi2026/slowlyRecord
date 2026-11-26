@@ -1,12 +1,12 @@
 /**
- * 内置知识包：初中地理核心概念（由 public/knowledgebanks/geography-concepts.json 转换生成，请勿手改）
+ * 内置知识包：地理常识（由 public/knowledgebanks/geography-concepts.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "geography-concepts",
-  "name": "初中地理核心概念",
-  "description": "初中地理核心概念 41 条",
+  "name": "地理常识",
+  "description": "地理常识 41 条",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

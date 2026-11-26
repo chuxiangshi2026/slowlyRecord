@@ -7,7 +7,7 @@ import type { KnowledgePack } from '@/stores/useUtils/types'
 const pack: KnowledgePack = {
   "id": "solar-terms-24",
   "name": "二十四节气",
-  "description": "二十四节气及其日期与物候，顺序本身是考点",
+  "description": "二十四节气及其日期与物候，顺序本身即记忆线索",
   "ordered": true,
   "usableAsPeg": true,
   "mnemonics": [

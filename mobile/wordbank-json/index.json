@@ -138,60 +138,6 @@
     "sizeKB": 32
   },
   {
-    "id": "girl-meets-world",
-    "name": "女孩成长记词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "friends-tv",
-    "name": "老友记词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "modern-family",
-    "name": "摩登家庭词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "big-bang-theory",
-    "name": "生活大爆炸词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "sherlock",
-    "name": "神探夏洛克词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "the-crown",
-    "name": "王冠词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "pursuit-of-happyness",
-    "name": "当幸福来敲门词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "forrest-gump",
-    "name": "阿甘正传词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
-    "id": "shawshank-redemption",
-    "name": "肖申克的救赎词汇",
-    "wordCount": 50,
-    "sizeKB": 5
-  },
-  {
     "id": "gaokao",
     "name": "高考词汇",
     "wordCount": 3746,
@@ -208,18 +154,6 @@
     "name": "典型句式与场景句型",
     "wordCount": 264,
     "sizeKB": 40
-  },
-  {
-    "id": "movie-lines",
-    "name": "电影台词",
-    "wordCount": 223,
-    "sizeKB": 39
-  },
-  {
-    "id": "famous-quotes",
-    "name": "名言警句",
-    "wordCount": 213,
-    "sizeKB": 42
   },
   {
     "id": "tech-vocab",

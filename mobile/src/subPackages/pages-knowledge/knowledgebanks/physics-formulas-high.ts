@@ -1,12 +1,12 @@
 /**
- * 内置知识包：高中物理公式（由 public/knowledgebanks/physics-formulas-high.json 转换生成，请勿手改）
+ * 内置知识包：物理进阶公式（由 public/knowledgebanks/physics-formulas-high.json 转换生成，请勿手改）
  */
 import type { KnowledgePack } from '@/stores/useUtils/types'
 
 const pack: KnowledgePack = {
   "id": "physics-formulas-high",
-  "name": "高中物理公式",
-  "description": "高中物理必修主干公式 28 条（直线运动、力学、电磁学）",
+  "name": "物理进阶公式",
+  "description": "物理进阶主干公式 28 条（直线运动、力学、电磁学）",
   "ordered": false,
   "usableAsPeg": false,
   "items": [

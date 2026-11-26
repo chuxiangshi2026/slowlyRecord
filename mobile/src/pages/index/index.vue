@@ -3,7 +3,7 @@
     <AppBackground />
     <view class="header">
       <text class="title">慢记</text>
-      <text class="subtitle">高效记忆，轻松学习</text>
+      <text class="subtitle">按遗忘曲线安排今天的复习</text>
     </view>
 
     <!-- 今日任务区：打开即见"今天该学什么"，一步直达 -->

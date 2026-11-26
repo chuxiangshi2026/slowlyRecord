@@ -1,7 +1,7 @@
 {
   "name": "慢记",
   "appid": "__UNI__SLOWLYRECORD",
-  "description": "慢记 - 基于艾宾浩斯遗忘曲线的多场景记忆训练工具，支持单词、听写、数字、文本、知识库、音标等多元记忆与多端同步",
+  "description": "慢记 - 基于艾宾浩斯遗忘曲线的记忆训练工具，支持词表、听写、数字、文本、知识包、音标等记忆场景与多端同步",
   "versionName": "1.1.7",
   "versionCode": "117",
   "transformPx": false,
