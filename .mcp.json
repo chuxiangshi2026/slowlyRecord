@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "bing-cn": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "bing-cn-mcp"]
+    },
+    "web-search": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "simple-web-search-mcp"]
+    },
+    "docker": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "docker-mcp"]
+    },
+    "ssh": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@fangjunjie/ssh-mcp-server",
+        "--config-file",
+        "/home/skj/.ssh/ssh-mcp-servers.json"
+      ]
+    },
+    "winremote": {
+      "type": "stdio",
+      "command": "/mnt/c/Users/skj/AppData/Local/Programs/Python/Python310/Scripts/winremote-mcp.exe",
+      "args": ["--transport", "stdio"]
+    }
+  }
+}

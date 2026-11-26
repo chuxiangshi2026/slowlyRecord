@@ -46,6 +46,9 @@ scripts/data/freq/
 
 # Tencent Cloud EdgeOne
 .env
+.env.local
+*.env.local
+mobile/.env.local
 .edgeone/*
 .tef_dist/*
 

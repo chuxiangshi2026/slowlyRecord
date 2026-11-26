@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "utools-plugin-selfcheck": {
+      "source": "uTools-Labs/utools-plugin-selfcheck-skill",
+      "commit": "00dc411f3f1a3a11130c16975649d3bbdd72a360",
+      "sourceType": "github",
+      "skillPath": "skills/utools-plugin-selfcheck/SKILL.md",
+      "computedHash": "e7fd23a3461828ff90a2d98f83101477f43674acb1be11776a7854432577272b"
+    }
+  }
+}
