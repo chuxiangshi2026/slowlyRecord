@@ -516,9 +516,10 @@ import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb, updateSetDbWithRetry} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/stats';
+import {maybeShowStatsNotice} from '@/utils/stats-notice';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron, isWeb} from '@/adapters/platform';
-import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut} from '@/adapters/window';
+import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut, hideMainWindow, showMainWindow, withMainWindowRestore} from '@/adapters/window';
 import {mergeFocusModeSettings, shouldIgnoreMouseInLockedFocusWindow, canOpenFocusWindow, focusWindowOpened, focusWindowClosed, getOpenFocusWindowCount, resyncFocusWindowCount, getWordFocusWindow, setWordFocusWindow} from '@/utils/focus-lock';
 import {
   WORDBANK_LIST,
@@ -1822,8 +1823,8 @@ const handleOpenWordList = async () => {
   }
 
   // 显示主窗口并刷新
-  if (isUtools() && (window as any).utools?.showMainWindow) {
-    const ok = (window as any).utools.showMainWindow();
+  if (isUtools()) {
+    const ok = showMainWindow();
     console.log('[专注模式-单词] showMainWindow 返回:', ok, '可见性:', document.visibilityState);
     // 临时诊断：与文本模式对照主窗口显示/隐藏时序
     const onVisChange = () => console.log('[专注模式-单词] visibilitychange =>', document.visibilityState);
@@ -1834,8 +1835,8 @@ const handleOpenWordList = async () => {
   setTimeout(async () => {
     listMode.value = 0;
     await wordsStore.listWords();
-    if (isUtools() && (window as any).utools?.showMainWindow) {
-      (window as any).utools.showMainWindow();
+    if (isUtools()) {
+      showMainWindow();
     }
   }, 120);
 };
@@ -1902,15 +1903,15 @@ const handleOpenDictation = async () => {
   router.push('/dictation');
 
   // 显示主窗口
-  if (isUtools() && (window as any).utools?.showMainWindow) {
-    (window as any).utools.showMainWindow();
+  if (isUtools()) {
+    showMainWindow();
   }
 
   // 延迟再次刷新，确保数据加载完毕
   setTimeout(async () => {
     await wordsStore.listWords();
-    if (isUtools() && (window as any).utools?.showMainWindow) {
-      (window as any).utools.showMainWindow();
+    if (isUtools()) {
+      showMainWindow();
     }
   }, 120);
 };
@@ -3179,7 +3180,7 @@ const importWords = () => {
   fileInput.type = 'file';
   fileInput.accept = '.json'; // 限制文件类型为JSON
   fileInput.onchange = (event) => {
-    if (isUtools()) (window as any).utools?.showMainWindow?.();
+    showMainWindow();
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -3258,7 +3259,7 @@ const importTextWords = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        ;(window as any).utools?.showMainWindow?.();
+        showMainWindow();
         try {
           const content = e.target?.result as string;
           const wordList = parseFileContent(content); // 解析文件内容
@@ -3404,19 +3405,18 @@ const toggleExplained = () => {
 /**
  * 截图翻译 - 快速识别图片中的文字并添加
  */
-const startScreenCapture = async () => {
+const startScreenCapture = async () => withMainWindowRestore(async () => {
   console.log('[截图添加] 开始截图识别流程');
   try {
     // 先隐藏弹窗（如果之前打开过），确保截图时界面干净
     ocrDialogVisible.value = false
 
     // 隐藏主窗口，确保截图时不会截到插件界面
-    if (isUtools()) (window as any).utools?.hideMainWindow?.();
+    hideMainWindow();
 
     // 调用截图翻译
     const result = await ocrTranslateMultiPlatform();
 
-    if (isUtools()) (window as any).utools?.showMainWindow?.();
     // 截图完成后，显示弹窗并更新状态
     // 重置状态
     ocrLoading.value = false
@@ -3490,7 +3490,7 @@ const startScreenCapture = async () => {
     }
     ocrDialogVisible.value = true
   }
-}
+})
 
 /**
  * 处理全选/取消全选
@@ -3597,17 +3597,23 @@ onMounted(async () => {
   if (applyBuiltinDeepLink()) return
 
   // 已引导过或词库已有数据 → 不再显示引导
+  let onboarded = false
   try {
-    if (localStorage.getItem(ONBOARDED_KEY) === '1') return
+    onboarded = localStorage.getItem(ONBOARDED_KEY) === '1'
   } catch { /* ignore */ }
 
-  // 单词可能已被入口流程（App 的 updateReview）加载过，避免重复 listWords
-  if (wordsStore.count === 0) {
-    await wordsStore.listWords()
+  if (!onboarded) {
+    // 单词可能已被入口流程（App 的 updateReview）加载过，避免重复 listWords
+    if (wordsStore.count === 0) {
+      await wordsStore.listWords()
+    }
+    if (wordsStore.count === 0) {
+      showOnboarding.value = true
+      return
+    }
   }
-  if (wordsStore.count === 0) {
-    showOnboarding.value = true
-  }
+  // 统计告知必须排在首启引导之后：引导浮层 z-index 9999，会挡住 ElMessageBox
+  maybeShowStatsNotice()
 })
 
 function onOnboardingFinish() {
@@ -3615,6 +3621,7 @@ function onOnboardingFinish() {
     localStorage.setItem(ONBOARDED_KEY, '1')
   } catch { /* ignore */ }
   showOnboarding.value = false
+  maybeShowStatsNotice()
 }
 </script>
 

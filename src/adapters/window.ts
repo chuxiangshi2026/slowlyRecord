@@ -14,6 +14,27 @@ import { isUtools } from './platform'
 import { getDbAdapter } from './db'
 import { updateSetDbWithRetry } from '@/utils/user-set-db-util'
 
+/** 显示 uTools 主窗口；其他平台为空操作并返回 undefined。 */
+export function showMainWindow(): unknown {
+  if (!isUtools()) return undefined
+  return (window as any).utools?.showMainWindow?.()
+}
+
+/** 隐藏 uTools 主窗口；非 uTools 或 API 缺失时按可继续处理返回 true。 */
+export function hideMainWindow(): boolean {
+  if (!isUtools()) return true
+  return (window as any).utools?.hideMainWindow?.() ?? true
+}
+
+/** 无论任务成功、失败或取消都恢复主窗口，并保留原返回/异常。 */
+export async function withMainWindowRestore<T>(task: () => Promise<T>): Promise<T> {
+  try {
+    return await task()
+  } finally {
+    showMainWindow()
+  }
+}
+
 /**
  * Electron 子窗口代理（IPC 转发）。
  * isAlwaysOnTop/isFocused 读本地状态（setAlwaysOnTop 时同步更新），

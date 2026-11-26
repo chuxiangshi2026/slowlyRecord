@@ -263,7 +263,7 @@ export async function ocrRecognizeWithPlatform(
     if (ocrPlatform === 'baidu') return await ocrTranslateBaidu(base64, appkey, key);
     if (ocrPlatform === 'ali') return await ocrTranslateAli(base64, appkey, key);
     if (ocrPlatform === 'tencent') return await ocrTranslateTencent(base64, appkey, key);
-    if (ocrPlatform === 'bilibili') return await ocrTranslateBilibili(base64, key, getActiveLanguage());
+    if (ocrPlatform === 'bilibili') return await ocrTranslateBilibili(base64, key);
     if (ocrPlatform === 'siliconflow') return await ocrTranslateSiliconflow(base64, appkey, key, translatePlatform);
     if (ocrPlatform === 'local') return await ocrTranslateLocal(base64, translatePlatform || 'local');
     if (ocrPlatform === 'deepseek' || ocrPlatform === 'glm' || ocrPlatform === 'utoolsai') {
@@ -336,7 +336,7 @@ export async function ocrTranslateMultiPlatform(onCaptured?: () => void): Promis
     } else if (ocrPlatform === 'tencent') {
         result = await ocrTranslateTencent(base64, appkey, key);
     } else if (ocrPlatform === 'bilibili') {
-        result = await ocrTranslateBilibili(base64, key, getActiveLanguage());
+        result = await ocrTranslateBilibili(base64, key);
     } else if (ocrPlatform === 'siliconflow') {
         result = await ocrTranslateSiliconflow(base64, appkey, key, wordsStore.currentTranslationPlatform || 'local');
     } else if (ocrPlatform === 'local') {
@@ -1114,13 +1114,15 @@ function isUTools(): boolean {
 let cachedWorker: any = null;
 let cachedWorkerLang = '';
 let cachedWorkerPromise: Promise<any> | null = null;
+let workerCleanupTimer: ReturnType<typeof setTimeout> | null = null;
 let lastUsedTime = 0;
 const WORKER_IDLE_TIMEOUT = 5 * 60 * 1000; // 5分钟无使用则释放
 
 // IndexedDB 缓存名称
 const CACHE_DB_NAME = 'SlowlyRecord_OCR_Cache';
 const CACHE_STORE_NAME = 'worker_scripts';
-const CACHE_KEY = 'worker_bundle';
+const CACHE_KEY_PREFIX = 'worker_bundle_';
+const LEGACY_ENG_CACHE_KEY = 'worker_bundle';
 
 // IndexedDB 存取统一走 kv-cache 适配层
 const scriptCache = getKvCache(CACHE_DB_NAME, CACHE_STORE_NAME);
@@ -1156,16 +1158,21 @@ function setUToolsCacheMarker(): void {
 /**
  * 从 IndexedDB 读取缓存
  */
-async function getCachedScripts(): Promise<{ worker: string, core: string, lang: string, version: number } | null> {
+async function getCachedScripts(lang: string): Promise<{ worker: string, core: string, lang: string, version: number } | null> {
     // 先检查 uTools 标记（更快）
     if (!hasUToolsCache()) {
         debugLog('[本地OCR] uTools 缓存标记不存在');
         return null;
     }
 
-    const result = await scriptCache.get<{ worker: string, core: string, lang: string, version: number }>(CACHE_KEY);
+    const key = `${CACHE_KEY_PREFIX}${lang}`;
+    let result = await scriptCache.get<{ worker: string, core: string, lang: string, version: number }>(key);
+    if (!result && lang === 'eng') {
+        // 兼容旧版未按语言分键的英语缓存；其他语言绝不能回退到英语模型
+        result = await scriptCache.get<{ worker: string, core: string, lang: string, version: number }>(LEGACY_ENG_CACHE_KEY);
+    }
     if (result) {
-        debugLog('[本地OCR] 从 IndexedDB 读取缓存成功');
+        debugLog(`[本地OCR] 从 IndexedDB 读取 ${lang} 缓存成功`);
     }
     return result;
 }
@@ -1173,8 +1180,8 @@ async function getCachedScripts(): Promise<{ worker: string, core: string, lang:
 /**
  * 保存到 IndexedDB 缓存
  */
-async function saveCachedScripts(workerCode: string, coreCode: string, langDataBase64: string): Promise<void> {
-    await scriptCache.put(CACHE_KEY, {
+async function saveCachedScripts(workerCode: string, coreCode: string, langDataBase64: string, lang: string): Promise<void> {
+    await scriptCache.put(`${CACHE_KEY_PREFIX}${lang}`, {
         worker: workerCode,
         core: coreCode,
         lang: langDataBase64,
@@ -1200,6 +1207,7 @@ async function getOrCreateWorker(lang: string = 'eng'): Promise<any> {
     // 检查缓存的 Worker 是否可用
     if (cachedWorker) {
         lastUsedTime = now;
+        scheduleWorkerCleanup();
         debugLog('[本地OCR] ⚡ 使用缓存的 Worker（快速识别）');
         return cachedWorker;
     }
@@ -1210,6 +1218,7 @@ async function getOrCreateWorker(lang: string = 'eng'): Promise<any> {
         cachedWorker = await cachedWorkerPromise;
         lastUsedTime = now;
         cachedWorkerPromise = null;
+        scheduleWorkerCleanup();
         return cachedWorker;
     }
 
@@ -1257,7 +1266,7 @@ async function createWorkerInternal(lang: string = 'eng'): Promise<any> {
     debugLog('[本地OCR] 创建 Worker，尝试读取缓存...');
 
     // 先尝试从 IndexedDB 读取缓存
-    const cached = await getCachedScripts();
+    const cached = await getCachedScripts(lang);
 
     let workerCode: string;
     let coreCode: string;
@@ -1286,7 +1295,7 @@ async function createWorkerInternal(lang: string = 'eng'): Promise<any> {
         langDataBase64 = arrayBufferToBase64(langData);
 
         // 保存到 IndexedDB 缓存
-        await saveCachedScripts(workerCode, coreCode, langDataBase64);
+        await saveCachedScripts(workerCode, coreCode, langDataBase64, lang);
         // 设置 uTools 缓存标记
         setUToolsCacheMarker();
     }
@@ -1324,13 +1333,21 @@ async function createWorkerInternal(lang: string = 'eng'): Promise<any> {
  * 定时清理 Worker
  */
 function scheduleWorkerCleanup() {
-    setTimeout(() => {
-        if (cachedWorker && Date.now() - lastUsedTime > WORKER_IDLE_TIMEOUT) {
+    if (workerCleanupTimer) clearTimeout(workerCleanupTimer);
+    const delay = Math.max(1, WORKER_IDLE_TIMEOUT - (Date.now() - lastUsedTime));
+    workerCleanupTimer = setTimeout(() => {
+        workerCleanupTimer = null;
+        if (!cachedWorker) return;
+        if (Date.now() - lastUsedTime >= WORKER_IDLE_TIMEOUT) {
             debugLog('[本地OCR] Worker 空闲超时，释放资源');
             cachedWorker.terminate();
             cachedWorker = null;
+            cachedWorkerLang = '';
+        } else {
+            // 创建后仍被使用时，按剩余空闲时间继续重排，避免 Worker 永久驻留
+            scheduleWorkerCleanup();
         }
-    }, WORKER_IDLE_TIMEOUT);
+    }, delay);
 }
 
 /**

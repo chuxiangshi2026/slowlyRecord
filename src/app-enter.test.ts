@@ -116,6 +116,7 @@ vi.mock('@/config.ts', async (importOriginal) => {
 })
 
 import App from './App.vue'
+import { translateWithPlatform } from '@/utils/translation-api'
 
 function fakeUtools() {
   return {
@@ -269,7 +270,7 @@ describe('App uTools 入口分派（fake utools 宿主）', () => {
     })
     expect(utools.showMainWindow).toHaveBeenCalled()
     await vi.waitFor(() => {
-      expect(hoisted.routerPush).toHaveBeenCalledWith({ path: '/translate', query: { text: 'hello' } })
+      expect(hoisted.routerPush).toHaveBeenCalledWith({ path: '/translate', query: { text: 'hello', to: 'zh' } })
     })
   })
 
@@ -281,9 +282,11 @@ describe('App uTools 入口分派（fake utools 宿主）', () => {
     mountApp()
     hoisted.enterCallback!({ code: 'jietuTranslate' })
     await vi.waitFor(() => {
-      expect(hoisted.routerPush).toHaveBeenCalledWith({ path: '/translate', query: { text: 'hello\nworld' } })
+      expect(hoisted.routerPush).toHaveBeenCalledWith({ path: '/translate', query: { text: 'hello\nworld', to: 'zh' } })
     })
     expect(utools.showMainWindow).toHaveBeenCalled()
+    // 截图翻译固定译向中文：预热参数与页面 query.to 一致，命中在途去重
+    expect(translateWithPlatform).toHaveBeenCalledWith('hello\nworld', 'youdao', 'auto', 'zh')
   })
 
   it('jietuTranslate 空结果：主窗口必须恢复（回归：曾静默悬挂），且不跳转', async () => {
@@ -398,6 +401,36 @@ describe('App uTools 入口分派（fake utools 宿主）', () => {
     hoisted.enterCallback!({ code: 'huaci', from: 'hotkey', payload: '美好' })
     await vi.waitFor(() => {
       expect(hoisted.addWord).toHaveBeenCalledWith('美好')
+    })
+  })
+
+  it('huaci 加词成功时不弹空白 warning', async () => {
+    mountApp()
+    hoisted.enterCallback!({ code: 'huaci', from: 'hotkey', payload: 'hello' })
+    await vi.waitFor(() => expect(hoisted.addWord).toHaveBeenCalledWith('hello'))
+    await new Promise(resolve => setTimeout(resolve, 0))
+    expect(hoisted.elMessage.warning).not.toHaveBeenCalled()
+  })
+
+  it('启动缓存 enter 失败时给出可见错误', async () => {
+    hoisted.addWord.mockRejectedValueOnce(new Error('db failed'))
+    ;(window as any).__pluginEnterQueue = [{ code: 'over', payload: 'hello' }]
+    mountApp()
+    await vi.waitFor(() => {
+      expect(hoisted.elMessage.warning).toHaveBeenCalledWith('操作执行失败，请重试')
+    })
+    delete (window as any).__pluginEnterQueue
+  })
+
+  it('批量加词失败时给出可见错误', async () => {
+    hoisted.batchAddWords.mockRejectedValueOnce(new Error('translate failed'))
+    const wrapper = mountApp()
+    hoisted.enterCallback!({ code: 'huaci', from: 'hotkey', payload: 'The quick brown fox jumps over the lazy dog again' })
+    const selector = wrapper.findComponent({ name: 'TextSelector' })
+    await vi.waitFor(() => expect(selector.props('visible')).toBe(true))
+    selector.vm.$emit('select', ['hello'])
+    await vi.waitFor(() => {
+      expect(hoisted.elMessage.error).toHaveBeenCalledWith('保存失败，请重试')
     })
   })
 })

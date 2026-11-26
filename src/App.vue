@@ -45,7 +45,7 @@ import {useUiStore} from "@/stores/ui.ts";
 import {DEFAULT_INTERVALS, USAGE_LIMITS} from "@/constants";
 import {addWord, batchAddWords} from "@/utils/str-util.ts";
 import {useSentencesStore} from "@/stores/sentences";
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage} from "element-plus";
 import {
   ocrTranslate,
   ocrTranslateAli,
@@ -67,11 +67,12 @@ import {getOcrApiKey} from "@/utils/get-api-key.ts";
 import {toEngineLang} from "@/utils/translation-lang-map.ts";
 import {getCurrentUsageCount, incrementUsageCounter, isFreeOcrPlatform, isOverDailyLimit} from "@/utils/usage-counter.ts";
 import {getNotificationAdapter} from "@/adapters/notification.ts";
-import {getStatsStatus, setStatsExcluded, applyPersistedStatsPrefs, STATS_NOTICE_KEY} from "@/utils/stats";
+import {applyPersistedStatsPrefs} from "@/utils/stats";
 import {RETIRED_MODEL_NAMES} from "@/config.ts";
 import {isStoreLocalOnly} from "@/adapters/local-bulk-store";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools as checkIsUtools} from "@/adapters/platform";
+import {hideMainWindow, showMainWindow} from "@/adapters/window";
 import { getActiveProfile, getActiveLanguage, isWordText } from '@/utils/language';
 import { containsChinese } from '@/utils/zh-entry';
 import { resolveZhEnDirection } from '@/utils/text-utils';
@@ -101,14 +102,16 @@ const debugPanelRef = ref<InstanceType<typeof DebugPanel> | null>(null);
 // 会话内复习提醒去重：每次插件进程只提醒一次
 let reviewReminderNotified = false;
 
+function reportEnterError(e: any) {
+  debugLog('onPluginEnter 处理失败:', e);
+  ElMessage.warning('操作执行失败，请重试');
+}
+
 // 接管 enter 事件：index.html 内联脚本早注册的队列转发到此停止（置 live 后其回调不再入队）
 ;(window as any).__pluginEnterLive = true
 ;(window as any).utools?.onPluginEnter?.(async (action: any) => {
   console.log('[onPluginEnter] 回调已触发, code=', action?.code, '时间=', new Date().toISOString());
-  handleUtoolsEnter(action).catch((e: any) => {
-    debugLog('onPluginEnter 处理失败:', e);
-    ElMessage.warning('操作执行失败，请重试');
-  })
+  handleUtoolsEnter(action).catch(reportEnterError)
 })
 
 // Electron 全局快捷键：主进程已读剪贴板文本一并下发，这里复用 uTools 划词/截图/翻译的既有处理流
@@ -146,7 +149,7 @@ async function handleUtoolsEnter(action: any) {
   // 同步插件状态和快捷键设置
   if (setDb) {
     // 统计偏好以 user-set 为准回填 localStorage（插件更新可能清空 localStorage）
-    applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
+    applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
     wordsStore.pluginStatus = setDb.pluginStatus;
     wordsStore.shortcutEnabled = setDb.shortcutEnabled;
     if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
@@ -288,22 +291,22 @@ async function handleUtoolsEnter(action: any) {
   }
   // 延迟调用，避免初始化时重复计算
   setTimeout(async () => {
-    await updateReview();
-    // uTools 8.0+ 定时任务对账：让系统侧任务与设置意向一致（低版本内部静默跳过）
-    void reconcileSchedules();
-    // 到期复习提醒：仅在「待复习较多且非复习入口」时提醒一次，避免与头部「待复习 N」重复触达；
-    // 点击直达复习：Web 走 onClick 回调，uTools 走 featureCode（点击后以 review 功能进入插件）
     try {
+      await updateReview();
+      // uTools 8.0+ 定时任务对账：让系统侧任务与设置意向一致（低版本内部静默跳过）
+      void reconcileSchedules().catch(e => console.error('[定时任务] 对账失败:', e));
+      // 到期复习提醒：仅在「待复习较多且非复习入口」时提醒一次，避免与头部「待复习 N」重复触达；
+      // 点击直达复习：Web 走 onClick 回调，uTools 走 featureCode（点击后以 review 功能进入插件）
       const isReviewEntry = action?.code === 'review';
       if (checkIsUtools() && !reviewReminderNotified && !isReviewEntry && wordsStore.forgetCount >= 5) {
         reviewReminderNotified = true;
         getNotificationAdapter().show('慢记复习提醒', `今日还有 ${wordsStore.forgetCount} 个单词/句子待复习`, () => {
-          if (checkIsUtools()) (window as any).utools?.showMainWindow?.();
+          showMainWindow();
           router.push('/word');
         }, 'review');
       }
     } catch (e) {
-      console.error('[复习提醒] 发送通知失败:', e);
+      console.error('[复习提醒] 更新复习状态或发送通知失败:', e);
     }
   }, 100);
 
@@ -344,7 +347,7 @@ async function handleUtoolsEnter(action: any) {
     // console.log('==================', action)
 
     // 先显示主窗口，确保用户能看到添加结果
-    if (isUTools()) (window as any).utools?.showMainWindow?.()
+    showMainWindow()
 
     const result = await addWord(action.payload);
     if (!result.success) {
@@ -358,7 +361,7 @@ async function handleUtoolsEnter(action: any) {
 
   // 超级面板「收藏句子」：原句进句子库，不翻译、不参与复习
   if (action.code === 'overSentence') {
-    if (isUTools()) (window as any).utools?.showMainWindow?.()
+    showMainWindow()
     const text = typeof action.payload === 'string' ? action.payload.trim() : ''
     if (!text) {
       ElMessage.warning('未获取到选中的文本')
@@ -507,7 +510,7 @@ async function handleUtoolsEnter(action: any) {
       console.error('[截图添加] 捕获到错误:', err);
       closeOCRPanel();
       // 发生错误或取消时，显示主窗口让用户可以继续操作
-      if (isUTools()) (window as any).utools?.showMainWindow?.();
+      showMainWindow();
       // 检查是否是使用次数超限的错误
       if (err.message && err.message.includes('每日免费')) {
         ElMessage.error(err.message);
@@ -566,8 +569,9 @@ async function handleUtoolsEnter(action: any) {
         ElMessage.warning('未识别到可翻译的原文');
         return;
       }
-      prewarmTranslation(text);
-      router.push({ path: '/translate', query: { text } });
+      // 截图翻译是「帮我读懂屏幕内容」：固定译向中文，不按中英占比改译成学习语言
+      prewarmTranslation(text, 'zh');
+      router.push({ path: '/translate', query: { text, to: 'zh' } });
     } catch (e: any) {
       debugLog('截图翻译失败:', e);
       closePendingPage();
@@ -630,7 +634,9 @@ function consumeQueuedPluginEnter() {
   if (w.__pluginEnterQueue && w.__pluginEnterQueue.length > 0) {
     const queued = w.__pluginEnterQueue.splice(0);
     console.log('[App] 消费启动前缓存的 enter 事件:', queued.map((a: any) => a?.code).join(','));
-    queued.forEach((action: any) => handleUtoolsEnter(action));
+    queued.forEach((action: any) => {
+      void handleUtoolsEnter(action).catch(reportEnterError);
+    });
   }
 }
 consumeQueuedPluginEnter();
@@ -731,7 +737,7 @@ async function ocrExistingImage(base64: string): Promise<OcrResult> {
     return await ocrTranslateAli(base64, appkey, key);
   }
   if (ocrPlatform === 'bilibili') {
-    return await ocrTranslateBilibili(base64, key, getActiveLanguage());
+    return await ocrTranslateBilibili(base64, key);
   }
   if (ocrPlatform === 'siliconflow') {
     return await ocrTranslateSiliconflow(base64, appkey, key, wordsStore.currentTranslationPlatform || 'local');
@@ -750,20 +756,19 @@ async function ocrExistingImage(base64: string): Promise<OcrResult> {
 
 /** 截图/OCR 完成后兜底恢复主窗口：窗口隐藏状态下的 toast 与路由切换用户都看不见 */
 function restoreUtoolsMainWindow() {
-  if (isUTools()) {
-    try { (window as any).utools?.showMainWindow?.(); } catch { /* 静默 */ }
-  }
+  try { showMainWindow(); } catch { /* 静默 */ }
 }
 
 /**
- * 翻译预热：用与翻译页相同的参数（中文→en、其他→zh）提前发起请求；
- * 翻译页挂载后经 translation-api 在途去重共享同一 Promise，省一次网络往返
+ * 翻译预热：用与翻译页相同的参数提前发起请求；
+ * 翻译页挂载后经 translation-api 在途去重共享同一 Promise，省一次网络往返。
+ * 截图翻译传入目标语言时以入口指定为准（与翻译页 query.to 一致）。
  */
-function prewarmTranslation(text: string) {
+function prewarmTranslation(text: string, to?: 'zh' | 'en') {
   try {
     // 与翻译页同一套方向判定（中英混杂按占比），保证在途去重命中同一缓存键
-    const { from, to } = resolveZhEnDirection(text);
-    void translateWithPlatform(text, wordsStore.currentTranslationPlatform, from, to).catch(() => { /* 预热失败由页面自身重试 */ });
+    const direction = to ? { from: 'auto' as const, to } : resolveZhEnDirection(text);
+    void translateWithPlatform(text, wordsStore.currentTranslationPlatform, direction.from, direction.to).catch(() => { /* 预热失败由页面自身重试 */ });
   } catch { /* 预热失败不影响正常流程 */ }
 }
 
@@ -774,7 +779,7 @@ async function displayOCRResults(resRegions: any[]) {
   console.log('[截图添加] displayOCRResults 被调用，结果数:', resRegions?.length || 0);
 
   // 识别成功，显示主窗口让用户查看结果
-  if (isUTools()) (window as any).utools?.showMainWindow?.();
+  showMainWindow();
   console.log('[截图添加] 主窗口已显示');
 
   // 存储OCR结果
@@ -789,10 +794,21 @@ async function displayOCRResults(resRegions: any[]) {
 
 
 
+async function runBatchAddWords(wordTexts: string[]): Promise<boolean> {
+  try {
+    await batchAddWords(wordTexts);
+    return true;
+  } catch (e) {
+    debugLog('批量添加单词失败:', e);
+    ElMessage.error('保存失败，请重试');
+    return false;
+  }
+}
+
 /**
  * 选择特定的OCR识别项
  */
-function handleSelectOCRItem(region: any) {
+async function handleSelectOCRItem(region: any) {
   let word = region.context || '';
   // let translation = region.tranContent || '';
 
@@ -806,8 +822,7 @@ function handleSelectOCRItem(region: any) {
     console.log('待添加的选中文本' + `[${word}]`)
     const text = `${word}`.trim();
     // 入口即单词列表：句子作为词条条目进入复习队列（收藏走句子库独立入口）
-    batchAddWords([text]);
-    router.push('/word')
+    if (await runBatchAddWords([text])) router.push('/word')
   } else {
     ElMessage.warning('单词或翻译内容为空');
   }
@@ -816,7 +831,7 @@ function handleSelectOCRItem(region: any) {
 /**
  * 选择所有OCR识别项
  */
-function handleSelectAllItems(items: any[]) {
+async function handleSelectAllItems(items: any[]) {
   const wordTexts: string[] = [];
   items.forEach(region => {
     const word = region.context || '';
@@ -825,12 +840,8 @@ function handleSelectAllItems(items: any[]) {
     }
   });
 
-  if (wordTexts.length > 0) {
-    batchAddWords(wordTexts);
-  }
-
-  if (items.length > 0) {
-    ElMessage.success(`已保存全部 ${items.length} 项到单词列表`);
+  if (wordTexts.length > 0 && await runBatchAddWords(wordTexts)) {
+    ElMessage.success(`已保存全部 ${wordTexts.length} 项到单词列表`);
     // 添加后跳转到单词列表
     router.push('/word')
   }
@@ -861,7 +872,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
   // 清空剪贴板，避免读到旧内容
   utoolsApi.copyText?.('')
 
-  let b = utoolsApi.hideMainWindow?.();
+  const b = hideMainWindow();
   if (!b) {
     if (utoolsApi.getWindowType?.() === "detach") {
       return '使用此功能，请先关闭自动分离';
@@ -879,7 +890,7 @@ async function getSelectedTextFromSystem(): Promise<string> {
   utoolsApi.simulateKeyboardTap?.("c", modifier);
   debugLog('发送快捷键...')
 
-  utoolsApi.showMainWindow?.();
+  showMainWindow();
   debugLog('显示主界面...')
 
   // 轮询剪贴板：复制完成立即返回，不再死等固定 500ms；超时兜底（慢速应用最大等待 700ms）
@@ -950,8 +961,11 @@ function checkShearBoardAddWork(text: string) {
     return;
   }
   // 验证处理后的文本是否符合要求
-  addWord(processedText).then(err => {
-    ElMessage.warning(err.message)
+  void addWord(processedText).then(result => {
+    if (!result.success) ElMessage.warning(result.message || '添加失败');
+  }).catch(e => {
+    debugLog('添加单词失败:', e);
+    ElMessage.error('保存失败，请重试');
   });
 
   // 添加单词后跳转到单词列表
@@ -974,12 +988,13 @@ async function displayTextSelection(text: string) {
 /**
  * 选择特定的文本项
  */
-function handleSelectTextItems(words: string[], platform?: string) {
+async function handleSelectTextItems(words: string[], platform?: string) {
   if (words && words.length > 0) {
     console.log('待添加的选中单词', words);
-    batchAddWords(words);
-    // 添加单词后跳转到单词列表
-    router.push('/word')
+    if (await runBatchAddWords(words)) {
+      // 添加单词后跳转到单词列表
+      router.push('/word')
+    }
   } else {
     ElMessage.warning('单词内容为空');
   }
@@ -1022,54 +1037,15 @@ function closeTextPanel() {
   textContent.value = '';
 }
 
-/**
- * 首次启动告知匿名使用统计：默认开启，明确说明上报内容与关闭入口。
- * 只在统计实际生效的环境提示（开发/本地/已手动关闭的环境不打扰），每个安装只提示一次。
- * 「已提示」与「用户关闭」都持久化到 user-set，插件更新清空 localStorage 后不会重弹/重置。
- */
-function maybeShowStatsNotice() {
-  try {
-    // 先用 user-set 里持久化的偏好校正 localStorage（更新后 localStorage 可能已被清空）
-    try {
-      const setDb = getSetDb();
-      if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
-    } catch { /* DB 未就绪时按 localStorage 判断 */ }
-
-    if (localStorage.getItem(STATS_NOTICE_KEY) === '1') return;
-    if (getStatsStatus() !== 'enabled') return;
-    localStorage.setItem(STATS_NOTICE_KEY, '1');
-    void import('@/utils/user-set-db-util')
-      .then(({ upsertSetDbFields }) => upsertSetDbFields({ statsNoticeShown: true }))
-      .catch(() => { /* 忽略：localStorage 已记，仅影响跨更新去重 */ });
-    ElMessageBox.confirm(
-      '慢记默认开启匿名使用统计，用于了解哪些功能真正被使用、版本与平台分布，从而优先改进这些功能。\n\n' +
-      '上报内容仅限操作事件（启动、添词、导入导出、设置修改等）与一个随机安装标识，绝不采集你的单词、释义、笔记或任何输入内容，也不包含账号信息。\n\n' +
-      '你可以随时在「设置 → 常规设置 → 匿名使用统计」关闭，关闭立即生效。',
-      '帮助改进慢记（匿名统计）',
-      {
-        confirmButtonText: '保持开启（推荐）',
-        cancelButtonText: '关闭统计',
-        distinguishCancelAndClose: true,
-        type: 'info',
-      }
-    ).catch((action: string) => {
-      if (action === 'cancel') setStatsExcluded(true);
-    });
-  } catch { /* localStorage/弹窗不可用时忽略，不影响启动 */ }
-}
-
 onMounted(async () => {
 
   // 恢复界面字号档位（缩放比例已持久化在 localStorage）
   useUiStore().applyUiZoom(useUiStore().uiZoom);
 
-  // 首次启动告知匿名使用统计（默认开启，可随时在设置关闭）
-  maybeShowStatsNotice();
-
   // 首页刷新时触发   自动更新需要复习的单词
   // 延迟调用，避免初始化时重复计算
   setTimeout(() => {
-    updateReview();
+    void Promise.resolve(updateReview()).catch(e => console.error('[启动] 更新复习状态失败:', e));
   }, 100);
 
   // 预加载本地 OCR Worker（如果用户选择了本地 OCR）
@@ -1077,7 +1053,7 @@ onMounted(async () => {
   const router = useRouter();
   if (wordsStore.currentOcrPlatform === 'local') {
     setTimeout(() => {
-      preloadWorker();
+      void preloadWorker(); // 内部已记录失败日志，fire-and-forget
     }, 1000); // 延迟1秒，让页面先完成渲染
   }
 
@@ -1086,7 +1062,7 @@ onMounted(async () => {
     try {
       const setDb = getSetDb();
       if (setDb) {
-        applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
+        applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
         wordsStore.pluginStatus = setDb.pluginStatus;
         wordsStore.shortcutEnabled = setDb.shortcutEnabled;
         if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
@@ -1130,7 +1106,7 @@ onMounted(async () => {
  */
 function handlePluginReview() {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
 
   // 清空最后访问的页面，强制进入单词列表
   wordsStore.setLastVisitedPage('')
@@ -1144,7 +1120,7 @@ function handlePluginReview() {
  */
 function handlePluginNumMemory(action?: any) {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
   // 超级面板选中文本进入：若文本含数字则直达条目页并预填添加对话框，否则只打开主页
   const raw = typeof action?.payload === 'string' ? action.payload : ''
   const numbers = raw.replace(/[^\d.]/g, '')
@@ -1159,7 +1135,7 @@ function handlePluginNumMemory(action?: any) {
  * 简单路由类关键词入口（记忆宫殿 / 知识库）：显示主窗口 + 跳页
  */
 function handlePluginSimpleRoute(path: string) {
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
   wordsStore.setLastVisitedPage('')
   router.push(path)
 }
@@ -1169,7 +1145,7 @@ function handlePluginSimpleRoute(path: string) {
  */
 function handlePluginDefaultEnter() {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
 
   // 检查是否有保存的最后访问页面
   const lastPage = wordsStore.lastVisitedPage
@@ -1189,7 +1165,7 @@ function handlePluginDefaultEnter() {
  */
 function handlePluginTranslate(action: any) {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
   // over 匹配（超级面板选中内容）时 payload 才是选中文本；主输入框键入触发时
   // payload 是输入框原文（含关键词本身，如「翻译」），剥掉关键词前缀取剩余部分
   let text = ''
@@ -1213,7 +1189,7 @@ function handlePluginTranslate(action: any) {
  */
 function handlePluginTextMemory() {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
   // 跳转到文本记忆页面（带 entry 标记：公共头返回时回到文本记忆首页而非单词页）
   router.push({ path: '/text-memory', query: { entry: 'textMemory' } })
 }
@@ -1223,7 +1199,7 @@ function handlePluginTextMemory() {
  */
 function handlePluginShortcutMemory() {
   // 显示主窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
 
   // 清空最后访问的页面，强制进入快捷键记忆页
   wordsStore.setLastVisitedPage('')
@@ -1237,7 +1213,7 @@ function handlePluginShortcutMemory() {
  */
 function handlePluginFocusMode() {
   // 先进入单词页，Word.vue 会根据 query 自动打开专注窗口
-  if (isUTools()) (window as any).utools?.showMainWindow?.()
+  showMainWindow()
   wordsStore.setLastVisitedPage('')
   router.push({
     path: '/word',

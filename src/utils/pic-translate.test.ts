@@ -628,6 +628,19 @@ describe('ocrTranslateBilibili（B站原生图片翻译）', () => {
     expect(result.errorCode).toBe('0')
     expect(result.resRegions).toEqual([{ boundingBox: '0,0,0,0', context: '', tranContent: '你好，世界' }])
   })
+
+  it('源语言自动时不限定语种（回归：中文截图曾被提示为「英语文本」）', async () => {
+    fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({
+      choices: [{ message: { content: '{"source":"你好","translation":"你好"}' } }],
+    }), { status: 200 }))
+
+    await ocrTranslateBilibili(HELLO_BASE64)
+
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body)
+    const prompt = body.messages[0].content[0].text
+    expect(prompt).not.toContain('英语')
+    expect(prompt).toContain('翻译为中文')
+  })
 })
 
 describe('ocrTranslateSiliconflow（硅基流动 DeepSeek-OCR）', () => {
@@ -918,6 +931,7 @@ describe('ocrTranslateLocal（本地 OCR）', () => {
     dbStorage.clear()
     langState.ocrLang = 'eng'
     platformState.isUtools = false
+    setupUtoolsWindow() // 独立运行本 describe 时也提供完整浏览器窗口环境
     tessMock.createWorker.mockResolvedValue(makeFakeWorker())
     // readLocalFile 回退到 fetch：每次调用返回独立的假脚本内容（Response body 只能读一次）
     fetchMock.mockImplementation(() => Promise.resolve(new Response('fake-script-content')))
@@ -950,6 +964,22 @@ describe('ocrTranslateLocal（本地 OCR）', () => {
 
     expect(tessMock.createWorker).toHaveBeenCalledTimes(1)
     expect(recognizeMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('语言切换后新 Worker 使用目标语言包而不是旧语言缓存', async () => {
+    const { ocrTranslateLocal } = await loadModule()
+    const { ensureTrainedData } = await import('@/utils/ocr-lang-pack')
+
+    await ocrTranslateLocal(HELLO_BASE64, 'local') // 先建立 eng 脚本缓存
+    vi.mocked(ensureTrainedData).mockResolvedValue(new TextEncoder().encode('jpn-traineddata'))
+    langState.ocrLang = 'jpn'
+    await ocrTranslateLocal(HELLO_BASE64, 'local')
+
+    expect(tessMock.createWorker).toHaveBeenCalledTimes(2)
+    const secondWorkerUrl = tessMock.createWorker.mock.calls[1][2].workerPath
+    const workerScript = Buffer.from(secondWorkerUrl.split(',')[1], 'base64').toString('utf-8')
+    const expectedBase64 = Buffer.from('jpn-traineddata').toString('base64')
+    expect(workerScript).toContain(expectedBase64)
   })
 
   it('preloadWorker 预热后，正式识别直接复用缓存', async () => {
@@ -996,6 +1026,27 @@ describe('ocrTranslateLocal（本地 OCR）', () => {
     expect(result.errorCode).toBe('0')
     expect(result.resRegions![0].tranContent).toBe('hello world')
     expect(translateMock.translateWithPlatform).toHaveBeenCalledWith('hello world', 'youdao', 'en')
+  })
+
+  it('Worker 使用后会重新计算空闲清理时间并最终释放', async () => {
+    vi.useFakeTimers()
+    try {
+      const mod = await loadModule()
+      const first = mod.ocrTranslateLocal(HELLO_BASE64, 'local')
+      await vi.advanceTimersByTimeAsync(1000)
+      await first
+      const worker = await tessMock.createWorker.mock.results[0].value
+
+      await vi.advanceTimersByTimeAsync(4 * 60 * 1000)
+      await mod.ocrTranslateLocal(HELLO_BASE64, 'local')
+      await vi.advanceTimersByTimeAsync(4 * 60 * 1000)
+      expect(worker.terminate).not.toHaveBeenCalled()
+
+      await vi.advanceTimersByTimeAsync(60 * 1000 + 1)
+      expect(worker.terminate).toHaveBeenCalledTimes(1)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   // 注意：此用例验证 Worker 创建失败兜底；当前实现失败后模块内 cachedWorkerPromise
