@@ -462,8 +462,8 @@ describe('getAllWordBankMetas', () => {
     expect(metas.length).toBe(1)
     expect(metas[0].id).toBe('default')
     expect(metas[0].isDefault).toBe(true)
-    // 默认词库的分片也应已创建
-    expect(memoryDb['slowly-record-wordbank-chunk-v2:default:0']).toBeDefined()
+    // 默认词库的完整代次分片也应已创建
+    expect(Object.keys(memoryDb).some(id => id.startsWith('slowly-record-wordbank-chunk-v2:default:g:'))).toBe(true)
   })
 })
 
@@ -490,10 +490,51 @@ describe('saveWordBank 读写隔离', () => {
     // 不允许出现 bank-b 的分片读取与写入
     expect(getIds.filter(i => i.includes('slowly-record-wordbank-chunk-v2:bank-b'))).toEqual([])
     expect(putIds.filter(i => i.includes('slowly-record-wordbank-chunk-v2:bank-b'))).toEqual([])
-    // 目标词库分片有写入
-    expect(putIds).toContain('slowly-record-wordbank-chunk-v2:bank-a:0')
+    // 目标词库的新代次分片有写入
+    expect(putIds.some(id => id.startsWith('slowly-record-wordbank-chunk-v2:bank-a:g:'))).toBe(true)
     // 其他词库数据完好
     expect(memoryDb['slowly-record-wordbank-chunk-v2:bank-b:0'].words[0].text).toBe('banana')
+  })
+})
+
+describe('分片一致性与失败恢复', () => {
+  it('旧分片出现缺号时明确报错，不静默丢弃后续分片', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'old-0', text: 'old-0' })] }])
+    seedDoc('slowly-record-wordbank-chunk-v2:bank-a:2', {
+      type: 'wordbank-chunk', bankId: 'bank-a', chunkIndex: 2, totalChunks: 3,
+      words: [makeWord({ _id: 'old-2', text: 'old-2' })], updatedAt: Date.now(),
+    })
+
+    await expect(getWordBank('bank-a')).rejects.toThrow('分片不完整')
+  })
+
+  it('新代次写入中途失败时保留旧词库，不出现新旧混合', async () => {
+    seedBanks([{ id: 'bank-a', words: [makeWord({ _id: 'old-word', text: 'old-word' })] }])
+    const newWords = Array.from({ length: 301 }, (_, index) => makeWord({ _id: `new-${index}`, text: `new-${index}` }))
+    mockDbAdapter.promises.put.mockImplementation(async (doc: any) => {
+      if (doc.type === 'wordbank-chunk' && doc.chunkIndex === 1) return { ok: false, message: 'quota exceeded' }
+      return putImpl(doc)
+    })
+
+    await expect(updateWordBankWords('bank-a', newWords)).resolves.toBe(false)
+
+    mockDbAdapter.promises.put.mockImplementation(async (doc: any) => putImpl(doc))
+    const bank = await getWordBank('bank-a')
+    expect(bank?.words.map(word => word.text)).toEqual(['old-word'])
+  })
+
+  it('完整代次写满后热路径新增分片会同步扩展清单', async () => {
+    seedBanks([{
+      id: 'bank-a',
+      words: Array.from({ length: 300 }, (_, index) => makeWord({ _id: `w-${index}`, text: `w-${index}` })),
+    }])
+    const bank = await getWordBank('bank-a')
+    await saveWordBank(bank!)
+    await updateWordInBankChunk('bank-a', makeWord({ _id: 'w-new', text: 'w-new' }))
+
+    const updated = await getWordBank('bank-a')
+    expect(updated?.words).toHaveLength(301)
+    expect(memoryDb['slowly-record-wordbank-chunk-v2:bank-a:manifest'].totalChunks).toBe(2)
   })
 })
 

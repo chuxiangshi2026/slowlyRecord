@@ -106,6 +106,9 @@ export interface DbAdapter {
      */
     bulkDocs(docs: DbDoc[]): Promise<DbReturn[]>
   }
+
+  /** 等待异步实现中的已排队写事务完成；同步实现无需实现。 */
+  whenIdle?(): Promise<void>
 }
 
 // ==================== dbStorage 适配器 ====================

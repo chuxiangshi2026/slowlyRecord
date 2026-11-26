@@ -21,7 +21,8 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import { initStats, trackRouterPageView, trackError, initErrorTracking, applyPersistedStatsPrefs } from '@/utils/stats'
-import { getSetDb } from '@/utils/user-set-db-util'
+import { getSetDb, decryptSyncedSecrets } from '@/utils/user-set-db-util'
+import { scrubPersistedStoreSecrets } from '@/utils/persist-secret-cleanup'
 import { syncElectronTitleBar } from '@/utils/electron-titlebar'
 import { registerScheduleTriggerHandler } from '@/utils/schedule-reminder'
 import { useWordsStore } from '@/stores/words'
@@ -119,6 +120,9 @@ if ((window as any).electronAPI) {
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+// 升级清理：旧版曾把 API 密钥同步持久化到 localStorage，先移除再创建 store
+scrubPersistedStoreSecrets()
+
 let pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia)
@@ -237,6 +241,30 @@ function renderStorageError(err: unknown) {
   root.replaceChildren(wrap)
 }
 
+/**
+ * 从加密的 user-set 文档恢复 API 密钥到内存。
+ * 密钥不再写入 Pinia 持久化 localStorage，必须在挂载页面前完成这一步。
+ */
+async function hydrateApiKeysFromEncryptedUserSet(): Promise<void> {
+  try {
+    const setDb = await decryptSyncedSecrets(getSetDb())
+    if (!setDb) return
+    const store = useWordsStore()
+    const mergeKeys = (target: Record<string, { appkey: string; key: string }>, source: any) => {
+      if (!source || typeof source !== 'object') return
+      for (const [platform, entry] of Object.entries(source)) {
+        const value = entry as { appkey?: string; key?: string } | undefined
+        if (!value?.appkey?.trim() && !value?.key?.trim()) continue
+        target[platform] = { appkey: value.appkey || '', key: value.key || '' }
+      }
+    }
+    mergeKeys(store.userApiKeys as any, setDb.keys)
+    mergeKeys(store.userOcrApiKeys as any, setDb.ocrKeys)
+  } catch (e) {
+    console.error('[启动] 恢复加密 API 密钥失败:', e)
+  }
+}
+
 // 初始化数据库适配器（必须完成后再挂载应用，避免组件在初始化前调用 getDbAdapter()）
 getDbAdapterAsync().then(async () => {
   // 商店版：记忆宫殿图片/外置词典等大体积数据存本机 IndexedDB（不同步），先载入内存镜像
@@ -251,11 +279,12 @@ getDbAdapterAsync().then(async () => {
   // 先用 user-set 中持久化的统计偏好回填 localStorage（插件更新可能已清空），再初始化统计
   try {
     const setDb = getSetDb();
-    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown });
+    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
   } catch { /* 读设置失败时按 localStorage 状态继续 */ }
   initStats().catch((err) => {
     console.error('[App] 统计初始化失败:', err);
   });
+  await hydrateApiKeysFromEncryptedUserSet();
   // console.info 不在生产构建的 pure 抹除名单内，保证打点可存活到生产
   console.info(`[启动耗时] 数据库适配器就绪: ${performance.now().toFixed(0)}ms`);
   app.mount('#app');

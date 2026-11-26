@@ -16,14 +16,14 @@
 
 import type { SyncData, SyncServerResult, SyncStatus, SyncTextMemory, SyncNumberMemory, SyncSignin, SyncMemoryPalace, SyncSentences, SyncKnowledgeMemory, SyncPhoneticMemory } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
+import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, stripSyncSecrets, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { getSetDb } from '@/utils/user-set-db-util'
 import { collectSigninSync } from '@/utils/signin-db'
 import { getTombstones } from '@/utils/sync-tombstone'
 import { exportToJson, importFromJson } from '@/utils/sync-file'
 import { log } from '@/utils/logger'
 import { DEFAULT_INTERVALS } from '@/constants'
-import { MAX_LEVEL } from '@/utils/srs'
+import { clampLevel } from '@/utils/srs'
 import pako from 'pako'
 
 /** 默认同步服务器地址（腾讯云 CloudBase 云函数） */
@@ -35,16 +35,10 @@ const DEFAULT_SERVER_BASE = 'https://1258475269-6fkx3oixct.ap-guangzhou.tencents
  */
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 
-/** localStorage key：上次成功推送的 JSON 哈希，用于跳过未变更的同步 */
-const LAST_PUSH_HASH_KEY = 'slowlyrecord-last-push-hash'
-
-/** 计算 SHA-256 哈希（hex 字符串），用于判断数据是否变更 */
-async function sha256Hex(text: string): Promise<string> {
-  const bytes = new TextEncoder().encode(text)
-  const hashBuffer = await crypto.subtle.digest('SHA-256', bytes)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-}
+/**
+ * 用户主动推送始终生成新同步码。
+ * 不用永久本地哈希跳过：服务端 blob 过期后，旧哈希会让用户永远无法重新上传。
+ */
 
 // ==================== 客户端加密 ====================
 
@@ -409,7 +403,7 @@ export async function decompressFromJsonPayload(payload: string): Promise<string
   return new TextDecoder().decode(jsonBytes)
 }
 
-/** 变更指纹：排除每次导出都会变化的字段，保证未改动时能真正跳过 */
+/** 生成稳定的变更指纹：排除每次导出都会变化的字段。 */
 export function getSyncFingerprint(data: SyncData): string {
   const { exportedAt, platform, ...stable } = data
   return JSON.stringify(stable)
@@ -421,15 +415,8 @@ export function getSyncFingerprint(data: SyncData): string {
  */
 export async function uploadToServer(): Promise<SyncServerResult> {
   try {
-    const data = await collectSyncData()
+    const data = stripSyncSecrets(await collectSyncData())
     const json = exportToJson(data)
-
-    const hash = await sha256Hex(getSyncFingerprint(data))
-    const lastHash = localStorage.getItem(LAST_PUSH_HASH_KEY)
-    if (lastHash && hash === lastHash) {
-      log.i('数据未变更，跳过上传')
-      return { success: true, code: '', skipped: true }
-    }
 
     // 1. 压缩 JSON
     const compressedPayload = await compressToJsonPayload(json)
@@ -452,8 +439,8 @@ export async function uploadToServer(): Promise<SyncServerResult> {
     const adapter = getSyncServerAdapter()
     const blobId = await adapter.uploadRaw(encrypted)
 
-    // 上传成功后记录哈希，下次未变更则跳过
-    localStorage.setItem(LAST_PUSH_HASH_KEY, hash)
+    // 清理旧版本遗留的跳过上传统计；主动推送始终生成新同步码
+    localStorage.removeItem('slowlyrecord-last-push-hash')
 
     // 5. 导出密钥，构建同步码
     const keyBase64 = await exportKey(aesKey)
@@ -647,7 +634,7 @@ export function convertDesktopWordToMobile(w: any): MobileCompatWord {
   const learnTime = w.learnDate ? new Date(w.learnDate).getTime() : Date.now()
   const createTime = w.ctime ? new Date(w.ctime).getTime() : learnTime
   const rawLevel = typeof w.level === 'number' ? Math.trunc(w.level) : 0
-  const level = Math.max(0, Math.min(MAX_LEVEL, DEFAULT_INTERVALS.length - 1, rawLevel))
+  const level = clampLevel(rawLevel)
   const intervalMs = (DEFAULT_INTERVALS[level] ?? DEFAULT_INTERVALS[0]) * 60 * 1000
   return {
     id: w._id,

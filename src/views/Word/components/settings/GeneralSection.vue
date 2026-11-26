@@ -197,7 +197,7 @@
     <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向）；
          隐私说明与上报状态同属一条（都是"采什么/目前是否在采"），合并展示不再单列 -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进产品）
+      <span class="stats-optout-text">匿名使用统计（默认关闭；开启后仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进产品）
         <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
               @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>
@@ -281,7 +281,7 @@ const onCloseAfterAddSwitchChange = () => {
   wordsStore.setClosePlugin(wordsStore.pluginStatus)
 }
 
-// 匿名使用统计开关：默认开；关闭即写自我排除标记，立即生效（生产环境无控制台，这是唯一排除入口）
+// 匿名使用统计开关：默认关；勾选即写 sr_stats_optin 正向标记，取消立即停发（生产环境无控制台，这是唯一入口）
 const statsOptIn = ref(!isStatsExcluded())
 const onStatsOptInChange = (v: string | number | boolean | undefined) => {
   const on = !!v
@@ -294,7 +294,7 @@ const statsStatusText = computed(() => {
   void statsOptIn.value // 开关切换时重算（getStatsStatus 直接读 localStorage）
   return ({
     enabled: '上报中',
-    excluded: '已手动关闭',
+    excluded: '未开启',
     dev: '开发环境已停用',
     localhost: '本地调试已停用',
     'no-endpoint': '未配置端点',

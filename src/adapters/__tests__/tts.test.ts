@@ -157,6 +157,36 @@ describe('tts adapter', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
       expect(window.speechSynthesis.speak).not.toHaveBeenCalled()
     })
+
+    it('替换适配器时解绑构造时注册的 voiceschanged 监听（同一引用）', () => {
+      const addEventListener = vi.fn()
+      const removeEventListener = vi.fn()
+      Object.defineProperty(window, 'speechSynthesis', {
+        value: {
+          speak: vi.fn(),
+          cancel: vi.fn(),
+          getVoices: vi.fn(() => []),
+          addEventListener,
+          removeEventListener,
+        },
+        writable: true,
+      })
+      setTtsAdapter(null as any)
+      getTtsAdapter()
+      const handler = addEventListener.mock.calls.find(c => c[0] === 'voiceschanged')?.[1]
+      expect(handler).toBeTypeOf('function')
+      // 替换单例即触发旧实例销毁：按同一引用解绑，而不是遗留匿名监听
+      setTtsAdapter({ speak: vi.fn(), stop: vi.fn(), playAudio: vi.fn(async () => {}) })
+      expect(removeEventListener).toHaveBeenCalledWith('voiceschanged', handler)
+    })
+
+    it('destroy 会停止播放', () => {
+      const adapter = getTtsAdapter()
+      adapter.speak('hello')
+      vi.clearAllMocks()
+      adapter.destroy?.()
+      expect(window.speechSynthesis.cancel).toHaveBeenCalled()
+    })
   })
 
   describe('WxTtsAdapter', () => {

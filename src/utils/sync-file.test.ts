@@ -2,28 +2,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // Mock sync-manager
-vi.mock('@shared/utils/sync-manager', () => ({
-  collectSyncData: vi.fn(async () => mockSyncData),
-  restoreSyncData: vi.fn(async () => ({
-    success: true,
-    wordBanksRestored: 1,
-    userSettingsRestored: true,
-    textMemoryRestored: true,
-    numberMemoryRestored: true,
-    shortcutMemoryRestored: true,
-    letterMemoryRestored: true,
-    errors: [],
-  })),
-  DEFAULT_RESTORE_OPTIONS: {
-    conflictStrategy: 'merge',
-    restoreWordBanks: true,
-    restoreUserSettings: true,
-    restoreTextMemory: true,
-    restoreNumberMemory: true,
-    restoreShortcutMemory: true,
-    restoreLetterMemory: true,
-  },
-}))
+vi.mock('@shared/utils/sync-manager', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@shared/utils/sync-manager')>()
+  return {
+    ...actual,
+    collectSyncData: vi.fn(async () => mockSyncData),
+    restoreSyncData: vi.fn(async () => ({
+      success: true,
+      wordBanksRestored: 1,
+      userSettingsRestored: true,
+      textMemoryRestored: true,
+      numberMemoryRestored: true,
+      shortcutMemoryRestored: true,
+      letterMemoryRestored: true,
+      errors: [],
+    })),
+  }
+})
 
 vi.mock('@shared/utils/logger', () => ({
   log: { i: vi.fn(), e: vi.fn(), w: vi.fn(), d: vi.fn() },
@@ -220,6 +215,38 @@ describe('sync-file', () => {
       expect(clickSpy).toHaveBeenCalled()
 
       createElementSpy.mockRestore()
+    })
+
+    it('JSON 同步文件导出前剥离密钥', async () => {
+      mockSyncData.userSettings!.keys = { glm: { appkey: 'private-app', key: 'private-key' } } as any
+      mockSyncData.userSettings!.ocrKeys = { tencent: { appkey: 'private-ocr', key: 'private-ocr-key' } } as any
+      let exportedBlob: Blob | null = null
+      const createUrlSpy = vi.spyOn(URL, 'createObjectURL').mockImplementation((blob) => {
+        exportedBlob = blob
+        return 'blob:sync-test'
+      })
+      const mockAnchor = document.createElement('a')
+      mockAnchor.click = vi.fn()
+      const createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockAnchor)
+
+      await downloadSyncFile('json')
+
+      const text = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(String(reader.result))
+        reader.onerror = () => reject(reader.error)
+        reader.readAsText(exportedBlob!)
+      })
+      const exported = JSON.parse(text)
+      expect(exported.userSettings.keys).toEqual({})
+      expect(exported.userSettings.ocrKeys).toEqual({})
+      expect(text).not.toContain('private-key')
+      expect(text).not.toContain('private-ocr-key')
+
+      createUrlSpy.mockRestore()
+      createElementSpy.mockRestore()
+      mockSyncData.userSettings!.keys = {}
+      mockSyncData.userSettings!.ocrKeys = {}
     })
 
     it('应该触发二进制格式下载', async () => {

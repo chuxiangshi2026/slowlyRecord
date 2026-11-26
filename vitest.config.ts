@@ -16,7 +16,7 @@ export default defineConfig({
     environment: 'node',
     globals: true,
     setupFiles: ['src/test-setup.ts'],
-    include: ['src/**/*.{test,spec}.{js,ts}', 'mobile/src/**/*.{test,spec}.{js,ts}'],
+    include: ['src/**/*.{test,spec}.{js,ts}', 'mobile/src/**/*.{test,spec}.{js,ts}', 'scripts/scf/**/*.test.{js,ts}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -68,6 +68,8 @@ export default defineConfig({
       { find: /^@\/stores\/useWordBook$/, replacement: resolve(__dirname, 'mobile/src/stores/useWordBook.ts') },
       // 移动端文本记忆页面同样通过 @/stores 引用，测试时需优先于桌面端通用别名
       { find: /^@\/stores\/useTextMemory$/, replacement: resolve(__dirname, 'mobile/src/stores/useTextMemory.ts') },
+      // 移动端音标记忆 store：mobile 单词页以 @/stores/usePhoneticMemory 引用，同上需优先映射到 mobile 目录
+      { find: /^@\/stores\/usePhoneticMemory$/, replacement: resolve(__dirname, 'mobile/src/stores/usePhoneticMemory.ts') },
       // mobile 端的 `import ... from '@/config'`（不带扩展名）指向 mobile/src/config.ts，
       // 桌面端使用 `@/config.ts`（带扩展名），由后面通用规则解析到 src/config.ts
       { find: /^@\/config$/, replacement: resolve(__dirname, 'mobile/src/config.ts') },

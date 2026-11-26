@@ -3,19 +3,17 @@ import { DB_KEY_USER_SET} from "@/constants";
 import {log} from "@/utils/logger"
 import type { UserSetType } from "@/types/user-set";
 import {getDbAdapter} from "@/adapters/db"
-import {isStoreLocalOnly} from "@/adapters/local-bulk-store"
 import {decryptSecret, encryptSecret, hasSecretCrypto, isEncryptedSecret} from "@/utils/secret-crypto"
 import cloneDeep from 'lodash.clonedeep';
 
 type SecretEntry = { appkey?: string; key?: string };
 
 /**
- * 商店版（审核合规）：用户填写的翻译/OCR API Key 加密（AES-GCM，见 secret-crypto.ts）
- * 后再写入随账号同步的 user-set 文档；环境不支持 WebCrypto 时退化为不落库（不写明文）。
- * 其他端不启用（IndexedDB 本就不参与账号同步），文档原样通过。
+ * 所有桌面端：用户填写的翻译/OCR API Key 加密（AES-GCM，见 secret-crypto.ts）
+ * 后再写入 user-set 文档；环境不支持 WebCrypto 时清空密钥字段（绝不落明文）。
+ * uTools 普通版的 utools.db 同样可能随账号同步，因此不能只保护商店版。
  */
 async function encryptSyncedSecrets<T extends UserSetType>(doc: T): Promise<T> {
-    if (!isStoreLocalOnly()) return doc;
     doc.keys = await encryptKeyMap(doc.keys);
     doc.ocrKeys = await encryptKeyMap(doc.ocrKeys);
     return doc;
@@ -40,10 +38,10 @@ async function encryptKeyMap<T extends Record<string, SecretEntry> | undefined>(
 
 /**
  * 读取侧解密：返回 keys/ocrKeys 还原为明文的副本（文档本体在库中仍是密文）。
- * 商店版以外原样返回；解密失败的条目按空值处理。
+ * 所有桌面端统一解密；解密失败的条目按空值处理。
  */
 export async function decryptSyncedSecrets<T extends UserSetType>(doc: T | null): Promise<T | null> {
-    if (!doc || !isStoreLocalOnly()) return doc;
+    if (!doc) return doc;
     const copy = cloneDeep(doc);
     copy.keys = await decryptKeyMap(copy.keys);
     copy.ocrKeys = await decryptKeyMap(copy.ocrKeys);
@@ -72,11 +70,11 @@ function hasPlaintextSecrets(doc: UserSetType): boolean {
 }
 
 /**
- * 商店版读取时的旧数据迁移：user-set 文档若仍含明文密钥（旧版本写入或他端同步回流），
- * 异步把文档改写为加密版本。密钥本体同时保留在 pinia 持久化 localStorage，不依赖文档明文。
+ * 桌面端读取时的旧数据迁移：user-set 文档若仍含明文密钥（旧版本写入或旧同步回流），
+ * 异步把文档改写为加密版本。
  */
 function migrateLegacySecretsAsync(doc: UserSetType): void {
-    if (!isStoreLocalOnly() || !hasPlaintextSecrets(doc)) return;
+    if (!hasPlaintextSecrets(doc)) return;
     const db = getDbAdapter();
     void (async () => {
         const cleaned = await encryptSyncedSecrets(cloneDeep(doc));

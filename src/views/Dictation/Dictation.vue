@@ -288,6 +288,7 @@ import { batchTranslateAndAddWords } from '@/utils/str-util';
 import { ensurePhonetic, isValidPhonetic, lookupPhoneticSync } from '@/utils/phonetic-util';
 import { WORDBANK_LIST, type WordBankType } from '@/utils/wordbank-service';
 import { isUtools } from '@/adapters/platform';
+import { showMainWindow } from '@/adapters/window';
 import { DEFAULT_INTERVALS } from '@/constants';
 import { computeLevelDown, isDue } from '@/utils/srs';
 import { FeatureEvents } from '@/utils/stats';
@@ -923,7 +924,7 @@ const importWords = () => {
   fileInput.type = 'file';
   fileInput.accept = '.json';
   fileInput.onchange = (event) => {
-    if (isUtools()) (window as any).utools?.showMainWindow?.();
+    showMainWindow();
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -979,7 +980,7 @@ const importTextWords = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        (window as any).utools?.showMainWindow?.();
+        showMainWindow();
         try {
           const content = e.target?.result as string;
           const wordListFromFile = parseFileContent(content);

@@ -207,7 +207,8 @@ const updateOcrKey = (index: OcrPlatform, field: 'appkey' | 'key', val: string) 
   ocrTestRuns[index] = (ocrTestRuns[index] || 0) + 1
   ocrTesting.value[index] = false
   delete ocrTestResults.value[index]
-  log.i('updateOcrKey', index, field, val)
+  // 更新 store 中的 API 密钥（不打印密钥值，只记录是否已配置）
+  log.i('updateOcrKey', index, field, Boolean(val))
   // 更新 store 中的 API 密钥
   wordsStore.setOcrApiKey(index, field === 'appkey' ? val : wordsStore.userOcrApiKeys[index].appkey, field === 'key' ? val : wordsStore.userOcrApiKeys[index].key);
 }

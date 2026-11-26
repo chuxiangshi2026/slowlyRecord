@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { getFileAdapter } from '../file'
+import { getFileAdapter, setFileAdapter } from '../file'
 import { resetPlatformCache, setPlatform } from '../platform'
 
 describe('文件选择取消', () => {
@@ -38,5 +38,17 @@ describe('文件选择取消', () => {
       this.dispatchEvent(new Event('cancel'))
     })
     await expect(getFileAdapter().pickFile()).resolves.toBe(file)
+  })
+
+  it('Electron 使用 IPC 文件适配器而不是 require 失败后降级', () => {
+    setPlatform('electron')
+    setFileAdapter(null as any)
+    ;(window as any).electronAPI = {}
+
+    expect(getFileAdapter().constructor.name).toBe('FileAdapterElectron')
+
+    setPlatform('web')
+    setFileAdapter(null as any)
+    delete (window as any).electronAPI
   })
 })

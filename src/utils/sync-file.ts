@@ -7,7 +7,7 @@
  */
 import type { SyncData, SyncFormat } from '@/types/sync'
 import { SYNC_VERSION } from '@/types/sync'
-import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
+import { collectSyncData, restoreSyncData, DEFAULT_RESTORE_OPTIONS, stripSyncSecrets, type RestoreOptions, type RestoreResult } from '@/utils/sync-manager'
 import { log } from '@/utils/logger'
 import pako from 'pako'
 
@@ -124,7 +124,7 @@ function validateSyncData(data: SyncData) {
  * 触发浏览器下载导出文件
  */
 export async function downloadSyncFile(format: SyncFormat = 'json'): Promise<void> {
-  const data = await collectSyncData()
+  const data = stripSyncSecrets(await collectSyncData())
   const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '')
 
   if (format === 'binary') {

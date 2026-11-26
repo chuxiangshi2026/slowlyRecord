@@ -84,6 +84,13 @@ describe('srs', () => {
       const intervalMs = DEFAULT_INTERVALS[1] * 60 * 1000;
       expect(isDue(now - intervalMs, 1, now)).toBe(true);
     });
+
+    it('超出业务上限的旧等级使用 MAX_LEVEL 间隔而非数组末尾', () => {
+      const now = Date.now();
+      const elapsedMs = (DEFAULT_INTERVALS[MAX_LEVEL] + 1) * 60 * 1000;
+      expect(elapsedMs).toBeLessThan(DEFAULT_INTERVALS[MAX_LEVEL + 1] * 60 * 1000);
+      expect(isDue(now - elapsedMs, 99, now)).toBe(true);
+    });
   });
 
   describe('canLevelUp', () => {
@@ -109,10 +116,16 @@ describe('srs', () => {
       expect(canLevelUp(now - endMs, 1, now)).toBe(true);
     });
 
-    it('level 11 的窗口使用 intervals 最后一个值', () => {
+    it('level 11 使用对应等级的间隔', () => {
       const now = Date.now();
       const startMs = DEFAULT_INTERVALS[11] * 60 * 1000 + 1;
       expect(canLevelUp(now - startMs, 11, now)).toBe(true);
+    });
+
+    it('超出业务上限的旧等级同样按 MAX_LEVEL 判断升级时间', () => {
+      const now = Date.now();
+      const elapsedMs = (DEFAULT_INTERVALS[MAX_LEVEL] + 1) * 60 * 1000;
+      expect(canLevelUp(now - elapsedMs, 99, now)).toBe(true);
     });
   });
 

@@ -11,7 +11,7 @@
         @change="handleFileImport"
       />
     </div>
-    <p class="config-hint">导出配置可保存您的 API 密钥、翻译引擎设置等个人配置{{ storeLocalOnly ? '（当前版本导出不含 API 密钥；密钥保存在本机，并以加密形式随账号同步）' : '' }}</p>
+    <p class="config-hint">导出配置仅保存翻译引擎等个人设置，不含 API 密钥；密钥在本机以加密形式存储。</p>
 
     <el-divider class="backup-divider">完整备份（换机迁移）</el-divider>
     <div class="config-buttons">
@@ -67,9 +67,9 @@ const exportConfig = () => {
       mainWindowOpacity: userSet.mainWindowOpacity ?? 1.0,
       autoSpeak: userSet.autoSpeak ?? false,
       focusMode: userSet.focusMode || {},
-      // 商店版：密钥不写入导出文件（审核合规）；同步走加密后的 user-set 文档
-      keys: isStoreLocalOnly() ? {} : (userSet.keys || {}),
-      ocrKeys: isStoreLocalOnly() ? {} : (userSet.ocrKeys || {})
+      // 配置导出永不带密钥；密钥只经加密 user-set 文档或用户显式完整备份迁移
+      keys: {},
+      ocrKeys: {}
     }
   }
 
@@ -112,7 +112,7 @@ const handleFileImport = (event: Event) => {
       }
 
       ElMessageBox.confirm(
-        '导入配置将覆盖当前的 API 密钥和设置，是否继续？',
+        '导入配置将覆盖当前的非密钥设置；旧版配置文件中的密钥也会导入，是否继续？',
         '确认导入',
         {
           confirmButtonText: '确认导入',

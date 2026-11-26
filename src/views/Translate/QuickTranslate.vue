@@ -328,6 +328,23 @@ const targetLanguageOptions = computed(() =>
   languageOptions.filter(lang => lang.value !== 'auto')
 );
 
+// 入口指定的目标语言（截图翻译带 to=zh：固定译向中文，不按中英占比改译成学习语言）
+const forcedTarget = ref('');
+
+function applyForcedTarget() {
+  const target = typeof route.query.to === 'string' ? route.query.to : '';
+  forcedTarget.value = targetLanguageOptions.value.some(option => option.value === target) ? target : '';
+  if (forcedTarget.value) {
+    sourceLang.value = 'auto';
+    targetLang.value = forcedTarget.value;
+  }
+}
+
+// 用户手动改目标语言时解除入口指定，避免下拉框的选择被入口参数覆盖
+watch(targetLang, (value) => {
+  if (value !== forcedTarget.value) forcedTarget.value = '';
+});
+
 // 翻译平台选项（hunyuan 旧平台与腾讯机器翻译已于 2026-09-30 停服，不再展示）
 const platformGroups = getAvailableTranslationEngineGroups();
 
@@ -350,6 +367,7 @@ onMounted(() => {
   const queryText = route.query.text as string;
   (window as any).services?.appendLog?.(`[翻译页] onMounted, query.text长度=${typeof queryText === 'string' ? queryText.length : 'none'}`);
   if (queryText) {
+    applyForcedTarget();
     inputText.value = queryText;
     handleTranslate();
   }
@@ -363,6 +381,7 @@ watch(
     (window as any).services?.appendLog?.(`[翻译页] watch触发, text长度=${typeof text === 'string' ? text.length : 'none'}`);
     if (typeof text === 'string' && text.trim()) {
       ocrPending.value = false;
+      applyForcedTarget();
       inputText.value = text.trim();
       handleTranslate();
     }
@@ -376,13 +395,20 @@ watch(
   (p) => {
     ocrPending.value = p === 'ocr';
     if (p === 'ocr') {
+      latestTranslateRequest++;
       result.value = null;
+      // 清掉上一次的文本，识别中页面不残留旧内容
+      inputText.value = '';
     }
   }
 );
 
+// 只让最后一次请求更新译文、历史记录和 loading，避免旧响应覆盖新输入
+let latestTranslateRequest = 0;
+
 // 执行翻译
 async function handleTranslate() {
+  const requestId = ++latestTranslateRequest;
   if (ocrPending.value) return; // 截图识别中，禁止重复触发
   const text = inputText.value.trim();
   if (!text) {
@@ -399,13 +425,19 @@ async function handleTranslate() {
     let to = targetLang.value;
 
     if (from === 'auto') {
-      const dir = resolveZhEnDirection(text);
-      from = dir.from;
-      to = dir.to;
+      if (forcedTarget.value) {
+        // 入口指定了目标语言：源语言交给引擎自动识别
+        to = forcedTarget.value;
+      } else {
+        const dir = resolveZhEnDirection(text);
+        from = dir.from;
+        to = dir.to;
+      }
     }
 
     const translateStart = Date.now();
     const res = await translateWithPlatform(text, selectedPlatform.value, from, to);
+    if (requestId !== latestTranslateRequest) return;
     (window as any).services?.appendLog?.(`[翻译页] 翻译完成 平台=${selectedPlatform.value} ${from}->${to} 耗时=${Date.now() - translateStart}ms 成功=${res.success}`);
     result.value = res;
 
@@ -414,14 +446,17 @@ async function handleTranslate() {
       addToHistory(text, res.explains || '', selectedPlatform.value, from, to);
     }
   } catch (error) {
-    ElMessage.error('翻译失败: ' + (error as Error).message);
+    if (requestId === latestTranslateRequest) {
+      ElMessage.error('翻译失败: ' + (error as Error).message);
+    }
   } finally {
-    loading.value = false;
+    if (requestId === latestTranslateRequest) loading.value = false;
   }
 }
 
 // 清空输入
 function clearInput() {
+  latestTranslateRequest++;
   inputText.value = '';
   result.value = null;
 }

@@ -14,6 +14,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 const hoisted = vi.hoisted(() => ({
   docsMap: new Map<string, any>(),
   downloaded: null as null | { data: any; fileName: string },
+  whenIdle: vi.fn(async () => {}),
+  decryptSecret: vi.fn(async (value: string) => value),
+  encryptSecret: vi.fn(async (value: string) => value ? `enc:v1:${value}` : value),
+  hasSecretCrypto: vi.fn(() => false),
 }))
 
 vi.mock('@/adapters/db', () => ({
@@ -25,6 +29,7 @@ vi.mock('@/adapters/db', () => ({
       hoisted.docsMap.set(doc._id, doc)
       return { ok: true, id: doc._id }
     },
+    whenIdle: hoisted.whenIdle,
   }),
 }))
 vi.mock('@/adapters/file', () => ({
@@ -36,9 +41,9 @@ vi.mock('@/adapters/file', () => ({
 }))
 // 密钥解密路径与本功能正交，这里统一按无 WebCrypto 环境处理（跳过解密分支）
 vi.mock('@/utils/secret-crypto', () => ({
-  decryptSecret: vi.fn(async (v: string) => v),
-  encryptSecret: vi.fn(async (v: string) => v),
-  hasSecretCrypto: () => false,
+  decryptSecret: hoisted.decryptSecret,
+  encryptSecret: hoisted.encryptSecret,
+  hasSecretCrypto: hoisted.hasSecretCrypto,
   isEncryptedSecret: (v: string) => typeof v === 'string' && v.startsWith('enc:v1:'),
 }))
 
@@ -73,6 +78,10 @@ describe('local-backup', () => {
   beforeEach(async () => {
     hoisted.docsMap.clear()
     hoisted.downloaded = null
+    hoisted.whenIdle.mockClear()
+    hoisted.whenIdle.mockResolvedValue(undefined)
+    hoisted.hasSecretCrypto.mockReturnValue(false)
+    hoisted.decryptSecret.mockImplementation(async (value: string) => value)
     _setStoreLocalOnlyForTest(true)
     await initLocalBulkStore()
   })
@@ -191,5 +200,68 @@ describe('local-backup', () => {
 
     expect(hoisted.docsMap.get('keep-me')).toBeTruthy()
     expect(hoisted.docsMap.get('x').v).toBe(2)
+  })
+
+  it('恢复完成前等待数据库写队列空闲', async () => {
+    await applyLocalBackup(makeBackup({ docs: [{ _id: 'x', v: 1 }] }))
+    expect(hoisted.whenIdle).toHaveBeenCalledTimes(1)
+  })
+
+  it('非安全上下文遇到密文时中止恢复，不写密文也不清空原密钥', async () => {
+    _setStoreLocalOnlyForTest(false)
+    hoisted.docsMap.set('user-set', {
+      _id: 'user-set',
+      keys: { glm: { appkey: 'existing-app', key: 'existing-key' } },
+    })
+    const backup = makeBackup({
+      docs: [{
+        _id: 'user-set',
+        keys: { glm: { appkey: 'enc:v1:cipher-app', key: 'enc:v1:cipher-key' } },
+      }],
+    })
+
+    await expect(applyLocalBackup(backup)).rejects.toThrow('不支持密钥解密')
+    expect(hoisted.docsMap.get('user-set').keys.glm.key).toBe('existing-key')
+  })
+
+  it('恢复明文备份时先加密再写回数据库', async () => {
+    _setStoreLocalOnlyForTest(false)
+    hoisted.hasSecretCrypto.mockReturnValue(true)
+    const backup = makeBackup({
+      docs: [{ _id: 'user-set', keys: { glm: { appkey: 'plain-app', key: 'plain-key' } } }],
+    })
+
+    await applyLocalBackup(backup)
+
+    const stored = hoisted.docsMap.get('user-set')
+    expect(stored.keys.glm.appkey).toBe('enc:v1:plain-app')
+    expect(stored.keys.glm.key).toBe('enc:v1:plain-key')
+  })
+
+  it('无安全加密环境时拒绝把备份密钥写成本地明文', async () => {
+    _setStoreLocalOnlyForTest(false)
+    hoisted.hasSecretCrypto.mockReturnValue(false)
+    const backup = makeBackup({
+      docs: [{ _id: 'user-set', keys: { glm: { appkey: 'plain-app', key: 'plain-key' } } }],
+    })
+
+    await expect(applyLocalBackup(backup)).rejects.toThrow('不支持密钥加密')
+    expect(hoisted.docsMap.has('user-set')).toBe(false)
+  })
+
+  it('bulk 引用不读取原型上的继承属性', async () => {
+    _setStoreLocalOnlyForTest(false)
+    ;(Object.prototype as any)['bulk:constructor'] = vi.fn()
+    const backup = makeBackup({
+      docs: [{ _id: 'number-memory', items: [{ imageUrl: 'bulk:constructor' }] }],
+      bulk: { 'bulk:known': 'data:image/png;base64,AAA' },
+    })
+
+    try {
+      await applyLocalBackup(backup)
+      expect(hoisted.docsMap.get('number-memory').items[0].imageUrl).toBe('bulk:constructor')
+    } finally {
+      delete (Object.prototype as any)['bulk:constructor']
+    }
   })
 })

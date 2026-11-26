@@ -109,7 +109,7 @@ const isDeleting = ref(false)
 
 
 import {DEFAULT_INTERVALS} from "@/constants";
-import {computeLevelDown} from "@/utils/srs";
+import {clampLevel, computeLevelDown} from "@/utils/srs";
 // import {useUsersStore} from "@/stores/users.ts";
 import {useWordsStore} from "@/stores/words.ts";
 import {bufferToWave, downloadAndStoreAudio} from "@/utils/audio-util.ts";
@@ -155,7 +155,7 @@ const formatInterval = (minutes: number): string => {
 // 等级图标提示：等级与下次复习间隔
 const levelTooltip = computed(() => {
   const level = Number(props.word.level) || 0;
-  const minutes = DEFAULT_INTERVALS[Math.min(level, DEFAULT_INTERVALS.length - 1)];
+  const minutes = DEFAULT_INTERVALS[clampLevel(level)];
   return `等级 ${level}/12 · 下次复习约 ${formatInterval(minutes)}后`;
 });
 

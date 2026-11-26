@@ -17,7 +17,7 @@
 import { getDbAdapter } from '@/adapters/db'
 import { getFileAdapter } from '@/adapters/file'
 import { isStoreLocalOnly, localBulkEntries, localBulkSet } from '@/adapters/local-bulk-store'
-import { decryptSecret, hasSecretCrypto, isEncryptedSecret } from '@/utils/secret-crypto'
+import { encryptSecret, hasSecretCrypto, isEncryptedSecret } from '@/utils/secret-crypto'
 import { DB_KEY_USER_SET } from '@/constants'
 import cloneDeep from 'lodash.clonedeep'
 
@@ -97,37 +97,42 @@ function resolveBulkRefsDeep(node: any, bulk: Record<string, any>): void {
   if (Array.isArray(node)) {
     for (let i = 0; i < node.length; i++) {
       const v = node[i]
-      if (typeof v === 'string' && v.startsWith('bulk:') && v in bulk) node[i] = bulk[v]
+      if (typeof v === 'string' && v.startsWith('bulk:') && Object.prototype.hasOwnProperty.call(bulk, v)) node[i] = bulk[v]
       else resolveBulkRefsDeep(v, bulk)
     }
     return
   }
   for (const key of Object.keys(node)) {
     const v = node[key]
-    if (typeof v === 'string' && v.startsWith('bulk:') && v in bulk) node[key] = bulk[v]
+    if (typeof v === 'string' && v.startsWith('bulk:') && Object.prototype.hasOwnProperty.call(bulk, v)) node[key] = bulk[v]
     else resolveBulkRefsDeep(v, bulk)
   }
 }
 
-/** 非商店端恢复时把 user-set 文档里的 enc:v1: 密文密钥解密回明文（失败条目留空） */
-async function decryptDocSecretsForNonStore(doc: Record<string, any>): Promise<void> {
-  if (!hasSecretCrypto()) return
-  const decryptMap = async (map: any) => {
+/**
+ * 恢复写库前统一保证密钥为密文：明文重新加密，已是密文的保持原样。
+ * 无法安全加密时在写入任何文档前中止，绝不把备份中的明文写入本地数据库。
+ */
+async function normalizeDocSecretsForStorage(doc: Record<string, any>): Promise<void> {
+  const maps = [doc.keys, doc.ocrKeys]
+  const hasAnySecret = maps.some(map => map && typeof map === 'object' && Object.values(map).some(entry => {
+    const e = entry as { appkey?: string; key?: string } | undefined
+    return !!e && (!!e.appkey || !!e.key)
+  }))
+  if (!hasAnySecret) return
+  if (!hasSecretCrypto()) {
+    throw new Error('当前环境不支持密钥加密，也不支持密钥解密，已中止恢复；请在 HTTPS 或桌面安全环境中导入')
+  }
+  const encryptMap = async (map: any) => {
     if (!map || typeof map !== 'object') return
     for (const entry of Object.values(map)) {
       const e = entry as { appkey?: string; key?: string }
       if (!e) continue
-      try {
-        if (e.appkey && isEncryptedSecret(e.appkey)) e.appkey = await decryptSecret(e.appkey)
-        if (e.key && isEncryptedSecret(e.key)) e.key = await decryptSecret(e.key)
-      } catch {
-        e.appkey = ''
-        e.key = ''
-      }
+      if (e.appkey && !isEncryptedSecret(e.appkey)) e.appkey = await encryptSecret(e.appkey)
+      if (e.key && !isEncryptedSecret(e.key)) e.key = await encryptSecret(e.key)
     }
   }
-  await decryptMap(doc.keys)
-  await decryptMap(doc.ocrKeys)
+  for (const map of maps) await encryptMap(map)
 }
 
 /**
@@ -145,10 +150,14 @@ export async function applyLocalBackup(backup: LocalBackupFile): Promise<{ docs:
   // 商店版备份 → 非商店端：还原 bulk 数据到文档形态
   if (toNonStore && hasBulk) {
     for (const doc of docs) resolveBulkRefsDeep(doc, bulk)
+    const docIndexes = new Map(docs.map((doc, index) => [doc._id, index]))
     const upsert = (doc: Record<string, any>) => {
-      const idx = docs.findIndex(d => d._id === doc._id)
-      if (idx >= 0) docs[idx] = doc
-      else docs.push(doc)
+      const idx = docIndexes.get(doc._id)
+      if (idx !== undefined) docs[idx] = doc
+      else {
+        docIndexes.set(doc._id, docs.length)
+        docs.push(doc)
+      }
     }
     // 宫殿图片文档：bulk 完整版（含 images dataURL）覆盖 refs 版
     for (const value of Object.values(bulk)) {
@@ -173,12 +182,10 @@ export async function applyLocalBackup(backup: LocalBackupFile): Promise<{ docs:
     }
   }
 
-  // user-set 文档的密文密钥在非商店端解密回明文（商店端保留密文，读取侧自行解密）
-  if (toNonStore) {
-    for (const doc of docs) {
-      if (doc._id === DB_KEY_USER_SET || (doc as any).type === 'user-set') {
-        await decryptDocSecretsForNonStore(doc)
-      }
+  // 所有桌面端写库前统一规范化密钥：旧备份明文重新加密，已有密文保持
+  for (const doc of docs) {
+    if (doc._id === DB_KEY_USER_SET || (doc as any).type === 'user-set') {
+      await normalizeDocSecretsForStorage(doc)
     }
   }
 
@@ -203,5 +210,6 @@ export async function applyLocalBackup(backup: LocalBackupFile): Promise<{ docs:
     }
   }
 
+  await db.whenIdle?.()
   return { docs: written, bulk: bulkWritten }
 }

@@ -2,6 +2,7 @@
  * 文件系统适配器
  */
 import { getPlatform } from './platform'
+import { FileAdapterElectron } from './impl/file-electron'
 
 export interface FileAdapter {
   /** 读取文本文件 */
@@ -195,16 +196,9 @@ export function getFileAdapter(): FileAdapter {
     case 'utools':
       _fileAdapter = new UtoolsFileAdapter()
       break
-    case 'electron': {
-      // 动态导入 Electron 适配器，避免在非 Electron 环境加载
-      try {
-        const { FileAdapterElectron } = require('./impl/file-electron')
-        _fileAdapter = new FileAdapterElectron()
-      } catch {
-        _fileAdapter = new WebFileAdapter()
-      }
+    case 'electron':
+      _fileAdapter = new FileAdapterElectron()
       break
-    }
     case 'mp-weixin':
       _fileAdapter = new WxFileAdapter()
       break

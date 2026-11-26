@@ -60,7 +60,7 @@ export function isDue(
     // 0 / undefined / null 视为从未学习，立即到期
     if (!learnDate) return true;
     const ts = normalizeLearnDate(learnDate);
-    const clampedLevel = clampLevel(level, intervals.length - 1);
+    const clampedLevel = clampLevel(level);
     const intervalMinutes = intervals[clampedLevel] ?? intervals[0];
     return now - ts >= intervalMinutes * 60 * 1000;
 }
@@ -78,7 +78,7 @@ export function canLevelUp(
     // 从未学习过时，首次答对允许升级
     if (!learnDate) return true;
     const ts = normalizeLearnDate(learnDate);
-    const clampedLevel = clampLevel(level, intervals.length - 1);
+    const clampedLevel = clampLevel(level);
     const startLearnDate = ts + (intervals[clampedLevel] ?? intervals[0]) * 60 * 1000;
     return now >= startLearnDate;
 }

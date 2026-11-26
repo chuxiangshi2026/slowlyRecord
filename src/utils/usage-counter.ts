@@ -1,6 +1,5 @@
 import {useWordsStore} from '@/stores/words.ts';
 import {USAGE_LIMITS} from '@/constants';
-import {type OcrResult, ocrTranslateMultiPlatform} from "@/utils/pic-translate.ts";
 import {AppInfo} from "@/config.ts";
 
 /**

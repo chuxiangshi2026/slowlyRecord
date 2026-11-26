@@ -11,6 +11,8 @@ export interface TtsAdapter {
   stop(): void
   /** 播放音频 URL */
   playAudio(url: string): Promise<void>
+  /** 销毁适配器：解绑事件监听、停止播放。替换单例（setTtsAdapter）时会调用旧实例的此方法 */
+  destroy?(): void
 }
 
 /**
@@ -40,13 +42,30 @@ class WebTtsAdapter implements TtsAdapter {
   private voicesReady = false
   /** 发言代次：等待语音列表期间被新 speak/stop 取代则丢弃，防止过期语音抢播 */
   private speakToken = 0
+  /** voiceschanged 具名监听：destroy 时按同一引用解绑 */
+  private readonly onVoicesChanged = () => this.refreshVoices()
 
   constructor() {
     this.refreshVoices()
     try {
       if (typeof speechSynthesis !== 'undefined' && typeof speechSynthesis.addEventListener === 'function') {
-        speechSynthesis.addEventListener('voiceschanged', () => this.refreshVoices())
+        speechSynthesis.addEventListener('voiceschanged', this.onVoicesChanged)
       }
+    } catch {
+      // 无 speechSynthesis 的环境（单测）忽略
+    }
+  }
+
+  destroy(): void {
+    try {
+      if (typeof speechSynthesis !== 'undefined' && typeof speechSynthesis.removeEventListener === 'function') {
+        speechSynthesis.removeEventListener('voiceschanged', this.onVoicesChanged)
+      }
+    } catch {
+      // 无 speechSynthesis 的环境（单测）忽略
+    }
+    try {
+      this.stop()
     } catch {
       // 无 speechSynthesis 的环境（单测）忽略
     }
@@ -214,5 +233,8 @@ export function getTtsAdapter(): TtsAdapter {
 }
 
 export function setTtsAdapter(adapter: TtsAdapter): void {
+  const prev = _ttsAdapter
   _ttsAdapter = adapter
+  // 替换旧实例前销毁：解绑其事件监听（如 WebTtsAdapter 的 voiceschanged），避免泄漏
+  if (prev && prev !== adapter) prev.destroy?.()
 }

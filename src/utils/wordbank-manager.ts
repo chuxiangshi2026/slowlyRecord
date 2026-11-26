@@ -50,14 +50,23 @@ interface WordBankChunkDoc {
   type: 'wordbank-chunk';
   bankId: string;
   chunkIndex: number;   // 分片索引
-  /**
-   * 总分片数。
-   * 注意：此字段非权威——桌面读路径（getWordBankChunkDocs/updateWordInBankChunk）
-   * 一律按「顺序扫到首个缺失分片即停」定位分片边界，不读本字段。
-   * merge 写（updateWordInBankChunk）按定位时快照填写，可能小于实际分片数，勿据此截断读取。
-   */
+  /** 完整代次的分片总数；旧版无 generation 的分片仅用于迁移兼容。 */
   totalChunks: number;
+  /** 同一次完整写入的代次 ID；清单只切换到一个完整代次。 */
+  generation?: string;
   words: Word[];        // 该分片的单词数据
+  updatedAt: number;
+}
+
+interface WordBankManifestDoc {
+  _id: string;
+  _rev?: string;
+  type: 'wordbank-manifest';
+  bankId: string;
+  activeGeneration: string;
+  totalChunks: number;
+  previousGeneration?: string;
+  previousTotalChunks?: number;
   updatedAt: number;
 }
 
@@ -81,8 +90,14 @@ const MAX_WORDS_PER_CHUNK = 300;
 /**
  * 获取词库分片文档ID
  */
-function getWordBankChunkId(bankId: string, chunkIndex: number): string {
-  return `${WORDBANK_CHUNK_PREFIX}${bankId}:${chunkIndex}`;
+function getWordBankChunkId(bankId: string, chunkIndex: number, generation?: string): string {
+  return generation
+    ? `${WORDBANK_CHUNK_PREFIX}${bankId}:g:${generation}:${chunkIndex}`
+    : `${WORDBANK_CHUNK_PREFIX}${bankId}:${chunkIndex}`;
+}
+
+function getWordBankManifestId(bankId: string): string {
+  return `${WORDBANK_CHUNK_PREFIX}${bankId}:manifest`;
 }
 
 /**
@@ -134,131 +149,135 @@ async function saveWordBankMetaDoc(banks: Omit<WordBank, 'words'>[]): Promise<bo
 /**
  * 获取词库的所有分片文档
  */
-function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
+function getWordBankManifest(bankId: string): WordBankManifestDoc | null {
+  return getDbAdapter().get(getWordBankManifestId(bankId)) as WordBankManifestDoc | null;
+}
+
+function completeGenerationChunks(
+  docs: WordBankChunkDoc[],
+  generation: string,
+  totalChunks: number,
+): WordBankChunkDoc[] | null {
+  const byIndex = new Map(
+    docs.filter(doc => doc.generation === generation).map(doc => [doc.chunkIndex, doc]),
+  );
   const chunks: WordBankChunkDoc[] = [];
-  try {
-    const db = getDbAdapter();
-    // 尝试读取所有分片，直到取不到为止（不再限制分片数量，避免大词库被静默截断）
-    for (let i = 0; ; i++) {
-      const docId = getWordBankChunkId(bankId, i);
-      const doc = db.get(docId) as WordBankChunkDoc | null;
-      if (doc && doc.type === 'wordbank-chunk') {
-        chunks.push(doc);
-      } else {
-        break; // 没有更多分片了
+  for (let i = 0; i < totalChunks; i++) {
+    const chunk = byIndex.get(i);
+    if (!chunk) return null;
+    chunks.push(chunk);
+  }
+  // 热路径先写新分片、后扩清单：清单总数之外的额外分片暂时忽略
+  return chunks;
+}
+
+function getWordBankChunkDocs(bankId: string): WordBankChunkDoc[] {
+  const db = getDbAdapter();
+  const docs = db.allDocs(`${WORDBANK_CHUNK_PREFIX}${bankId}:`)
+    .filter((doc: any) => doc.type === 'wordbank-chunk') as WordBankChunkDoc[];
+  const manifest = getWordBankManifest(bankId);
+
+  if (manifest) {
+    const active = completeGenerationChunks(docs, manifest.activeGeneration, manifest.totalChunks);
+    if (active) return active;
+    if (manifest.previousGeneration && manifest.previousTotalChunks) {
+      const previous = completeGenerationChunks(docs, manifest.previousGeneration, manifest.previousTotalChunks);
+      if (previous) {
+        console.error(`词库当前代次不完整，临时回退上一完整代次 (${bankId})`);
+        return previous;
       }
     }
-  } catch (e) {
-    console.error(`获取词库分片失败 (${bankId}):`, e);
+    throw new Error(`词库分片不完整 (${bankId})`);
   }
-  return chunks.sort((a, b) => a.chunkIndex - b.chunkIndex);
+
+  // 旧版无代次分片：必须连续，缺片时明确报错而不是静默截断
+  const legacy = docs.filter(doc => !doc.generation).sort((a, b) => a.chunkIndex - b.chunkIndex);
+  for (let i = 0; i < legacy.length; i++) {
+    if (legacy[i].chunkIndex !== i) throw new Error(`词库分片不完整 (${bankId})`);
+  }
+  return legacy;
 }
 
 /**
  * 保存词库单词数据（分片存储）
  */
 async function saveWordBankDataDoc(bankId: string, words: Word[]): Promise<boolean> {
+  const db = getDbAdapter();
+  const cleanedWords = words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
+  // 按 text 去重：保留列表中后出现的（通常更新），防止历史脏数据重复入库
+  const seen = new Set<string>();
+  const uniqueWords: Word[] = [];
+  for (let i = cleanedWords.length - 1; i >= 0; i--) {
+    const w = cleanedWords[i];
+    const key = w.text.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueWords.unshift(w);
+    }
+  }
+
+  const totalChunks = Math.max(1, Math.ceil(uniqueWords.length / MAX_WORDS_PER_CHUNK));
+  const generation = uuidv4();
+  const previousManifest = getWordBankManifest(bankId);
+  const newChunkIds: string[] = [];
+
   try {
-    const db = getDbAdapter();
-
-    // 规范化文本，保留词组空格
-    const cleanedWords = words.map(w => ({ ...w, text: normalizeItemText(w.text) }));
-    // 按 text 去重：保留列表中后出现的（通常更新），防止历史脏数据重复入库
-    const seen = new Set<string>();
-    const uniqueWords: Word[] = [];
-    for (let i = cleanedWords.length - 1; i >= 0; i--) {
-      const w = cleanedWords[i];
-      const key = w.text.toLowerCase();
-      if (!seen.has(key)) {
-        seen.add(key);
-        uniqueWords.unshift(w);
-      }
-    }
-    // 将单词分成多个块
-    const totalChunks = Math.ceil(uniqueWords.length / MAX_WORDS_PER_CHUNK);
-
-    if (totalChunks === 0) {
-      // 空词库，创建一个空分片
-      const doc: WordBankChunkDoc = {
-        _id: getWordBankChunkId(bankId, 0),
-        type: 'wordbank-chunk',
-        bankId,
-        chunkIndex: 0,
-        totalChunks: 1,
-        words: [],
-        updatedAt: Date.now()
-      };
-      let result = await db.promises.put(doc);
-      if (!result.ok && result.message?.includes('conflict')) {
-        const existing = db.get(doc._id);
-        if (existing?._rev) {
-          doc._rev = existing._rev;
-          result = await db.promises.put(doc);
-        }
-      }
-      if (!result.ok) {
-        console.error(`保存词库空分片失败 (${bankId}):`, result.message);
-        return false;
-      }
-      // 新分片写入成功后再删除多余的旧分片
-      await deleteExtraWordBankChunks(bankId, 1);
-      return true;
-    }
-
-    // 保存每个分片（同 id 覆盖写旧分片）
     for (let i = 0; i < totalChunks; i++) {
-      const start = i * MAX_WORDS_PER_CHUNK;
-      const end = start + MAX_WORDS_PER_CHUNK;
-      const chunkWords = uniqueWords.slice(start, end);
-
+      const chunkWords = uniqueWords.slice(i * MAX_WORDS_PER_CHUNK, (i + 1) * MAX_WORDS_PER_CHUNK);
       const doc: WordBankChunkDoc = {
-        _id: getWordBankChunkId(bankId, i),
+        _id: getWordBankChunkId(bankId, i, generation),
         type: 'wordbank-chunk',
         bankId,
         chunkIndex: i,
         totalChunks,
+        generation,
         words: cloneDeep(chunkWords),
         updatedAt: Date.now()
       };
-
-      let result = await db.promises.put(doc);
-      if (!result.ok && result.message?.includes('conflict')) {
-        const existing = db.get(doc._id);
-        if (existing?._rev) {
-          doc._rev = existing._rev;
-          result = await db.promises.put(doc);
-        }
-      }
-      if (!result.ok) {
-        console.error(`保存词库分片失败 (${bankId}, chunk ${i}):`, result.message);
-        return false;
-      }
+      const result = await db.promises.put(doc);
+      if (!result.ok) throw new Error(result.message || `分片 ${i} 写入失败`);
+      newChunkIds.push(doc._id);
     }
 
-    // 新分片全部写入成功后再删除多余的旧分片，避免中途崩溃导致整库丢词
-    await deleteExtraWordBankChunks(bankId, totalChunks);
-
-    console.log(`[WordBankManager] 成功保存词库 ${bankId}，共 ${totalChunks} 个分片，${cleanedWords.length} 个单词`);
-    return true;
+    const manifest: WordBankManifestDoc = {
+      _id: getWordBankManifestId(bankId),
+      type: 'wordbank-manifest',
+      bankId,
+      activeGeneration: generation,
+      totalChunks,
+      previousGeneration: previousManifest?.activeGeneration,
+      previousTotalChunks: previousManifest?.totalChunks,
+      updatedAt: Date.now(),
+    };
+    if (previousManifest?._rev) manifest._rev = previousManifest._rev;
+    const manifestResult = await db.promises.put(manifest);
+    if (!manifestResult.ok) throw new Error(manifestResult.message || '分片清单写入失败');
   } catch (e) {
-    console.error(`保存词库数据异常 (${bankId}):`, e);
+    console.error(`保存词库新代次失败 (${bankId})，保留旧数据:`, e);
+    for (const id of newChunkIds) {
+      try {
+        const existing = db.get(id);
+        if (existing?._rev) await db.promises.remove({ _id: id, _rev: existing._rev });
+      } catch { /* 清理失败不影响旧代次读取 */ }
+    }
     return false;
   }
+
+  await deleteOtherGenerationChunks(bankId, generation);
+  return true;
 }
 
-/**
- * 删除索引 >= startIndex 的旧分片（用于新分片写入成功后清理多余旧数据）
- */
-async function deleteExtraWordBankChunks(bankId: string, startIndex: number): Promise<void> {
+/** 清单切换成功后清理其他代次；删除失败不影响新完整代次读取。 */
+async function deleteOtherGenerationChunks(bankId: string, activeGeneration: string): Promise<void> {
   const db = getDbAdapter();
-  // 旧分片索引是连续的，遇到第一个不存在的分片即可停止
-  for (let i = startIndex; ; i++) {
-    const docId = getWordBankChunkId(bankId, i);
-    const existingDoc = db.get(docId) as WordBankChunkDoc | null;
-    if (!existingDoc?._rev) {
-      break;
+  const oldDocs = db.allDocs(`${WORDBANK_CHUNK_PREFIX}${bankId}:`)
+    .filter((doc: any) => doc.type === 'wordbank-chunk' && doc.generation !== activeGeneration);
+  for (const doc of oldDocs) {
+    try {
+      if (doc._rev) await db.promises.remove({ _id: doc._id, _rev: doc._rev });
+    } catch (e) {
+      console.error(`清理旧词库分片失败 (${bankId}, ${doc._id}):`, e);
     }
-    await db.promises.remove({ _id: docId, _rev: existingDoc._rev });
   }
 }
 
@@ -278,19 +297,17 @@ export async function updateWordInBankChunk(bankId: string, word: Word): Promise
   const MAX_RETRY = 3; // conflict 时重读重试的最大次数
 
   for (let attempt = 0; ; attempt++) {
-    // 1. 定位单词所在分片（顺序扫，分片索引连续，遇到缺失即停，找到即停）
+    // 1. 从当前完整代次定位分片，避免跨代次或缺片时写错数据
+    const chunks = getWordBankChunkDocs(bankId);
+    const generation = chunks[0]?.generation;
     let targetChunkIndex = -1;
-    let lastChunkIndex = -1;
-    let lastChunkWordCount = 0;
-    for (let i = 0; ; i++) {
-      const doc = db.get(getWordBankChunkId(bankId, i)) as WordBankChunkDoc | null;
-      if (!doc || doc.type !== 'wordbank-chunk') break;
-      lastChunkIndex = i;
-      lastChunkWordCount = doc.words.length;
-      const hitById = !!cleanedWord._id && doc.words.some(w => w._id === cleanedWord._id);
-      const hitByText = doc.words.some(w => normalizeItemText(w.text) === cleanedWord.text);
+    let lastChunkIndex = chunks.length - 1;
+    let lastChunkWordCount = lastChunkIndex >= 0 ? chunks[lastChunkIndex].words.length : 0;
+    for (const chunk of chunks) {
+      const hitById = !!cleanedWord._id && chunk.words.some(w => w._id === cleanedWord._id);
+      const hitByText = chunk.words.some(w => normalizeItemText(w.text) === cleanedWord.text);
       if (hitById || hitByText) {
-        targetChunkIndex = i;
+        targetChunkIndex = chunk.chunkIndex;
         break;
       }
     }
@@ -301,8 +318,8 @@ export async function updateWordInBankChunk(bankId: string, word: Word): Promise
         ? lastChunkIndex + 1
         : lastChunkIndex;
     }
-
-    const chunkId = getWordBankChunkId(bankId, targetChunkIndex);
+    const isNewChunk = targetChunkIndex > lastChunkIndex;
+    const chunkId = getWordBankChunkId(bankId, targetChunkIndex, generation);
 
     // 2. put 前重新取最新分片（拿到对方窗口刚写入的其他单词进度）
     const latestDoc = db.get(chunkId) as WordBankChunkDoc | null;
@@ -327,6 +344,7 @@ export async function updateWordInBankChunk(bankId: string, word: Word): Promise
       bankId,
       chunkIndex: targetChunkIndex,
       totalChunks: Math.max(targetChunkIndex + 1, lastChunkIndex + 1),
+      generation,
       words: mergedWords,
       updatedAt: Date.now()
     };
@@ -337,6 +355,20 @@ export async function updateWordInBankChunk(bankId: string, word: Word): Promise
     // 4. 带最新 _rev put；conflict 时重读重试
     const result = await db.promises.put(doc);
     if (result.ok) {
+      if (isNewChunk && generation) {
+        const manifest = getWordBankManifest(bankId);
+        if (manifest?.activeGeneration === generation) {
+          const manifestResult = await db.promises.put({
+            ...manifest,
+            totalChunks: targetChunkIndex + 1,
+            updatedAt: Date.now(),
+          });
+          if (!manifestResult.ok) {
+            console.error(`[WordBankManager] 分片清单扩展失败 (${bankId}):`, manifestResult.message);
+            return false;
+          }
+        }
+      }
       return true;
     }
     if (!result.message?.includes('conflict') || attempt >= MAX_RETRY) {
@@ -388,17 +420,9 @@ function getWordBankWords(bankId: string): Word[] {
 export async function deleteWordBankDataDoc(bankId: string): Promise<boolean> {
   try {
     const db = getDbAdapter();
-    // 删除所有分片，直到遇到第一个不存在的分片为止（不再限制分片数量）
-    for (let i = 0; ; i++) {
-      const docId = getWordBankChunkId(bankId, i);
-      const existingDoc = db.get(docId) as WordBankChunkDoc | null;
-
-      if (existingDoc?._rev) {
-        await db.promises.remove({ _id: docId, _rev: existingDoc._rev });
-      } else {
-        // 分片索引是连续的，第一个缺失的分片说明后面也没有了
-        break;
-      }
+    const docs = db.allDocs(`${WORDBANK_CHUNK_PREFIX}${bankId}:`);
+    for (const doc of docs) {
+      if (doc._rev) await db.promises.remove({ _id: doc._id, _rev: doc._rev });
     }
     return true;
   } catch (e) {

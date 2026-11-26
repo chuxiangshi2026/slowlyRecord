@@ -29,6 +29,7 @@ import {isUtools} from "@/adapters/platform";
 import {normalizeItemText, getItemKey} from "@/utils/text-utils";
 import {useSigninStore} from "@/stores/signin";
 import {recordTombstone} from "@/utils/sync-tombstone";
+import {clampLevel, isDue} from "@/utils/srs";
 
 // 默认专注模式设置
 const defaultFocusMode: FocusModeSettings = {
@@ -658,28 +659,24 @@ export const useWordsStore =
             }
 
             function setOcrApiKey(provider: OcrPlatform, appkey: string, key: string) {
-                log.i('设置OCR密钥', provider, appkey, key)
                 userOcrApiKeys.value[provider] ??= { appkey: '', key: '' };
                 userOcrApiKeys.value[provider].appkey = appkey;
                 userOcrApiKeys.value[provider].key = key;
 
                 let userSet = getSetDb()
                 if (userSet) {
-                    log.i('数据库不为空', userSet)
                     if (!userSet.ocrKeys) {
                         userSet.ocrKeys = {};
                     }
                     userSet.ocrKeys[provider] ??= {appkey: '', key: ''};
                     userSet.ocrKeys[provider].appkey = userOcrApiKeys.value[provider].appkey;
                     userSet.ocrKeys[provider].key = userOcrApiKeys.value[provider].key;
-                    log.i('赋值后', userSet)
+                    log.i('OCR密钥已更新', provider, Boolean(appkey), Boolean(key))
                 } else {
-                    log.i('数据库为空', userSet)
                     userSet = initUserSet();
                     userSet.ocrKeys = userOcrApiKeys.value;
-                    log.i('初次赋值后', userSet)
+                    log.i('OCR密钥初次保存', provider, Boolean(appkey), Boolean(key))
                 }
-                log.i('保存用户设置', userSet)
                 addAndUpdateSetDb(userSet);
                 // 保存到本地存储
             }
@@ -831,14 +828,11 @@ export const useWordsStore =
                         item.learnDate = learnDate;
                     }
 
-                    // 确保 level 有效，并钳制到 DEFAULT_INTERVALS 合法索引范围（0-12，level 0 对应下标 0 的间隔）
-                    const maxLevel = DEFAULT_INTERVALS.length - 1;
-                    const safeLevel = Math.max(0, Math.min(maxLevel, Number(item.level) || 0));
-                    const interval = DEFAULT_INTERVALS[safeLevel] ?? DEFAULT_INTERVALS[0];
-
-                    const reviewTime = learnDate.getTime() + interval * 60 * 1000;
+                    // 与共享 SRS 一致：等级封顶 12，恰好到期即计入复习
                     const now = Date.now();
-                    const shouldReview = now > reviewTime;
+                    const level = Number(item.level) || 0;
+                    const shouldReview = isDue(learnDate, level, now);
+                    const reviewTime = learnDate.getTime() + DEFAULT_INTERVALS[clampLevel(level)] * 60 * 1000;
 
                     // 判断单词是否是新添加的（从未被复习过）
                     // 如果 learnDate 和 ctime 相同或非常接近（5秒内），说明是新建单词，从未被复习过
@@ -1211,8 +1205,7 @@ export const useWordsStore =
                     'appBg',
                     'scheduleReminder',
                     'focusMode',
-                    'userApiKeys',
-                    'userOcrApiKeys',
+                    // 密钥不写 localStorage：启动时从加密 user-set 文档解密加载
                     'builtinFreeTranslate',
                     'lastVisitedPage',
                     'hiddenExplain'

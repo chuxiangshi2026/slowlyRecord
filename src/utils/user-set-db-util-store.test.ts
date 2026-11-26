@@ -115,10 +115,8 @@ describe('user-set 密钥加密（商店版）', () => {
     // 读取当时仍返回明文（迁移是后台异步进行的）
     expect(doc.keys.youdao.key).toBe('yd-secret')
 
-    await flushAsync()
-    await flushAsync()
+    await vi.waitFor(() => expect(isEncryptedSecret(storage.get('user-set').keys.youdao.key)).toBe(true))
     const migrated = storage.get('user-set')
-    expect(isEncryptedSecret(migrated.keys.youdao.key)).toBe(true)
     const decrypted = (await decryptSyncedSecrets(migrated))!
     expect(decrypted.keys.youdao.key).toBe('yd-secret')
   })
@@ -133,10 +131,25 @@ describe('user-set 密钥加密（商店版）', () => {
     expect(storage.get('user-set')).toBe(before)
   })
 
-  it('非商店版写入保持明文原样', async () => {
+  it('非商店版写入同样加密，不因平台门控回落明文', async () => {
     _setStoreLocalOnlyForTest(false)
     const userSet: any = { _id: 'user-set', keys: { glm: { appkey: '', key: 'plain-key' } }, ocrKeys: {} }
     await addAndUpdateSetDb(userSet)
-    expect(storage.get('user-set').keys.glm.key).toBe('plain-key')
+    expect(isEncryptedSecret(storage.get('user-set').keys.glm.key)).toBe(true)
+    expect(JSON.stringify(storage.get('user-set'))).not.toContain('plain-key')
+  })
+
+  it('非商店版读取旧明文文档时同样后台迁移为密文', async () => {
+    _setStoreLocalOnlyForTest(false)
+    storage.set('user-set', {
+      _id: 'user-set',
+      keys: { glm: { appkey: 'legacy-app', key: 'legacy-key' } },
+      ocrKeys: {},
+    })
+
+    getSetDb(true)
+    await vi.waitFor(() => expect(isEncryptedSecret(storage.get('user-set').keys.glm.key)).toBe(true))
+    const decrypted = (await decryptSyncedSecrets(storage.get('user-set')))!
+    expect(decrypted.keys.glm.key).toBe('legacy-key')
   })
 })

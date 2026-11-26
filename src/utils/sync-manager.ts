@@ -83,16 +83,15 @@ export async function collectSyncData(): Promise<SyncData> {
   const userSetDoc = getSetDb()
   let userSettings: SyncUserSettings | null = null
   if (userSetDoc) {
-    // 商店版：API 密钥只存本机，不进入任何同步负载（审核合规）
-    const scrubKeys = isStoreLocalOnly()
+    // 所有同步通道默认不携带密钥；本地完整备份走独立的数据通道
     userSettings = {
       pluginStatus: userSetDoc.pluginStatus ?? false,
       shortcutEnabled: userSetDoc.shortcutEnabled ?? false,
       translationPlatform: userSetDoc.translationPlatform ?? 'glm',
       ocrPlatform: userSetDoc.ocrPlatform ?? 'local',
       memoryFirmness: userSetDoc.memoryFirmness ?? '正常',
-      keys: scrubKeys ? {} : (userSetDoc.keys ?? {}),
-      ocrKeys: scrubKeys ? {} : (userSetDoc.ocrKeys ?? {}),
+      keys: {},
+      ocrKeys: {},
       focusMode: userSetDoc.focusMode ?? { alwaysOnTop: true, opacity: 1.0, edgeStickEnabled: true },
       autoSpeak: userSetDoc.autoSpeak ?? false,
       eyeCare: userSetDoc.eyeCare ?? false,
