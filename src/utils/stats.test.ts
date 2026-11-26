@@ -58,7 +58,11 @@ describe('stats（自建端点）', () => {
   })
 
   describe('启用判定', () => {
-    it('uTools 生产环境（hostname 为空、isDev=false）启用', async () => {
+    it('默认关闭：生产环境未主动开启前不上报，opt-in 后立即启用', async () => {
+      await initStats()
+      await flush()
+      expect(globalThis.fetch).not.toHaveBeenCalled()
+      setStatsExcluded(false) // 用户主动勾选开启
       await initStats()
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
@@ -82,22 +86,22 @@ describe('stats（自建端点）', () => {
     it('非 uTools 的 localhost 排除', async () => {
       delete (globalThis as any).window.utools
       ;(globalThis as any).window.location.hostname = 'localhost'
+      setStatsExcluded(false)
       await initStats()
       await flush()
       expect(globalThis.fetch).not.toHaveBeenCalled()
     })
 
-    it('file:// 生产页（hostname 空、无 utools/electronAPI）按 web 平台启用', async () => {
+    it('file:// 生产页（hostname 空、无 utools/electronAPI）opt-in 后按 web 平台启用', async () => {
       delete (globalThis as any).window.utools
+      setStatsExcluded(false)
       await initStats()
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
       expect(sentEvents()[0].platform).toBe('web')
     })
 
-    it('自我排除标记跳过上报；setStatsExcluded 双向切换', async () => {
-      expect(isStatsExcluded()).toBe(false)
-      setStatsExcluded(true)
+    it('默认关闭即未开启；setStatsExcluded 双向切换立即生效', async () => {
       expect(isStatsExcluded()).toBe(true)
       trackPageView('/Word')
       await flush()
@@ -107,16 +111,34 @@ describe('stats（自建端点）', () => {
       trackPageView('/Word')
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
+      setStatsExcluded(true)
+      expect(isStatsExcluded()).toBe(true)
+      trackPageView('/Word')
+      await flush()
+      // 只有 opt-in 后的那一次 page.view 真正发出
+      expect((globalThis.fetch as any).mock.calls.filter((c: any[]) => c[1]?.body)).toHaveLength(1)
     })
 
     it('applyPersistedStatsPrefs 回填 localStorage（更新清空后恢复用户选择）', () => {
-      window.localStorage.removeItem('sr_stats_exclude')
+      window.localStorage.removeItem('sr_stats_optin')
       window.localStorage.removeItem('sr_stats_notice_v1')
-      applyPersistedStatsPrefs({ excluded: true, noticeShown: true })
-      expect(isStatsExcluded()).toBe(true)
-      expect(window.localStorage.getItem('sr_stats_notice_v1')).toBe('1')
-      applyPersistedStatsPrefs({ excluded: false })
+      applyPersistedStatsPrefs({ optedIn: true, noticeShown: true })
       expect(isStatsExcluded()).toBe(false)
+      expect(window.localStorage.getItem('sr_stats_notice_v1')).toBe('1')
+      applyPersistedStatsPrefs({ optedIn: false })
+      expect(isStatsExcluded()).toBe(true)
+    })
+
+    it('旧版数据迁移：statsExcluded===false（曾显式开启）视为已 opt-in，其余按默认关闭', () => {
+      window.localStorage.removeItem('sr_stats_optin')
+      applyPersistedStatsPrefs({ excluded: false })
+      expect(isStatsExcluded()).toBe(false) // 保住旧版显式选择
+      window.localStorage.removeItem('sr_stats_optin')
+      applyPersistedStatsPrefs({ excluded: true })
+      expect(isStatsExcluded()).toBe(true)
+      window.localStorage.removeItem('sr_stats_optin')
+      applyPersistedStatsPrefs({}) // 旧版默认开启的老用户：无显式选择，按新默认关闭
+      expect(isStatsExcluded()).toBe(true)
     })
 
     it('强制启用标记优先于一切排除规则', async () => {      ;(globalThis as any).window.utools.isDev = () => true
@@ -129,11 +151,13 @@ describe('stats（自建端点）', () => {
   })
 
   describe('getStatsStatus', () => {
-    it('生产环境返回 enabled', () => {
+    it('默认未开启返回 excluded，opt-in 后返回 enabled', () => {
+      expect(getStatsStatus()).toBe('excluded')
+      setStatsExcluded(false)
       expect(getStatsStatus()).toBe('enabled')
     })
 
-    it('手动关闭返回 excluded，dev 环境返回 dev，localhost 返回 localhost', () => {
+    it('关闭返回 excluded，dev 环境返回 dev，localhost 返回 localhost', () => {
       setStatsExcluded(true)
       expect(getStatsStatus()).toBe('excluded')
       setStatsExcluded(false)
@@ -174,6 +198,7 @@ describe('stats（自建端点）', () => {
       expect(initAttribution()).toBeNull()
 
       ;(globalThis as any).window.location.search = '?utm_source=github&page=poem-tang_001'
+      setStatsExcluded(false)
       await initStats()
       await flush()
       const events = sentEvents()
@@ -186,6 +211,9 @@ describe('stats（自建端点）', () => {
   })
 
   describe('信封结构', () => {
+    // 信封用例聚焦上报内容，统一先 opt-in（默认关闭口径下无正向标记一律不发）
+    beforeEach(() => setStatsExcluded(false))
+
     it('启动事件：事件名/平台/版本/匿名安装 ID 在顶层，POST 到固定端点', async () => {
       await initStats()
       await flush()
@@ -246,6 +274,9 @@ describe('stats（自建端点）', () => {
   })
 
   describe('异常上报', () => {
+    // bug.error 与常规统计共用 opt-in 开关；用例统一先开启（关闭行为有专项用例）
+    beforeEach(() => setStatsExcluded(false))
+
     it('trackError 上报 bug.error，带路由和非敏感运行时上下文', async () => {
       ;(globalThis as any).window.utools.getAppVersion = () => '8.0.2'
       await trackError('js', new Error('boom'), '/word')

@@ -91,8 +91,10 @@ export type UserSetType = DbDoc<{
     autoSpeak: boolean;
     /** 护眼模式（浅绿背景基底），默认开启 */
     eyeCare?: boolean;
-    /** 已选择关闭匿名使用统计（持久化在 user-set，插件更新清空 localStorage 后仍保留用户选择） */
+/** 已选择关闭匿名使用统计（旧版字段：新数据由 statsOptedIn 作为正向同意标记，此字段同步写以兼容旧版本读取） */
     statsExcluded?: boolean;
+    /** 主动开启匿名使用统计（默认关闭口径的正向同意标记；缺失时读取侧按 statsExcluded===false 迁移，其余视为关闭） */
+    statsOptedIn?: boolean;
     /** 首次启动统计告知弹窗已展示过（跨更新只提示一次） */
     statsNoticeShown?: boolean;
     /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */

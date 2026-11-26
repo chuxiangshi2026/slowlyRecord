@@ -8,21 +8,16 @@
  * 百度统计 hm.js 依赖页面域名与 cookie，file:// 下数据会被丢弃；umami 欧区网关国内不可达，
  * 且第三方统计平台涉及合规告知成本。自建端点字段自控、不记录 IP，叙事最简单。
  *
- * 排除规则（优先级从高到低）：
- * - localStorage `sr_stats_force` = '1'：强制启用（开发自测用）
- * - localStorage `sr_stats_exclude` = '1'：永久跳过上报（设置页「匿名使用统计」开关即写此键）
- * - uTools 开发环境（utools.isDev()）自动排除
- * - 非 uTools 的 localhost/127.0.0.1（vite dev）自动排除
- *
  * 合规约定：
- * - 默认开启，但首次启动会明确告知上报内容并提供关闭入口（设置页开关）
+ * - 默认关闭：首次启动明确告知「默认关闭，主动开启后才发送」，用户勾选后立即生效、取消立即停发；
+ *   插件升级不会重新开启（开启选择持久化在 user-set）
  * - 不伪造、不设置 User-Agent；端点固定为 config.ts 的 STATS_ENDPOINT
  * - 只发 JSON 事件：事件名/页面路径/平台/版本/匿名安装 ID/少量事件数据，不含用户词库内容
  */
 import { STATS_ENDPOINT, APP_VERSION } from '@/config';
 
-/** 自我排除标记键（值为 '1' 时不上报；设置页开关写此键，并在 user-set 持久化） */
-const STATS_EXCLUDE_KEY = 'sr_stats_exclude';
+/** 主动开启标记键（值为 '1' 时才允许上报；默认关闭口径下的正向同意标记） */
+const STATS_OPTIN_KEY = 'sr_stats_optin';
 /** 首次启动告知弹窗已展示标记键（同时持久化到 user-set，插件更新清空 localStorage 后不重弹） */
 export const STATS_NOTICE_KEY = 'sr_stats_notice_v1';
 /** 强制启用标记键（开发自测用，优先于一切排除规则） */
@@ -38,31 +33,42 @@ function getFlag(key: string): boolean {
   }
 }
 
-/** 当前是否已排除统计（设置页开关的显示值取反即用） */
+/**
+ * 当前是否未开启统计（设置页开关的显示值取反即用）。
+ * 默认关闭口径：只有用户主动勾选过（存在 sr_stats_optin 标记）才视为已开启，
+ * 未勾选、取消勾选、升级后无标记一律视为未开启。
+ */
 export function isStatsExcluded(): boolean {
-  return getFlag(STATS_EXCLUDE_KEY);
+  return !getFlag(STATS_OPTIN_KEY);
 }
 
-/** 设置统计排除标记（设置页「匿名使用统计」开关调用；立即生效，无需重启） */
+/**
+ * 设置统计开关（设置页「匿名使用统计」开关调用；立即生效，无需重启）。
+ * 开启 = 写 sr_stats_optin 正向标记；关闭 = 清除标记（默认即关闭）。
+ */
 export function setStatsExcluded(excluded: boolean): void {
   try {
-    if (excluded) window.localStorage?.setItem(STATS_EXCLUDE_KEY, '1');
-    else window.localStorage?.removeItem(STATS_EXCLUDE_KEY);
+    if (excluded) window.localStorage?.removeItem(STATS_OPTIN_KEY);
+    else window.localStorage?.setItem(STATS_OPTIN_KEY, '1');
   } catch { /* localStorage 不可用时忽略 */ }
-  // 持久化到 user-set：uTools 插件更新可能清空 localStorage，用户的选择不能因此丢失
+  // 持久化到 user-set：uTools 插件更新可能清空 localStorage，用户的选择不能因此丢失；
+  // statsOptedIn 为正向同意标记，旧 statsExcluded 同步写以兼容旧版本读取侧
   void import('@/utils/user-set-db-util')
-    .then(({ upsertSetDbFields }) => upsertSetDbFields({ statsExcluded: excluded }))
+    .then(({ upsertSetDbFields }) => upsertSetDbFields({ statsExcluded: excluded, statsOptedIn: !excluded }))
     .catch(() => { /* DB 未就绪时仅 localStorage 生效 */ });
 }
 
 /**
  * 把 user-set 中持久化的统计偏好同步回 localStorage（插件更新清空 localStorage 后恢复用户选择）。
  * 在启动读取 user-set 后调用。
+ * 迁移规则：旧版本只写 statsExcluded（无 statsOptedIn）——statsExcluded===false 表示用户曾显式
+ * 开启（旧流程下只有主动打开开关才会是 false），映射为已 opt-in；undefined/true 一律按新默认关闭处理。
  */
-export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; noticeShown?: boolean }): void {
+export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; noticeShown?: boolean; optedIn?: boolean }): void {
+  const optedIn = prefs.optedIn ?? (prefs.excluded === false);
   try {
-    if (prefs.excluded === true) window.localStorage?.setItem(STATS_EXCLUDE_KEY, '1');
-    else if (prefs.excluded === false) window.localStorage?.removeItem(STATS_EXCLUDE_KEY);
+    if (optedIn) window.localStorage?.setItem(STATS_OPTIN_KEY, '1');
+    else window.localStorage?.removeItem(STATS_OPTIN_KEY);
     if (prefs.noticeShown) window.localStorage?.setItem(STATS_NOTICE_KEY, '1');
   } catch { /* localStorage 不可用时忽略 */ }
 }
@@ -87,7 +93,23 @@ function shouldEnableStats(): boolean {
 /** 统计状态：上报中 / 各停用原因（设置页状态行展示用，生产环境无控制台时的排障入口） */
 export type StatsStatus = 'enabled' | 'excluded' | 'dev' | 'localhost' | 'no-endpoint';
 
-/** 当前统计状态及停用原因；判定顺序与上报路径一致（force 优先于一切排除规则） */
+/**
+ * 当前统计状态及停用原因；判定顺序与上报路径一致（force 优先于一切排除规则）。
+ * 'excluded' 在默认关闭口径下同时表示「未开启（默认）」与「已关闭」
+ */
+/** 环境是否允许上报统计（忽略用户开关）：有端点、非 uTools 开发、非 localhost。
+ * 首启告知弹窗按此判定，避免 getStatsStatus() 在默认关闭时恒为 'excluded' 而漏判 dev/localhost */
+export function isStatsEnvEligible(): boolean {
+  if (!STATS_ENDPOINT || typeof window === 'undefined') return false;
+  if (getFlag(STATS_FORCE_KEY)) return true;
+  const isUTools = !!(window as any).utools;
+  try {
+    if (isUTools && (window as any).utools.isDev?.()) return false;
+  } catch { /* 旧版本无 isDev 时忽略 */ }
+  const hostname = window.location.hostname;
+  return isUTools || (hostname !== 'localhost' && hostname !== '127.0.0.1');
+}
+
 export function getStatsStatus(): StatsStatus {
   if (!STATS_ENDPOINT) return 'no-endpoint';
   if (typeof window === 'undefined') return 'no-endpoint';

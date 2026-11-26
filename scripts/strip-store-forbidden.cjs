@@ -371,6 +371,15 @@ const FORBIDDEN = [
     'chuxiangshi2026/slowlyRecord@211ee3f',
 ]
 
+// 统计端点迁移自检：STATS_ENDPOINT 一旦不再是旧统计函数域名，旧裸地址就不许残留在商店包里。
+// 只匹配统计函数那台主机名（同步用的是另一台 tencentscf 函数，不能一并拦）。
+// 迁移前（域名尚未接通，端点仍指向旧函数）不启用该断言，避免把外部阻塞误判成构建失败。
+const OLD_STATS_HOST = '1258475269-324jnlw5kv.ap-guangzhou.tencentscf.com'
+const statsConfig = fs.readFileSync(path.join(__dirname, '..', 'src', 'config.ts'), 'utf8')
+if (!statsConfig.includes(`STATS_ENDPOINT = 'https://${OLD_STATS_HOST}'`)) {
+    FORBIDDEN.push(OLD_STATS_HOST)
+}
+
 function* walk(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
         const full = path.join(dir, entry.name)
