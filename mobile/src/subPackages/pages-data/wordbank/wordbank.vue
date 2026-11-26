@@ -58,7 +58,7 @@
     <!-- 远程词库下载 -->
     <view class="section-header">
       <text class="section-title">下载词库</text>
-      <text class="section-add" @click="refreshRemoteIndex">刷新</text>
+      <text class="section-add" @click="refreshRemoteIndex">{{ refreshing ? '刷新中…' : '刷新' }}</text>
     </view>
     <view class="remote-tools">
       <input class="remote-search" v-model="remoteKeyword" placeholder="搜索词库，如：四级 / 老友记">
@@ -139,7 +139,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useMobileWords, type WordBankMeta } from '@/stores/useMobileWords'
-import { fetchRemoteIndex, getWordBank, getCachedBankIds, removeCachedWordBank, categoryIdOf, buildCategoryTabs, hasSpeechAudio, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
+import { fetchRemoteIndex, getBundledIndex, getWordBank, getCachedBankIds, removeCachedWordBank, categoryIdOf, buildCategoryTabs, hasSpeechAudio, type RemoteWordBankInfo } from '@/utils/remote-wordbank'
 import { askImportTargetBank } from '@/utils/wordbank-import-target'
 import { getProfile, listLanguages } from '@/utils/language'
 import { inferMobileItemType } from '@/stores/useUtils/text'
@@ -161,8 +161,10 @@ const importCandidates = computed(() => {
 })
 
 // 远程词库下载
-const remoteList = ref<RemoteWordBankInfo[]>([])
+const remoteList = ref<RemoteWordBankInfo[]>(getBundledIndex())
 const remoteError = ref('')
+// 清单先展示随包快照，远端刷新成功后再覆盖，避免慢网时整块空白
+const refreshing = ref(false)
 const cachedIds = ref<string[]>([])
 const downloadingId = ref('')
 const downloadProgress = ref(0)
@@ -196,12 +198,18 @@ onMounted(async () => {
 })
 
 async function refreshRemoteIndex() {
+  if (refreshing.value) return
+  refreshing.value = true
   remoteError.value = ''
-  const list = await fetchRemoteIndex()
-  if (list) {
-    remoteList.value = list
-  } else {
-    remoteError.value = '词库清单加载失败，请检查网络后点"刷新"'
+  try {
+    const list = await fetchRemoteIndex()
+    if (list) {
+      remoteList.value = list
+    } else {
+      remoteError.value = '刷新失败，当前显示内置清单，可稍后重试'
+    }
+  } finally {
+    refreshing.value = false
   }
 }
 
@@ -257,7 +265,13 @@ async function importToBank(bank: RemoteWordBankInfo, rawWords: any[], bankId: s
   }
   // 导入成功后删除下载缓存：词库已进入分块存储，原始 JSON 缓存（GRE 级约 650KB）留着只占 storage 配额
   removeCachedWordBank(bank.id)
-  uni.showToast({ title: `已导入 ${rawWords.length} 词`, icon: 'success' })
+  // 提示用 importWords 实际新增/更新数，而非下载的原始条数（可能含去重与无效词）
+  uni.showToast({
+    title: result.updated > 0
+      ? `已导入 ${result.imported.length} 词，更新 ${result.updated} 词`
+      : `已导入 ${result.imported.length} 词`,
+    icon: 'success',
+  })
 }
 
 const currentBankName = computed(() => {

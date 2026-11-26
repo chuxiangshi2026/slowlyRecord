@@ -1,6 +1,6 @@
 {
   "name": "slowlyrecord-mobile",
-  "version": "1.1.2",
+  "version": "1.1.7",
   "description": "慢记移动端 - UniApp 跨平台应用",
   "scripts": {
     "type-check": "vue-tsc --noEmit -p tsconfig.json",
@@ -16,8 +16,6 @@
     "build:app-ios": "UNI_APP_CODE_SPLITTING=1 uni build -p app --minify",
     "dev:h5": "uni -p h5",
     "build:h5": "uni build -p h5 --minify",
-    "type-check": "vue-tsc --noEmit -p tsconfig.json",
-    "type-check:test": "vue-tsc --noEmit -p tsconfig.test.json",
     "mp:preview": "node scripts/mp-ci.cjs preview",
     "mp:upload": "node scripts/mp-ci.cjs upload"
   },

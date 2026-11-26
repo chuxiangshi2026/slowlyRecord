@@ -5,6 +5,19 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 // ==================== Mock 设置 (vi.mock 必须放在最顶部，且不能引用外部变量) ====================
 
+// Mock 内置密钥配置：源码已不含真实凭证（VITE_* 注入），测试用固定假密钥锁定"内置可用"分支
+vi.mock('@/config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/config')>()
+  return {
+    ...actual,
+    DefaultApiKeys: {
+      ...actual.DefaultApiKeys,
+      youdao: { appkey: 'test-youdao-appkey', key: 'test-youdao-secret' },
+      glm: { appkey: 'test-glm-key', key: 'glm-4-flash' },
+    },
+  }
+})
+
 // Mock pako - 工厂函数内联，避免 hoisting 时变量未初始化
 vi.mock('pako', () => ({
   default: {

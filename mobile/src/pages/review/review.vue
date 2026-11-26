@@ -302,6 +302,8 @@ const lastJudgement = ref<LastJudgement | null>(null)
 const showUndoBar = ref(false)
 const undoLabel = ref('')
 let undoTimer: ReturnType<typeof setTimeout> | null = null
+let cardAnimationTimer: ReturnType<typeof setTimeout> | null = null
+let gestureHandled = false
 
 // 升级飘字：Lv 提升时短暂展示「Lv5 → 6」，1s 后消失（降级不飘，负反馈已有标红）
 const levelUpFloat = ref<{ from: number; to: number } | null>(null)
@@ -386,9 +388,10 @@ const currentWord = computed(() => {
   return sessionWords.value[currentIndex.value]
 })
 
+// currentIndex 为 0 基下标，进度按「当前第几张（1 基）」计，最后一张 = 100%
 const progressPercent = computed(() => {
   if (sessionWords.value.length === 0) return 0
-  return Math.round(((currentIndex.value) / sessionWords.value.length) * 100)
+  return Math.min(100, Math.round(((currentIndex.value + 1) / sessionWords.value.length) * 100))
 })
 
 const emptyTitle = computed(() => {
@@ -444,7 +447,7 @@ onShow(() => {
 
 onMounted(() => {
   // 打卡数据用于完成页"去打卡"引导判断
-  signinStore.loadRecords()
+  signinStore.refreshToday()
   // 每日目标值（轻反馈用）
   dailyGoal.value = loadDailyGoal()
   // 恢复自动发音开关设置（默认开）
@@ -638,6 +641,7 @@ watch(currentWord, (word) => {
 
 const handleTouchStart = (e: any) => {
   if (isAnimating.value) return
+  gestureHandled = false
   const t = e.touches[0]
   touchStartX.value = t.clientX
   touchStartY.value = t.clientY
@@ -686,6 +690,7 @@ const handleTouchMove = (e: any) => {
 
 const handleTouchEnd = (e: any) => {
   if (isAnimating.value) return
+  gestureHandled = true
   const t = e.changedTouches[0]
   const deltaX = t.clientX - touchStartX.value
   const deltaY = t.clientY - touchStartY.value
@@ -721,7 +726,11 @@ const handleTouchEnd = (e: any) => {
 }
 
 const onCardTap = () => {
-  // tap 事件在划动时不应触发
+  // H5 等平台 touchend 后还会派发 tap，同一手势只能翻转一次
+  if (gestureHandled) {
+    gestureHandled = false
+    return
+  }
   if (!isSwiping.value && !isAnimating.value) {
     flipCard()
   }
@@ -767,7 +776,9 @@ const animateCard = (direction: 'left' | 'right' | 'down', callback: () => void)
     cardTransform.value = { x: 0, y: 500, rotate: 0, rotateX: 45, rotateY: 0 }
   }
 
-  setTimeout(() => {
+  if (cardAnimationTimer) clearTimeout(cardAnimationTimer)
+  cardAnimationTimer = setTimeout(() => {
+    cardAnimationTimer = null
     callback()
     cardTransform.value = { x: 0, y: 0, rotate: 0, rotateX: 0, rotateY: 0 }
     isAnimating.value = false
@@ -879,6 +890,7 @@ onUnmounted(() => {
   stopSpeaking()
   if (undoTimer) clearTimeout(undoTimer)
   if (levelUpTimer) clearTimeout(levelUpTimer)
+  if (cardAnimationTimer) clearTimeout(cardAnimationTimer)
 })
 
 const nextWord = () => {
@@ -1110,7 +1122,7 @@ const goAfterReview = (url: string) => {
   color: var(--sr-text-3);
 }
 
-.hint-left { color: #e6a23c; }
+.hint-left { color: var(--sr-warning, #e6a23c); }
 .hint-down { color: var(--sr-primary); }
 .hint-right { color: var(--sr-primary); }
 

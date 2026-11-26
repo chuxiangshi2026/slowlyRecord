@@ -150,8 +150,11 @@ export function buildChineseAudioUrls(text: string): string[] {
   return urls
 }
 
-/** 百度翻译网页免费 TTS（lan=zh 中文 / lan=uk 英文），境内真机可用；域名需在 downloadFile 白名单 */
-export function buildBaiduTtsUrl(text: string, lan: 'zh' | 'uk'): string {
+/** 百度翻译网页免费 TTS 的语种代码（百度 gettts 接口口径：uk 英语、zh 中文、jp 日语、ru 俄语、spa 西语、fra 法语），境内真机可用；域名需在 downloadFile 白名单 */
+export type BaiduTtsLan = 'zh' | 'uk' | 'jp' | 'ru' | 'spa' | 'fra'
+
+/** 百度翻译网页免费 TTS，境内真机可用；域名需在 downloadFile 白名单 */
+export function buildBaiduTtsUrl(text: string, lan: BaiduTtsLan): string {
   return `https://fanyi.baidu.com/gettts?lan=${lan}&text=${encodeURIComponent(text)}&spd=5&source=web`
 }
 

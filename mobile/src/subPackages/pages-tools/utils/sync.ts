@@ -21,7 +21,7 @@ import type {
   MobileMemoryPalace,
   MobileSentences,
 } from '@/stores/useUtils/types'
-import { applyTranslationSettings, getAllTranslationApiKeys, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
+import { applyTranslationSettings, getTranslationPlatform } from '@/stores/useUtils/translation-settings'
 import { filterByTombstones, mergeTombstones } from '@/stores/useUtils/sync-tombstone'
 import { log } from '../../../utils/logger'
 
@@ -290,25 +290,6 @@ const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
  */
 const MAX_SYNC_IMAGE_CHARS = 32 * 1024
 
-/** uni storage key：上次成功推送的 JSON 哈希，用于跳过未变更的同步 */
-const LAST_PUSH_HASH_KEY = 'slowlyrecord-last-push-hash'
-
-/** 计算 SHA-256 哈希（hex 字符串），用于判断数据是否变更 */
-async function sha256Hex(text: string): Promise<string> {
-  const subtle = (globalThis as any)?.crypto?.subtle
-  if (!subtle) {
-    // 无 WebCrypto 时退回简单哈希（djb2），只用于去重判断
-    let hash = 5381
-    for (let i = 0; i < text.length; i++) hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0
-    return hash.toString(16)
-  }
-  const bytes = utf8ToBytes(text)
-  const hashBuffer = await subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('')
-}
-
 export interface PushPayload {
   banks: MobileSyncBank[]
   textMemory?: MobileTextMemory
@@ -334,11 +315,6 @@ export function stripMobileSyncSecrets(data: MobileSyncData): MobileSyncData {
   }
 }
 
-function mobileSyncFingerprint(data: MobileSyncData): string {
-  const { exportedAt, platform, ...stable } = data
-  return JSON.stringify(stable)
-}
-
 export function collectSyncData(payload: PushPayload): MobileSyncData {
   return {
     version: 1,
@@ -347,7 +323,8 @@ export function collectSyncData(payload: PushPayload): MobileSyncData {
     banks: payload.banks,
     userSettings: {
       translationPlatform: getTranslationPlatform(),
-      keys: getAllTranslationApiKeys(),
+      // 同步包永不带密钥；密钥只保留本机，避免更换设备/分享同步码时泄露
+      keys: {},
     },
     textMemory: payload.textMemory,
     numberMemory: payload.numberMemory,
@@ -383,17 +360,10 @@ export async function pushToServer(
     const payload: PushPayload = Array.isArray(banksOrPayload)
       ? { banks: banksOrPayload, ...extra }
       : banksOrPayload
-    const data = collectSyncData(payload)
+    // 无论 AES 是否可用，上传负载都不携带密钥；主动推送始终生成新同步码
+    const data = stripMobileSyncSecrets(collectSyncData(payload))
     const useAes = hasWebCryptoSubtle()
-    const json = JSON.stringify(useAes ? data : stripMobileSyncSecrets(data))
-
-    // 跳过未变更的同步：排除每次都会变化的导出时间
-    const hash = await sha256Hex(mobileSyncFingerprint(data))
-    const lastHash = uni.getStorageSync(LAST_PUSH_HASH_KEY)
-    if (lastHash && hash === lastHash) {
-      log.i('[sync] 数据未变更，跳过上传')
-      return { success: true, code: '', skipped: true }
-    }
+    const json = JSON.stringify(data)
 
     const jsonBytes = utf8ToBytes(json)
     const compressed = pako.deflate(jsonBytes)
@@ -417,7 +387,6 @@ export async function pushToServer(
       return { success: false, error: `数据量过大（${mb}MB），请减少词库或图片后重试` }
     }
     const blobId = await uploadRaw(encryptedBase64)
-    uni.setStorageSync(LAST_PUSH_HASH_KEY, hash)
     const syncCode = buildSyncCode(blobId, syncKey)
     return { success: true, code: syncCode }
   } catch (e) {

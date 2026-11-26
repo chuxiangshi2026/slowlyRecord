@@ -12,11 +12,15 @@ const JSDELIVR_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@
 const PUBLIC_WORDBANK_BASE = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/wordbanks'
 const CACHE_KEY_PREFIX = 'slowlyrecord_remote_wordbank_'
 const CACHE_INDEX_KEY = 'slowlyrecord_remote_wordbank_index'
-// 微信 storage 单 key 上限 1MB，超出需分块（与 adapters/index.ts 的 CHUNK_SIZE 一致）
-const CHUNK_SIZE = 900 * 1024
+// 微信 storage 单 key 上限按字节计 1MB，超出需分块；按 UTF-8 字节切分并留余量
+//（多字节词库用字符数会严重低估体积，见 bug-list-2026-11-25 D15）
+const CHUNK_SIZE = 800 * 1024
 
 /** 词库清单条目（与 index.json 一致） */
+import { splitStringByUtf8Bytes } from '@/adapters/index'
 import { getProfile, type LanguageCode } from '@/utils/language'
+// 随包内置的清单快照（约 5KB）：首屏先展示，远端刷新只负责更新，弱网/慢 CDN 时不再空白
+import bundledIndexJson from '../../wordbank-json/index.json'
 
 export interface RemoteWordBankInfo {
   id: string
@@ -56,7 +60,7 @@ const EN_CATEGORY_BY_ID: Record<string, string> = {
   // 口语与句型
   'oral-basic': 'oral', 'oral-intermediate': 'oral', 'oral-advanced': 'oral',
   'common-phrases': 'oral', collocations: 'oral', 'phrasal-verbs': 'oral',
-  idioms: 'oral', 'sentence-patterns': 'oral', roots: 'oral', newConcept: 'oral',
+  idioms: 'oral', 'sentence-patterns': 'oral', roots: 'oral',
   'spoken-reductions-1': 'oral', 'spoken-reactions-1': 'oral',
   'spoken-reductions-2': 'oral', 'spoken-elision-1': 'oral',
   'spoken-liaison-1': 'oral', 'spoken-reactions-2': 'oral',
@@ -135,19 +139,35 @@ export function hasSpeechAudio(bankId: string): boolean {
   return !!bankId && PUBLIC_HOSTED_BANKS.some((bank) => bank.id === bankId && bank.speechAudio === true)
 }
 
-/** 已缓存的词库 id 列表 */
-export function getCachedBankIds(): string[] {
+function readCachedIds(): string[] {
   try {
     const raw = uni.getStorageSync(CACHE_INDEX_KEY)
-    if (Array.isArray(raw)) return raw
-    if (typeof raw === 'string' && raw) return JSON.parse(raw)
-  } catch { /* ignore */ }
-  return []
+    const ids = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? JSON.parse(raw) : [])
+    return Array.isArray(ids) ? ids.filter((id: unknown): id is string => typeof id === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * 已缓存的词库 id 列表。
+ * 自愈：导入成功后会删除原始 JSON 缓存，若列表没同步就会显示「已下载」但点开重新下载，
+ * 这里按缓存是否真的存在过滤一次（并回写），避免界面与实际状态不一致。
+ */
+export function getCachedBankIds(): string[] {
+  const ids = readCachedIds()
+  const alive = ids.filter((id) => {
+    try { return !!uni.getStorageSync(CACHE_KEY_PREFIX + id) } catch { return false }
+  })
+  if (alive.length !== ids.length) {
+    try { uni.setStorageSync(CACHE_INDEX_KEY, JSON.stringify(alive)) } catch { /* ignore */ }
+  }
+  return alive
 }
 
 /** 标记词库已缓存 */
 function markCached(id: string) {
-  const ids = getCachedBankIds()
+  const ids = readCachedIds()
   if (!ids.includes(id)) {
     ids.push(id)
     try { uni.setStorageSync(CACHE_INDEX_KEY, JSON.stringify(ids)) } catch { /* ignore */ }
@@ -161,6 +181,8 @@ export function loadCachedWordBank(id: string): any[] | null {
     if (!raw) return null
     // 分块形态：主 key 存 {_chunks, _chunkKeys} 元信息
     if (typeof raw === 'object' && raw._chunkKeys) {
+      // 分片数与 key 列表必须一致，防止半截写入被误当完整缓存（bug-list-2026-11-25 14.4）
+      if (!Array.isArray(raw._chunkKeys) || raw._chunkKeys.length !== raw._chunks) return null
       let joined = ''
       for (const chunkKey of raw._chunkKeys) {
         const part = uni.getStorageSync(chunkKey)
@@ -177,21 +199,21 @@ export function loadCachedWordBank(id: string): any[] | null {
   }
 }
 
-/** 写入缓存，超 1MB 自动分块（level8 等大词库整存必然写失败） */
+/** 写入缓存，超上限自动按 UTF-8 字节分块（level8 等大词库整存必然写失败） */
 function saveCacheWithChunks(id: string, jsonStr: string): void {
   const key = CACHE_KEY_PREFIX + id
-  if (jsonStr.length <= CHUNK_SIZE) {
-    uni.setStorageSync(key, jsonStr)
+  const chunks = splitStringByUtf8Bytes(jsonStr, CHUNK_SIZE)
+  if (chunks.length <= 1) {
+    uni.setStorageSync(key, chunks[0] ?? jsonStr)
     markCached(id)
     return
   }
   const chunkKeys: string[] = []
-  for (let i = 0, n = 0; i < jsonStr.length; i += CHUNK_SIZE, n++) {
-    chunkKeys.push(`${key}__chunk__${n}`)
-  }
   try {
-    chunkKeys.forEach((chunkKey, i) => {
-      uni.setStorageSync(chunkKey, jsonStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE))
+    chunks.forEach((chunk, i) => {
+      const chunkKey = `${key}__chunk__${i}`
+      chunkKeys.push(chunkKey)
+      uni.setStorageSync(chunkKey, chunk)
     })
     uni.setStorageSync(key, { _chunks: chunkKeys.length, _chunkKeys: chunkKeys })
     markCached(id)
@@ -214,6 +236,12 @@ export function removeCachedWordBank(id: string): void {
     }
     uni.removeStorageSync(key)
   } catch { /* ignore */ }
+  // 同步从「已下载」列表移除：导入成功后缓存被删，界面若仍显示已下载，再点会重新下载并可能报错
+  try {
+    const ids = readCachedIds()
+    const next = ids.filter((x) => x !== id)
+    if (next.length !== ids.length) uni.setStorageSync(CACHE_INDEX_KEY, JSON.stringify(next))
+  } catch { /* ignore */ }
 }
 
 /** 下载词库 JSON（带进度回调），成功后写入缓存 */
@@ -228,7 +256,10 @@ export function downloadWordBank(
       url,
       success: (res) => {
         if (res.statusCode !== 200) {
-          reject(new Error(`下载失败（${res.statusCode}）`))
+          // 403/429 多为 jsDelivr 对同一出口 IP 的限流，提示重试比只报数字有用
+          reject(new Error(res.statusCode === 403 || res.statusCode === 429
+            ? `下载被限流（${res.statusCode}），请稍后重试`
+            : `下载失败（${res.statusCode}）`))
           return
         }
         // 读取文件内容并解析
@@ -239,6 +270,8 @@ export function downloadWordBank(
             try {
               const data = JSON.parse(readRes.data as string)
               if (!Array.isArray(data)) throw new Error('格式错误')
+              // 空词库（如历史遗留的 newConcept.json = []）不能当成下载成功，否则会被标记已下载并导入 0 词
+              if (data.length === 0) throw new Error('词库文件为空')
               // 写缓存（超 1MB 自动分块，level8 等大词库整存必然写失败）
               try {
                 saveCacheWithChunks(id, readRes.data as string)
@@ -274,27 +307,95 @@ export async function getWordBank(
   onProgress?: (percent: number) => void,
 ): Promise<any[]> {
   const cached = loadCachedWordBank(id)
-  if (cached) return cached
+  if (cached && cached.length > 0) return cached
+  // 空缓存（旧版本把空文件写进了 storage）视为无效，清掉后重新下载
+  if (cached) removeCachedWordBank(id)
   return downloadWordBank(id, onProgress)
 }
 
-/** 拉取远程词库清单，并补齐清单外的托管词库（多语言 + 口语句库） */
-export function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
+/**
+ * 上次成功拉到的清单（刷新失败时兜底，避免线上弱网/域名异常时列表整块消失）
+ */
+const INDEX_CACHE_KEY = 'slowlyrecord_remote_wordbank_index_list'
+
+/** 补齐清单外的托管词库（多语言 + 口语句库） */
+function mergeIndex(data: RemoteWordBankInfo[]): RemoteWordBankInfo[] {
+  const remoteIds = new Set(data.map(bank => bank.id))
+  return [
+    ...data.map(bank => ({ ...bank, language: bank.language || 'en' })),
+    ...PUBLIC_HOSTED_BANKS.filter(bank => !remoteIds.has(bank.id)),
+  ]
+}
+
+/** downloadFile 通道读 JSON：与词库下载共用 downloadFile 合法域名，不额外依赖 request 域名 */
+function fetchJsonByDownload(url: string): Promise<any | null> {
   return new Promise((resolve) => {
-    uni.request({
-      url: `${JSDELIVR_BASE}/index.json`,
+    uni.downloadFile({
+      url,
       success: (res) => {
-        if (res.statusCode === 200 && Array.isArray(res.data)) {
-          const remoteIds = new Set(res.data.map((bank: RemoteWordBankInfo) => bank.id))
-          resolve([
-            ...res.data.map((bank: RemoteWordBankInfo) => ({ ...bank, language: bank.language || 'en' })),
-            ...PUBLIC_HOSTED_BANKS.filter(bank => !remoteIds.has(bank.id)),
-          ])
-        } else {
-          resolve(null)
-        }
+        if (res.statusCode !== 200) return resolve(null)
+        uni.getFileSystemManager().readFile({
+          filePath: res.tempFilePath,
+          encoding: 'utf-8',
+          success: (readRes) => { try { resolve(JSON.parse(String(readRes.data))) } catch { resolve(null) } },
+          fail: () => resolve(null),
+        })
       },
       fail: () => resolve(null),
     })
   })
+}
+
+/** request 通道读 JSON（备用）；部分环境把 JSON 当字符串返回，这里统一兜住 */
+function fetchJsonByRequest(url: string): Promise<any | null> {
+  return new Promise((resolve) => {
+    uni.request({
+      url,
+      dataType: 'json',
+      success: (res) => {
+        if (res.statusCode !== 200) return resolve(null)
+        const data: any = res.data
+        if (typeof data === 'string') {
+          try { resolve(JSON.parse(data)) } catch { resolve(null) }
+          return
+        }
+        resolve(data)
+      },
+      fail: () => resolve(null),
+    })
+  })
+}
+
+/** 随包内置的清单（已补齐托管词库），首屏与所有网络通道失败时都用它 */
+export function getBundledIndex(): RemoteWordBankInfo[] {
+  const rows = Array.isArray(bundledIndexJson) ? bundledIndexJson as RemoteWordBankInfo[] : []
+  return mergeIndex(rows)
+}
+
+function readCachedIndex(): RemoteWordBankInfo[] | null {
+  try {
+    const raw = uni.getStorageSync(INDEX_CACHE_KEY)
+    const parsed = typeof raw === 'string' && raw ? JSON.parse(raw) : raw
+    return Array.isArray(parsed) && parsed.length ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * 拉取远程词库清单，并补齐清单外的托管词库（多语言 + 口语句库）。
+ * 线上小程序 request 与 downloadFile 是两套合法域名，词库文件走 downloadFile 已配好，
+ * 清单此前只走 request，缺 request 域名时整页刷不出来；现改为 downloadFile 优先、request 兜底，
+ * 两者都失败再退回上次成功的清单。
+ */
+export async function fetchRemoteIndex(): Promise<RemoteWordBankInfo[] | null> {
+  const url = `${JSDELIVR_BASE}/index.json`
+  let data = await fetchJsonByDownload(url)
+  if (!Array.isArray(data)) data = await fetchJsonByRequest(url)
+  if (Array.isArray(data)) {
+    const list = mergeIndex(data as RemoteWordBankInfo[])
+    try { uni.setStorageSync(INDEX_CACHE_KEY, JSON.stringify(list)) } catch { /* 超配额时忽略，不影响本次展示 */ }
+    return list
+  }
+  return readCachedIndex() ?? getBundledIndex()
 }

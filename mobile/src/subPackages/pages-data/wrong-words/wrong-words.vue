@@ -116,9 +116,10 @@ watch(isDone, (done) => {
   if (done) useAchievements().checkNow()
 })
 
+// pos 为 0 基下标，进度按「当前第几张（1 基）」计，最后一张 = 100%
 const progressPercent = computed(() => {
   if (session.ids.length === 0) return 0
-  return (session.pos / session.ids.length) * 100
+  return Math.min(100, ((session.pos + 1) / session.ids.length) * 100)
 })
 
 /** 开始一轮新会话：对当前错题列表取快照 */
@@ -284,7 +285,7 @@ const goHome = () => {
 }
 
 .progress-bar {
-  background: rgba(255,255,255,0.3);
+  background: var(--sr-border);
   border-radius: 10rpx;
   height: 20rpx;
   margin-bottom: 40rpx;
@@ -294,7 +295,7 @@ const goHome = () => {
 
 .progress-fill {
   height: 100%;
-  background: #fff;
+  background: var(--sr-primary);
   border-radius: 10rpx;
   transition: width 0.3s;
 }
@@ -304,7 +305,7 @@ const goHome = () => {
   top: 30rpx;
   right: 0;
   font-size: 24rpx;
-  color: #fff;
+  color: var(--sr-text-3);
 }
 
 .card {
@@ -399,16 +400,15 @@ const goHome = () => {
   border-radius: 50rpx;
   font-size: 32rpx;
   border: none;
-  color: #fff;
+  color: var(--sr-on-primary);
 }
 
+/* 与 review 页同名按钮同口径：danger 语义红实底 */
 .btn-forget {
-  background: rgba(255,255,255,0.3);
-  border: 2rpx solid #fff;
+  background: #c0564f;
 }
 
 .btn-remember {
-  background: #fff;
-  color: #c0564f;
+  background: var(--sr-primary);
 }
 </style>

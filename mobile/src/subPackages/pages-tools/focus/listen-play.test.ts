@@ -1,6 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { buildWordAudioUrls, ListenPlayer, type WordAudioPlayer } from './listen-play'
 
+// 源码已不含真实凭证：中文 TTS（有道智云）依赖注入密钥，测试用假密钥锁定音源链
+vi.mock('@/config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/config')>()
+  return {
+    ...actual,
+    DefaultApiKeys: {
+      ...actual.DefaultApiKeys,
+      youdao: { appkey: 'test-youdao-appkey', key: 'test-youdao-secret' },
+    },
+  }
+})
+
 describe('buildWordAudioUrls', () => {
   it('应以有道音源为首选，百度 uk 次之并附带谷歌兜底音源', () => {
     const urls = buildWordAudioUrls('take care')
@@ -248,8 +260,10 @@ describe('ListenPlayer', () => {
     const p = new ListenPlayer(['こんにちは', '学生'], player, () => 1000, {}, 'ja')
 
     p.start()
-    expect(played[0]).toContain('tl=ja')
-    expect(prefetched[0]).toContain('tl=ja')
+    // 非英语链：百度网页 TTS（lan=jp）首发、谷歌（tl=ja）兜底
+    expect(played[0]).toContain('lan=jp')
+    expect(played[0]).toContain('fanyi.baidu.com')
+    expect(prefetched[0]).toContain('lan=jp')
     p.destroy()
   })
 

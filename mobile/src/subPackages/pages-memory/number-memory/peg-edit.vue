@@ -75,7 +75,7 @@
 import { ref, computed, getCurrentInstance, nextTick } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useNumberMemory } from '@/stores/useNumberMemory'
-import { getCaptureAdapter } from '@/subPackages/pages-tools/utils/capture'
+import { getCaptureAdapter } from '@/utils/capture'
 
 const store = useNumberMemory()
 

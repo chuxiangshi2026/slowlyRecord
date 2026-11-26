@@ -5,7 +5,7 @@
  * ⚠️ 翻译引擎、OCR、截图适配器已迁移到分包目录
  *   - 翻译引擎: import from '@/subPackages/pages-tools/utils/translation'
  *   - OCR: import from '@/subPackages/pages-tools/utils/ocr'
- *   - 截图适配器: import from '@/subPackages/pages-tools/utils/capture'
+ *   - 截图适配器: import from '@/utils/capture'
  */
 
 // 类型

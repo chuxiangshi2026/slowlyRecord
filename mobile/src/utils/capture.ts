@@ -1,6 +1,6 @@
 /**
- * 截图适配器 - 仅被分包页面引用
- * 从 adapters/ 迁移到分包目录，避免打入主包
+ * 截图适配器 - 主包共享能力，供 pages-tools 与 pages-memory 等分包引用。
+ * 放在主包 utils，禁止分包之间互相引用运行时模块。
  */
 
 export interface CaptureResult {

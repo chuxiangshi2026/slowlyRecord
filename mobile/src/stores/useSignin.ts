@@ -14,7 +14,7 @@ export const useSignin = defineStore('signin', () => {
   const signedDates = ref<string[]>([])
   let _loaded = false
 
-  const todayStr = computed(() => formatDate(new Date()))
+  const todayStr = ref(formatDate(new Date()))
 
   const hasSignedToday = computed(() => signedDates.value.includes(todayStr.value))
 
@@ -43,7 +43,7 @@ export const useSignin = defineStore('signin', () => {
     return signedDates.value.filter(d => d.startsWith(prefix)).length
   }
 
-  /** 从存储加载打卡记录（幂等，可在多个页面安全调用） */
+  /** 从存储加载打卡记录（成功才标记加载完成，失败允许下次重试） */
   function loadRecords() {
     if (_loaded) return
     try {
@@ -53,10 +53,20 @@ export const useSignin = defineStore('signin', () => {
         const parsed = typeof stored === 'string' ? JSON.parse(stored) : stored
         if (Array.isArray(parsed)) signedDates.value = parsed
       }
+      _loaded = true
     } catch {
       signedDates.value = []
     }
-    _loaded = true
+  }
+
+  /** 页面进入时刷新日期；跨天后强制重读，避免后台常驻仍按昨天打卡 */
+  function refreshToday() {
+    const current = formatDate(new Date())
+    if (current !== todayStr.value) {
+      todayStr.value = current
+      _loaded = false
+    }
+    loadRecords()
   }
 
   function persist() {
@@ -112,6 +122,7 @@ export const useSignin = defineStore('signin', () => {
     streakDays,
     totalSignDays,
     loadRecords,
+    refreshToday,
     signToday,
     monthSignDays,
     // sync

@@ -490,15 +490,33 @@ export function pickLruEvictionsForBytes(entries: AudioCacheEntry[], maxBytes: n
   return evicted
 }
 
-/** 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio、google tts 的 q、百度 gettts 的 text 参数），提取不到返回 null */
+/**
+ * 从 TTS URL 提取缓存 key 用的单词文本（支持有道 dictvoice 的 audio、google tts 的 q、
+ * 百度 gettts 的 text 参数；非英语/中文的 lan、tl 语种参数一并纳入 key）。
+ * 无这些参数的 http(s) 直链（jsDelivr 预合成音频、诗词音频等）
+ * 用完整 URL（去 hash）派生稳定 key；无法缓存的地址返回 null。
+ */
 export function parseAudioCacheWord(url: string): string | null {
   try {
     const qIndex = url.indexOf('?')
-    if (qIndex < 0) return null
-    const params = new URLSearchParams(url.slice(qIndex + 1))
-    const raw = params.get('audio') ?? params.get('q') ?? params.get('text')
-    const word = raw?.trim().toLowerCase()
-    return word ? word : null
+    if (qIndex >= 0) {
+      const params = new URLSearchParams(url.slice(qIndex + 1))
+      const raw = params.get('audio') ?? params.get('q') ?? params.get('text')
+      const word = raw?.trim().toLowerCase()
+      if (word) {
+        // 同一文本在不同语种发音不同：非英语/中文的 lan/tl 纳入 key，避免跨语种缓存串音（14.3）。
+        // 只取语种主代码比较（谷歌为 zh-CN/ja 等带区域后缀形式），英语/中文维持原 key 兼容既有缓存
+        const lan = (params.get('lan') ?? params.get('tl') ?? '').toLowerCase()
+        const base = lan.split('-')[0]
+        return base && base !== 'uk' && base !== 'zh' && base !== 'en' ? `${base}:${word}` : word
+      }
+    }
+    if (/^https?:\/\//i.test(url)) {
+      const hashIndex = url.indexOf('#')
+      const stable = (hashIndex >= 0 ? url.slice(0, hashIndex) : url).trim()
+      return stable ? `url:${stable}` : null
+    }
+    return null
   } catch {
     return null
   }

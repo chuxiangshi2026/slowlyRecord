@@ -75,7 +75,7 @@ export const useAchievements = defineStore('achievements', () => {
     load()
 
     const signinStore = useSignin()
-    signinStore.loadRecords()
+    signinStore.refreshToday()
 
     const wordsStore = useMobileWords()
     await wordsStore.loadWords()

@@ -94,7 +94,7 @@ import { queryOfflineDict } from '@/stores/useUtils/offline-dict'
 import { inferMobileItemType, normalizeMobileItemText } from '@/stores/useUtils/text'
 import { useMobileWords } from '@/stores/useMobileWords'
 import { getWordKey } from '@/utils/text-utils'
-import { getCaptureAdapter } from '../utils/capture'
+import { getCaptureAdapter } from '@/utils/capture'
 import { recognizeImageWords, type OcrWordResult } from '../utils/ocr'
 import {
   defaultSelectedTokens,

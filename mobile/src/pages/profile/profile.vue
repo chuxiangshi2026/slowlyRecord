@@ -462,6 +462,9 @@ const exportData = () => {
     success: () => {
       uni.showToast({ title: '数据已复制到剪贴板', icon: 'none' })
     },
+    fail: () => {
+      uni.showToast({ title: '导出失败，数据过大或剪贴板不可用', icon: 'none' })
+    },
   })
 }
 

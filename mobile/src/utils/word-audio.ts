@@ -10,7 +10,7 @@
 
 import { getTtsAdapter, type TtsAdapter } from '@/adapters/index'
 import { getPronunciationUrl } from '@/stores/useUtils/offline-dict'
-import { buildChineseAudioUrls, buildBaiduTtsUrl, containsChinese, splitChineseSpeechText } from '@/utils/youdao-tts'
+import { buildChineseAudioUrls, buildBaiduTtsUrl, containsChinese, splitChineseSpeechText, type BaiduTtsLan } from '@/utils/youdao-tts'
 import { getActiveLanguage, getProfile, type LanguageCode } from '@/utils/language'
 import { getSpeechAudioUrl } from '@/utils/speech-audio'
 import { cdnUrlVariants } from '@/utils/cdn-mirror'
@@ -49,17 +49,37 @@ function buildGoogleAudioUrl(word: string, ttsLang: string): string {
   return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${ttsLang}&q=${encodeURIComponent(word)}`
 }
 
+/** 有道 dictvoice 免费音源：实测俄/西/法/日均返回 audio/mpeg，境内可用 */
+function buildYoudaoDictVoiceUrl(word: string): string {
+  return `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`
+}
+
 /** 长句判定：含空格且较长/多词。dictvoice 对长句易 500 且每次失败都带重试延迟，句子改由百度 uk 首发 */
 function isSentenceLike(text: string): boolean {
   const t = text.trim()
   return t.includes(' ') && (t.length > 20 || t.split(/\s+/).length >= 4)
 }
 
-/** 英语：单词走 dictvoice 首发（快、音质好），句子走百度 uk 首发（dictvoice 长句易失败、谷歌境内被阻断）；其他语种使用对应语言的谷歌 TTS。 */
+/** 语言 profile → 百度 gettts 语种代码（ja→jp、es→spa、fr→fra 为百度接口口径） */
+const BAIDU_TTS_LAN: Record<LanguageCode, BaiduTtsLan> = {
+  en: 'uk', ja: 'jp', ru: 'ru', es: 'spa', fr: 'fra',
+}
+
+/**
+ * 英语：单词走 dictvoice 首发（快、音质好），句子走百度 uk 首发（dictvoice 长句易失败、谷歌境内被阻断）；
+ * 其他语种走百度网页 TTS 首发（境内可用，按 gettts 语种代码映射），谷歌对应语种 TTS 兜底（境外可用）。
+ * 全链失败由 speakWord 末尾统一提示，非英语不再只剩境内被阻断的谷歌一个音源（bug-list-2026-11-25 D22）。
+ */
 export function buildWordAudioUrls(word: string, language: LanguageCode = getActiveLanguage()): string[] {
   if (language === 'en' && containsChinese(word)) return buildChineseAudioUrls(word)
   const profile = getProfile(language)
-  if (profile.code !== 'en') return [buildGoogleAudioUrl(word, profile.ttsLang.split('-')[0])]
+  if (profile.code !== 'en') {
+    const baiduLan = BAIDU_TTS_LAN[profile.code]
+    const google = buildGoogleAudioUrl(word, profile.ttsLang.split('-')[0])
+    const youdao = buildYoudaoDictVoiceUrl(word)
+    // 百度仅日语实测返回音频；俄/西/法直接走有道 dictvoice，避免先请求必然 403 的地址
+    return profile.code === 'ja' ? [buildBaiduTtsUrl(word, baiduLan), youdao, google] : [youdao, google]
+  }
   const youdao = getPronunciationUrl(word, 'us')
   const baidu = buildBaiduTtsUrl(word, 'uk')
   const google = buildGoogleAudioUrl(word, 'en')

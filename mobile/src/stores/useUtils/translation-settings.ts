@@ -94,10 +94,6 @@ export function resolveEffectiveTranslationPlatform(provider: TranslationPlatfor
   return hasUsableTranslationApiKey(provider) ? provider : 'mymemory'
 }
 
-export function getAllTranslationApiKeys(): Record<string, { appkey: string; key: string }> {
-  return { ...userApiKeys }
-}
-
 export function applyTranslationSettings(settings?: {
   translationPlatform?: TranslationPlatform
   keys?: Record<string, { appkey: string; key: string }>

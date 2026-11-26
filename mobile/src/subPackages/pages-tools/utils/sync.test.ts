@@ -12,10 +12,13 @@ import {
   collectSyncData,
   buildRestoreResult,
   pullFromServer,
+  pushToServer,
   utf8ToBytes,
   uint8ArrayToBase64,
+  base64ToUint8Array,
   xorCrypt,
 } from './sync'
+import { setTranslationApiKey } from '@/stores/useUtils/translation-settings'
 import { setDbAdapter, resetDbAdapter, type DbAdapter } from '@/adapters/index'
 import type { MobileSyncWordBook } from '@/stores/useUtils/types'
 import { getTombstones, TOMBSTONES_DOC_ID } from '@/stores/useUtils/sync-tombstone'
@@ -227,5 +230,58 @@ describe('pullFromServer 墓碑过滤', () => {
     expect(result.banks![0].words).toHaveLength(1)
     // 空 remote 墓碑不触发回写（不产生墓碑文档）
     expect(getTombstones()).toEqual({})
+  })
+})
+
+describe('pushToServer 隐私与重复上传', () => {
+  function decodeBase64Url(value: string): Uint8Array {
+    const normalized = value.replace(/-/g, '+').replace(/_/g, '/')
+    const padLen = (4 - (normalized.length % 4)) % 4
+    return base64ToUint8Array(normalized + '='.repeat(padLen))
+  }
+
+  async function decryptAesPayload(payload: string, keyBase64: string): Promise<any> {
+    const combined = decodeBase64Url(payload)
+    const key = await (globalThis as any).crypto.subtle.importKey(
+      'raw', decodeBase64Url(keyBase64), { name: 'AES-GCM' }, false, ['decrypt'],
+    )
+    const plain = await (globalThis as any).crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: combined.slice(0, 12) }, key, combined.slice(12),
+    )
+    const json = new TextDecoder().decode(pako.inflate(new Uint8Array(plain)))
+    return JSON.parse(json)
+  }
+
+  it('AES 加密上传的真实负载不包含翻译密钥', async () => {
+    setTranslationApiKey('glm', 'private-app', 'private-key')
+    env.requestMock.mockImplementationOnce((opts: any) => {
+      opts.success({ statusCode: 200, data: { code: 'blob-secret' } })
+    })
+
+    try {
+      const result = await pushToServer({ banks: [] })
+      expect(result.success).toBe(true)
+      const request = env.requestMock.mock.calls[0][0]
+      const keyBase64 = result.code!.split('.').pop()!
+      const payload = await decryptAesPayload(request.data.e, keyBase64)
+      expect(payload.userSettings.keys).toEqual({})
+      expect(JSON.stringify(payload)).not.toContain('private-key')
+    } finally {
+      setTranslationApiKey('glm', '', '')
+    }
+  })
+
+  it('相同数据主动推送两次仍上传两次并返回新同步码', async () => {
+    env.requestMock
+      .mockImplementationOnce((opts: any) => opts.success({ statusCode: 200, data: { code: 'blob-1' } }))
+      .mockImplementationOnce((opts: any) => opts.success({ statusCode: 200, data: { code: 'blob-2' } }))
+
+    const first = await pushToServer({ banks: [] })
+    const second = await pushToServer({ banks: [] })
+
+    expect(first.code).toBeTruthy()
+    expect(second.code).toBeTruthy()
+    expect(second.skipped).not.toBe(true)
+    expect(env.requestMock).toHaveBeenCalledTimes(2)
   })
 })

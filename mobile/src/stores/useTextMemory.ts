@@ -13,13 +13,14 @@ import {
   scheduleOnForgotten,
 } from '../utils/practice-srs'
 import { filterByTombstones, recordTombstones } from './useUtils/sync-tombstone'
+import { MiniProgramDbAdapter } from '@/adapters/index'
 
 /**
  * 文本记忆 store（移动端）
  *
  * 持久化策略：
- * - 与桌面端共用 wire format（字段名一致），通过 wx.Storage 单 key 存放
- * - 单 key 命名 `slowlyrecord-textmemory-data`，与桌面端 TEXTMEMORY_DOC_ID 对齐
+ * - 与桌面端共用 wire format（字段名一致），通过 wx.Storage 分片存放
+ * - 主 key 命名 `slowlyrecord-textmemory-data`，与桌面端 TEXTMEMORY_DOC_ID 对齐；超限由 MiniProgramDbAdapter 分片
  *
  * 已实现：列表/添加/编辑/删除文章 + 内置库导入 + 批量粘贴 + 导入页地图 Tab(标点/作者生平路线)
  *          + 遮挡回忆自测（recall.vue，自评接轻量复习调度 level/nextReview）
@@ -27,6 +28,8 @@ import { filterByTombstones, recordTombstones } from './useUtils/sync-tombstone'
  */
 
 const STORAGE_KEY = 'slowlyrecord-textmemory-data'
+const textMemoryStorage = new MiniProgramDbAdapter('')
+let lastPersistErrorAt = 0
 
 interface TextMemoryDoc {
   articles: MobileTextArticle[]
@@ -56,7 +59,9 @@ function enrichGeo(article: MobileTextArticle): MobileTextArticle {
 
 function readDoc(): TextMemoryDoc {
   try {
-    const raw = uni.getStorageSync(STORAGE_KEY)
+    // 必须走同一适配器读取：文档超过单 key 限制时由 MiniProgramDbAdapter 分片存储，
+    // 直接 uni.getStorageSync 主键只能拿到分片元数据，会误判为空导致内容"消失"
+    const raw = textMemoryStorage.get<TextMemoryDoc>(STORAGE_KEY)
     if (raw && typeof raw === 'object') {
       return {
         articles: Array.isArray(raw.articles) ? raw.articles : [],
@@ -71,9 +76,20 @@ function readDoc(): TextMemoryDoc {
   return { articles: [], notes: [], prompts: [], updatedAt: 0 }
 }
 
+/** load() 前判断本地是否有文本记忆数据（含分片形态），用于区分"没有数据"与"分片丢失" */
+function hasPersistedDoc(): boolean {
+  try {
+    const raw = uni.getStorageSync(STORAGE_KEY)
+    return Boolean(raw && typeof raw === 'object')
+  } catch {
+    return false
+  }
+}
+
 function writeDoc(doc: TextMemoryDoc) {
   doc.updatedAt = Date.now()
-  uni.setStorageSync(STORAGE_KEY, doc)
+  const result = textMemoryStorage.put({ _id: STORAGE_KEY, ...doc })
+  if (!result.ok) throw new Error(result.message || '文本记忆存储写入失败')
 }
 
 export const useTextMemory = defineStore('mobileTextMemory', () => {
@@ -136,7 +152,14 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     if (initialized.value) return
     loading.value = true
     try {
+      // 主键存在但适配器读不出正文：分片丢失/损坏，绝不能静默当空数据（用户会以为内容没了）
+      // 判据用"主键有值 + 适配器返回 null"，避免把真实存在的空文档误判为损坏
+      const corrupted = hasPersistedDoc() && textMemoryStorage.get<TextMemoryDoc>(STORAGE_KEY) === null
       const doc = readDoc()
+      if (corrupted) {
+        console.error('[text-memory] 本地文档存在但读取失败（疑似分片丢失）')
+        uni.showToast({ title: '文本记忆数据读取失败，部分内容可能已丢失', icon: 'none' })
+      }
       // 加载时为缺少 geo 的旧数据补全（一次性迁移）
       let needPersist = false
       const enriched = doc.articles.map((a) => {
@@ -154,13 +177,24 @@ export const useTextMemory = defineStore('mobileTextMemory', () => {
     }
   }
 
-  function persist() {
-    writeDoc({
-      articles: articles.value,
-      notes: notes.value,
-      prompts: prompts.value,
-      updatedAt: Date.now(),
-    })
+  function persist(): boolean {
+    try {
+      writeDoc({
+        articles: articles.value,
+        notes: notes.value,
+        prompts: prompts.value,
+        updatedAt: Date.now(),
+      })
+      return true
+    } catch (e) {
+      console.error('文本记忆保存失败:', e)
+      const now = Date.now()
+      if (now - lastPersistErrorAt > 5000) {
+        lastPersistErrorAt = now
+        uni.showToast({ title: '保存失败，数据暂未持久化，请重试', icon: 'none' })
+      }
+      return false
+    }
   }
 
   // ===== 文章 CRUD =====

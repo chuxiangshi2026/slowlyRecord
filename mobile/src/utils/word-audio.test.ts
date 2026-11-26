@@ -8,6 +8,18 @@ import { speakWord, stopSpeaking, buildWordAudioUrls, speakChineseLongText, pref
 import { setTtsAdapter } from '@/adapters/index'
 import { setActiveLanguage } from '@/utils/language'
 
+// 源码已不含真实凭证：中文 TTS（有道智云）依赖用户/注入密钥，测试用假密钥锁定音源链
+vi.mock('@/config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/config')>()
+  return {
+    ...actual,
+    DefaultApiKeys: {
+      ...actual.DefaultApiKeys,
+      youdao: { appkey: 'test-youdao-appkey', key: 'test-youdao-secret' },
+    },
+  }
+})
+
 interface PlayCall {
   url: string
   options?: { silent?: boolean }
@@ -82,15 +94,18 @@ describe('buildWordAudioUrls', () => {
   })
 
   it.each([
-    ['ja', '学生', 'ja'],
-    ['ru', 'привет', 'ru'],
-    ['es', 'hola', 'es'],
-    ['fr', 'bonjour', 'fr'],
-  ] as const)('%s 使用对应语种 TTS，日语汉字不误走中文音源', (language, word, ttsLang) => {
+    ['ja', '学生', 'fanyi.baidu.com/gettts', 'lan=jp', 'ja', 3],
+    ['ru', 'привет', 'dict.youdao.com/dictvoice', '', 'ru', 2],
+    ['es', 'hola', 'dict.youdao.com/dictvoice', '', 'es', 2],
+    ['fr', 'bonjour', 'dict.youdao.com/dictvoice', '', 'fr', 2],
+  ] as const)('%s 使用实际可用的境内音源首发、谷歌兜底', (language, word, firstHost, marker, ttsLang, count) => {
     const urls = buildWordAudioUrls(word, language)
-    expect(urls).toHaveLength(1)
-    expect(urls[0]).toContain(`tl=${ttsLang}`)
+    expect(urls).toHaveLength(count)
+    expect(urls[0]).toContain(firstHost)
+    if (marker) expect(urls[0]).toContain(marker)
     expect(urls[0]).toContain(encodeURIComponent(word))
+    expect(urls.at(-1)).toContain(`tl=${ttsLang}`)
+    expect(urls.at(-1)).toContain(encodeURIComponent(word))
   })
 })
 
@@ -204,10 +219,10 @@ describe('speakWord 音频调度', () => {
     expect(env.prefetches[0]).toContain(encodeURIComponent('你好'))
   })
 
-  it('预取与当前词使用相同的非英语语种', () => {
+  it('预取与当前词使用相同的非英语语种（百度对应语种代码）', () => {
     speakWord('こんにちは', { language: 'ja', prefetchNext: '学生' })
     expect(env.prefetches).toHaveLength(1)
-    expect(env.prefetches[0]).toContain('tl=ja')
+    expect(env.prefetches[0]).toContain('lan=jp')
     expect(env.prefetches[0]).toContain(encodeURIComponent('学生'))
   })
 
@@ -223,6 +238,51 @@ describe('speakWord 音频调度', () => {
     expect(env.calls[2].url).toContain('translate.google.com')
     expect(env.calls[2].url).toContain('tl=zh-CN')
     env.calls[2].resolve()
+  })
+
+  it('非英语：百度失败回退谷歌对应语种，全链失败时用户主动发音弹一次提示', async () => {
+    const toast = vi.fn()
+    ;(globalThis as any).uni = { showToast: toast }
+    // toastFailThrottled 为模块级 3 秒节流：假时钟把时间推到上次提示之后，避免与同文件其他用例互相节流
+    vi.useFakeTimers()
+    try {
+      vi.setSystemTime(Date.now() + 10 * 1000)
+      speakWord('学生', { language: 'ja', userInitiated: true })
+      expect(env.calls[0].url).toContain('fanyi.baidu.com/gettts')
+      expect(env.calls[0].url).toContain('lan=jp')
+      env.calls[0].reject(new Error('net error'))
+      await vi.advanceTimersByTimeAsync(0)
+      expect(env.calls[1].url).toContain('dict.youdao.com/dictvoice')
+      env.calls[1].reject(new Error('net error'))
+      await vi.advanceTimersByTimeAsync(0)
+      expect(env.calls).toHaveLength(3)
+      expect(env.calls[2].url).toContain('translate.google.com')
+      expect(env.calls[2].url).toContain('tl=ja')
+      env.calls[2].reject(new Error('net error'))
+      await vi.advanceTimersByTimeAsync(0)
+      expect(env.calls).toHaveLength(3)
+      expect(toast).toHaveBeenCalledTimes(1)
+    } finally {
+      vi.useRealTimers()
+      delete (globalThis as any).uni
+    }
+  })
+
+  it('非英语自动发音全链失败静默（可发音入口统一由用户主动发音提示）', async () => {
+    const toast = vi.fn()
+    ;(globalThis as any).uni = { showToast: toast }
+    try {
+      speakWord('学生', { language: 'ja' })
+      env.calls[0].reject(new Error('net error'))
+      await flushMicrotasks()
+      env.calls[1].reject(new Error('net error'))
+      await flushMicrotasks()
+      env.calls[2].reject(new Error('net error'))
+      await flushMicrotasks()
+      expect(toast).not.toHaveBeenCalled()
+    } finally {
+      delete (globalThis as any).uni
+    }
   })
 
   it('未指定下一个词时不发起预取', () => {

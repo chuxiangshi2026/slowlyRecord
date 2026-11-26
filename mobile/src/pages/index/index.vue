@@ -174,8 +174,8 @@ const streakDays = computed(() => signinStore.streakDays)
 // 词库是否为空：新用户（0 词）与"今日已学完"是两种完全不同的状态，文案必须区分
 const isLibraryEmpty = computed(() => wordsStore.wordCount === 0)
 
-// 今日已复习数（口径：lastReviewTime >= 今天 0 点），进度环只算复习部分
-const todayReviewed = computed(() => countReviewedToday(wordsStore.allWords))
+// 今日已复习数：与首页其他统计一致，仅统计当前词库
+const todayReviewed = computed(() => countReviewedToday(wordsStore.words))
 
 // 目标进度环状态与填充角度（0-360°）
 const goalProgress = computed(() => getGoalProgress(todayReviewed.value, dailyGoal.value))
@@ -223,12 +223,12 @@ const wrongWordsCount = computed(() => {
 // 已掌握 = level ≥ 12（与桌面端 remember 口径一致），统计卡用，避免与上方次级任务的连续打卡重复
 const masteredCount = computed(() => wordsStore.words.filter(w => (w.level || 0) >= 12).length)
 
-// 今日学习 = 当天新增数 + 当天复习数（字段为 mobile 特有的 addTime/lastReviewTime）
+// 今日学习 = 当前词库当天新增数 + 当天复习数
 const todayLearned = computed(() => {
   const todayStart = new Date()
   todayStart.setHours(0, 0, 0, 0)
   const start = todayStart.getTime()
-  const added = wordsStore.allWords.filter(w => w.addTime >= start).length
+  const added = wordsStore.words.filter(w => w.addTime >= start).length
   return added + todayReviewed.value
 })
 
@@ -240,7 +240,7 @@ const currentBankName = computed(() => {
 onMounted(() => {
   // 不 await，避免阻塞首屏渲染；数据加载后通过 watch 自动更新 UI
   wordsStore.loadWords()
-  signinStore.loadRecords()
+  signinStore.refreshToday()
   textStore.load()
 })
 
@@ -253,6 +253,7 @@ onLoad(() => {
 
 // tab 页切回时刷新目标值（「我的」页修改后返回即生效）；复习进度本身由 store 响应式驱动
 onShow(() => {
+  signinStore.refreshToday()
   dailyGoal.value = loadDailyGoal()
   shareImage.value = ''
   sharePreviewVisible.value = false

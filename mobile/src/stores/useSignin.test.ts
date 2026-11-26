@@ -55,3 +55,37 @@ describe('useSignin 同步（collectSync / restoreSync）', () => {
     expect(mockStorage.get(SIGNIN_KEY)).toBe(JSON.stringify(['2026-09-01']))
   })
 })
+
+describe('useSignin 跨天与读取恢复', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    mockStorage.clear()
+    vi.useRealTimers()
+  })
+
+  it('跨午夜刷新后允许新的一天打卡', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 10, 25, 23, 59))
+    const store = useSignin()
+    expect(store.signToday()).toBe(true)
+
+    vi.setSystemTime(new Date(2026, 10, 26, 0, 1))
+    store.refreshToday()
+
+    expect(store.todayStr).toBe('2026-11-26')
+    expect(store.hasSignedToday).toBe(false)
+    expect(store.signToday()).toBe(true)
+    vi.useRealTimers()
+  })
+
+  it('首次读取失败后允许再次加载', () => {
+    vi.mocked(uni.getStorageSync).mockImplementationOnce(() => { throw new Error('storage failed') })
+    const store = useSignin()
+    store.loadRecords()
+    mockStorage.set(SIGNIN_KEY, JSON.stringify(['2026-09-01']))
+
+    store.loadRecords()
+
+    expect(store.signedDates).toEqual(['2026-09-01'])
+  })
+})

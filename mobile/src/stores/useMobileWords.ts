@@ -636,7 +636,7 @@ export const useMobileWords = defineStore('mobileWords', () => {
     const now = Date.now()
     allWords.value = allWords.value.map(w =>
       w.id === id
-        ? { ...w, remembered: false, needsReview: true, level: newLevel, lastReviewTime: now, nextReviewTime: now + 10 * 60 * 1000, updatedAt: now }
+        ? { ...w, remembered: false, needsReview: true, level: newLevel, nextReviewTime: now + 10 * 60 * 1000, updatedAt: now }
         : w
     )
     markBankDirty(word.bankId || DEFAULT_BANK_ID)
@@ -731,6 +731,8 @@ export const useMobileWords = defineStore('mobileWords', () => {
       const normalizedItem = {
         ...word,
         word: normalizedWord,
+        // 缺 meaning 的词条（如剪贴板任意 JSON）兜底空串，避免下游按释义搜索时崩溃
+        meaning: word.meaning || '',
         id,
         bankId,
         updatedAt: word.updatedAt ?? word.lastReviewTime ?? word.addTime ?? Date.now(),
@@ -764,8 +766,9 @@ export const useMobileWords = defineStore('mobileWords', () => {
       const merged: MobileWord = { ...existing }
       const remoteContentTime = remote.updatedAt || 0
       const localContentTime = existing.updatedAt || 0
-      const remoteLearnTime = remote.lastReviewTime || 0
-      const localLearnTime = existing.lastReviewTime || 0
+      // 学习进度新旧看 updatedAt：答错不再推进 lastReviewTime，旧数据才回退到该字段
+      const remoteLearnTime = remote.updatedAt || remote.lastReviewTime || 0
+      const localLearnTime = existing.updatedAt || existing.lastReviewTime || 0
       const aliases = new Set([...(existing.aliases || []), ...(remote.aliases || [])])
       if (remote.id && remote.id !== existing.id) aliases.add(remote.id)
       const aliasesChanged = aliases.size !== (existing.aliases || []).length
@@ -782,8 +785,13 @@ export const useMobileWords = defineStore('mobileWords', () => {
         }
       }
 
-      if (remoteLearnTime > localLearnTime) {
-        for (const key of learningKeys) (merged as any)[key] = remote[key]
+      // 学习进度合并前置守卫：远端完全不带学习字段时（如另一端只改了释义），
+      // 不得用 updatedAt 的新旧推断学习进度更新，否则会把本地学习状态覆盖成 undefined
+      const remoteCarriesLearning = learningKeys.some(key => remote[key] !== undefined)
+      if (remoteCarriesLearning && remoteLearnTime > localLearnTime) {
+        for (const key of learningKeys) {
+          if (remote[key] !== undefined) (merged as any)[key] = remote[key]
+        }
         merged.updatedAt = Math.max(merged.updatedAt || 0, remoteContentTime, localContentTime)
       }
 

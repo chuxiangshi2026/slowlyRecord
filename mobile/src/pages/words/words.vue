@@ -298,8 +298,16 @@ function batchMoveWords() {
     success: async (res) => {
       const target = banks[res.tapIndex]
       if (!target) return
-      for (const id of ids) {
-        await wordsStore.moveWordToBank(id, target.id)
+      let moved = 0
+      try {
+        for (const id of ids) {
+          await wordsStore.moveWordToBank(id, target.id)
+          moved++
+        }
+      } catch {
+        // 中途失败：已成功的不回滚，提示用户重试剩余部分
+        uni.showToast({ title: `移动中断：已移动 ${moved} 个，请重试剩余单词`, icon: 'none' })
+        return
       }
       uni.showToast({ title: `已移动 ${ids.length} 个单词`, icon: 'none' })
       selectedIds.value = new Set()
@@ -318,8 +326,16 @@ function batchDeleteWords() {
     confirmColor: '#ff5252',
     success: async (res) => {
       if (!res.confirm) return
-      for (const id of ids) {
-        await wordsStore.deleteWord(id)
+      let deleted = 0
+      try {
+        for (const id of ids) {
+          await wordsStore.deleteWord(id)
+          deleted++
+        }
+      } catch {
+        // 中途失败：已成功删除的不回滚（删除有墓碑防复活），提示用户重试剩余部分
+        uni.showToast({ title: `删除中断：已删除 ${deleted} 个，请重试剩余单词`, icon: 'none' })
+        return
       }
       uni.showToast({ title: `已删除 ${ids.length} 个单词`, icon: 'none' })
       selectedIds.value = new Set()
@@ -405,17 +421,13 @@ function toggleSort(key: string) {
   }
 }
 
-// ========== 通配符转正则（与桌面端一致）==========
+// ========== 通配符转正则：仅含 * 的输入才返回 RegExp，普通文本返回 null 走下方 includes 分支（搜索单词+释义）==========
 function patternToRegex(pattern: string): RegExp | null {
-  if (!pattern.trim()) return null
   const trimmed = pattern.trim()
+  if (!trimmed || !trimmed.includes('*')) return null
   try {
-    if (trimmed.includes('*')) {
-      const escaped = trimmed.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*')
-      return new RegExp(`^${escaped}$`, 'i')
-    }
-    const escaped = trimmed.replace(/[.+^${}()|[\]\\]/g, '\\$&')
-    return new RegExp(escaped, 'i')
+    const escaped = trimmed.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*')
+    return new RegExp(`^${escaped}$`, 'i')
   } catch {
     return null
   }
@@ -471,8 +483,9 @@ const filteredWords = computed(() => {
   // 第1步：根据 listMode 过滤
   let list = [...wordsStore.words]
   if (listMode.value === 0) {
-    // 待复习
-    list = list.filter(w => w.needsReview || !w.remembered)
+    // 待复习：与 store.reviewWords 同口径，仅到期/显式标记且未记完
+    const now = Date.now()
+    list = list.filter(w => !w.remembered && (w.needsReview === true || w.nextReviewTime === undefined || w.nextReviewTime <= now))
   } else if (listMode.value === 1) {
     // 已复习（不需要复习但还没记完的）
     list = list.filter(w => !w.needsReview && !w.remembered)
@@ -488,14 +501,14 @@ const filteredWords = computed(() => {
   if (f.pattern.trim()) {
     const regex = patternToRegex(f.pattern)
     if (regex) {
-      // 通配符模式：仅匹配单词本身（与桌面端一致）
+      // 通配符模式：仅匹配单词本身
       list = list.filter(w => regex.test(w.word.replace(/\s+/g, '')))
     } else {
-      // 普通搜索：同时搜索单词和释义
+      // 普通搜索：同时搜索单词和释义（meaning 兜底空串，兼容缺释义旧数据）
       const keyword = f.pattern.toLowerCase().trim()
       list = list.filter(w =>
         w.word.toLowerCase().includes(keyword) ||
-        w.meaning.toLowerCase().includes(keyword)
+        (w.meaning || '').toLowerCase().includes(keyword)
       )
     }
   }
@@ -896,38 +909,38 @@ const formatDate = (timestamp: number): string => {
   justify-content: space-between;
   padding: 12rpx 24rpx;
   border-radius: 24rpx;
-  background: #fff0f0;
+  background: var(--sr-danger-bg, #fff0f0);
 }
 
-/* 浅红底暗色下刺眼，换深红半透明底（文字色 #c0564f 保留） */
+/* 浅红底暗色下刺眼，换深红半透明底（文字 danger 语义红保留） */
 .theme-dark .wrong-words-entry {
   background: rgba(255, 82, 82, 0.15);
 }
 
 .wrong-entry-text {
   font-size: 24rpx;
-  color: #c0564f;
+  color: var(--sr-danger, #c0564f);
 }
 
 .wrong-entry-arrow {
   font-size: 26rpx;
-  color: #c0564f;
+  color: var(--sr-danger, #c0564f);
 }
 
 .reset-btn {
   padding: 8rpx 24rpx;
   border-radius: 24rpx;
-  background: #fff0f0;
+  background: var(--sr-danger-bg, #fff0f0);
 }
 
-/* 浅红底暗色下刺眼，换深红半透明底（文字色 #c0564f 保留） */
+/* 浅红底暗色下刺眼，换深红半透明底（文字 danger 语义红保留） */
 .theme-dark .reset-btn {
   background: rgba(255, 82, 82, 0.15);
 }
 
 .reset-text {
   font-size: 24rpx;
-  color: #c0564f;
+  color: var(--sr-danger, #c0564f);
 }
 
 /* 列表模式切换 */
@@ -1059,7 +1072,7 @@ const formatDate = (timestamp: number): string => {
 }
 
 .review-badge {
-  background: #c0564f;
+  background: var(--sr-danger, #c0564f);
   color: #fff;
   font-size: 20rpx;
   padding: 4rpx 12rpx;

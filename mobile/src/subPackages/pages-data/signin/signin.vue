@@ -187,7 +187,7 @@ const calendarDays = computed(() => {
 })
 
 onMounted(() => {
-  signinStore.loadRecords()
+  signinStore.refreshToday()
 })
 
 // ===== 成就检查与解锁通知 =====
@@ -236,7 +236,7 @@ async function checkAndNotify() {
 
 // 每次进入打卡页检查一次（覆盖从复习页/我的页返回等路径）
 onShow(() => {
-  signinStore.loadRecords()
+  signinStore.refreshToday()
   achievementStore.load()
   checkAndNotify()
 })

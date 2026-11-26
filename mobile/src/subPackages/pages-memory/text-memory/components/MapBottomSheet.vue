@@ -236,7 +236,7 @@ function previewContent(content: string): string {
 .checkbox {
   width: 36rpx;
   height: 36rpx;
-  border: 2rpx solid #ccc;
+  border: 2rpx solid var(--sr-border);
   border-radius: 8rpx;
   background: var(--sr-card);
   display: flex;

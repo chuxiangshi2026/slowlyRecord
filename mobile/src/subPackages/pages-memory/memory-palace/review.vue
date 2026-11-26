@@ -104,7 +104,7 @@ const palaceStore = useMemoryPalace()
 const textStore = useTextMemory()
 // 打卡数据用于完成页"去打卡"引导判断
 const signinStore = useSignin()
-signinStore.loadRecords()
+signinStore.refreshToday()
 
 const palaceId = ref('')
 const palace = computed(() => palaceStore.getPalace(palaceId.value))

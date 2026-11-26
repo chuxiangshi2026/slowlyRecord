@@ -131,7 +131,9 @@ export class BackgroundWordPlayer {
       this.pending = { gen, resolve, reject, timer }
       try {
         // title 为必填，缺失会直接报错不发声；用单词文本，锁屏界面同时展示
-        bg.title = parseAudioCacheWord(url) || '慢记专注'
+        // （直链 URL 派生的 url: 前缀 key 不当标题展示）
+        const cacheWord = parseAudioCacheWord(url)
+        bg.title = cacheWord && !cacheWord.startsWith('url:') ? cacheWord : '慢记专注'
         bg.epname = '慢记'
         bg.singer = '专注连播'
         bg.src = url

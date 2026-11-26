@@ -134,9 +134,31 @@ describe('音频缓存纯函数', () => {
       expect(parseAudioCacheWord(`https://dict.youdao.com/dictvoice?audio=${encodeURIComponent("don't")}`)).toBe("don't")
     })
 
-    it('无参数或无法解析时返回 null', () => {
-      expect(parseAudioCacheWord('https://example.com/audio.mp3')).toBeNull()
+    it('无 audio/q/text 参数的 http(s) 直链（jsDelivr 预合成音频等）用完整 URL 派生稳定 key', () => {
+      const url = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e36e37.mp3'
+      const key = parseAudioCacheWord(url)
+      expect(key).toBe(`url:${url}`)
+      // 同一 URL 稳定、不同路径不同 key、hash/查询参数变化也反映到 key
+      expect(parseAudioCacheWord(url)).toBe(key)
+      expect(parseAudioCacheWord(url.replace('fccc', 'aaaa'))).not.toBe(key)
+      expect(parseAudioCacheWord(`${url}#t=1`)).toBe(key)
+    })
+
+    it('非 http(s) 地址（本地路径等）无法派生 key，返回 null', () => {
       expect(parseAudioCacheWord('not-a-url')).toBeNull()
+      expect(parseAudioCacheWord('wxfile://tmp/audio.mp3')).toBeNull()
+    })
+
+    it('非英语/中文的 lan、tl 语种参数纳入 key，防止同文本跨语种串音（D17/14.3）', () => {
+      expect(parseAudioCacheWord('https://fanyi.baidu.com/gettts?lan=jp&text=%E5%AD%A6%E7%94%9F&spd=5&source=web')).toBe('jp:学生')
+      expect(parseAudioCacheWord('https://fanyi.baidu.com/gettts?lan=uk&text=hello&spd=5&source=web')).toBe('hello')
+      expect(parseAudioCacheWord('https://fanyi.baidu.com/gettts?lan=zh&text=%E4%BD%A0%E5%A5%BD&spd=5&source=web')).toBe('你好')
+      expect(
+        parseAudioCacheWord('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ja&q=%E5%AD%A6%E7%94%9F')
+      ).toBe('ja:学生')
+      expect(
+        parseAudioCacheWord('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=hello')
+      ).toBe('hello')
     })
   })
 })
@@ -256,6 +278,37 @@ describe('MiniProgramTtsAdapter 重试与缓存', () => {
     const manifest = storage.get('slowlyrecord_audio_cache_manifest')
     const wordKey = hashAudioCacheKey('hello')
     expect(manifest[wordKey]?.filePath).toBe('saved://tmp://audio.mp3')
+  })
+
+  it('jsDelivr 直链播放成功后同样落缓存（URL 派生稳定 key，D17 回归）', async () => {
+    const url = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e37.mp3'
+    const promise = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    audioInstances[0].trigger('ended')
+    await promise
+    await vi.advanceTimersByTimeAsync(0) // 让后台 downloadAndCache 完成
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    const manifest = storage.get('slowlyrecord_audio_cache_manifest')
+    const urlKey = hashAudioCacheKey(`url:${url}`)
+    expect(manifest[urlKey]?.filePath).toBe('saved://tmp://audio.mp3')
+  })
+
+  it('jsDelivr 直链可预取缓存，且与播放共用同一 key（D17 回归）', async () => {
+    const url = 'https://cdn.jsdelivr.net/gh/chuxiangshi2026/slowlyRecord@master/public/speech-audio/spoken-reductions-1/fccc2c23599dd82f462335ff36e37.mp3'
+    getTtsAdapter().prefetchAudio?.(url)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
+    const manifest = storage.get('slowlyrecord_audio_cache_manifest')
+    const urlKey = hashAudioCacheKey(`url:${url}`)
+    expect(manifest[urlKey]?.filePath).toBe('saved://tmp://audio.mp3')
+    // 播放同一 URL 命中预取缓存，不再下载
+    const promise = getTtsAdapter().playAudio(url)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(audioInstances[0].src).toBe('saved://tmp://audio.mp3')
+    audioInstances[0].trigger('ended')
+    await promise
+    await vi.advanceTimersByTimeAsync(0)
+    expect(uniMock.downloadFile).toHaveBeenCalledTimes(1)
   })
 
   it('命中缓存时直接播本地路径，不再下载', async () => {

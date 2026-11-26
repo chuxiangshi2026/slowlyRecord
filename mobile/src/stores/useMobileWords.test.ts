@@ -295,6 +295,22 @@ describe('useMobileWords Store', () => {
       expect(updated?.nextReviewTime).toBeLessThanOrEqual(Date.now() + 11 * 60 * 1000)
     })
 
+    it('忘记只更新同步时间与下次复习，不推进今日学习统计时间', async () => {
+      const store = useMobileWords()
+      const previousReviewTime = Date.now() - 24 * 60 * 60 * 1000
+      const word = await store.addWord({
+        word: 'forget-time', meaning: '测试', addTime: Date.now(), reviewCount: 1,
+        nextReviewTime: previousReviewTime, lastReviewTime: previousReviewTime,
+      })
+      const beforeSyncTime = word.updatedAt
+
+      await store.markAsForgotten(word.id)
+
+      const updated = store.words.find(w => w.id === word.id)
+      expect(updated?.lastReviewTime).toBe(previousReviewTime)
+      expect(updated?.updatedAt).toBeGreaterThanOrEqual(beforeSyncTime || 0)
+    })
+
     it('忘记每次降 4 级：与桌面端 computeLevelDown 口径一致（下限 1）', async () => {
       const store = useMobileWords()
 
@@ -418,6 +434,18 @@ describe('useMobileWords Store', () => {
       expect(result.skippedCount).toBe(1)
       expect(store.words).toHaveLength(1)
       expect(store.words[0].word).toBe('take off')
+    })
+
+    it('缺 meaning 的导入词条应兜底为空串，避免释义搜索崩溃', async () => {
+      const store = useMobileWords()
+
+      const result = await store.importWords([
+        { id: 'mobile_words_import-1', word: 'ghost', addTime: Date.now(), reviewCount: 0, nextReviewTime: Date.now() } as any,
+      ])
+
+      expect(result.success).toBe(true)
+      expect(result.imported).toHaveLength(1)
+      expect(store.words[0].meaning).toBe('')
     })
   })
 
@@ -836,6 +864,41 @@ describe('useMobileWords Store', () => {
       expect(store.words[0].meaning).toBe('本地新释义')
       expect(store.words[0].level).toBe(8)
       expect(store.words[0].aliases).toContain('different-id')
+    })
+
+    it('远端只有内容字段且 updatedAt 较新时，不覆盖本地学习状态', async () => {
+      const store = useMobileWords()
+      const local = await store.addWord({
+        word: 'durian',
+        meaning: '旧释义',
+        addTime: 1,
+        reviewCount: 5,
+        nextReviewTime: 999,
+        level: 8,
+        remembered: false,
+        needsReview: true,
+        lastReviewTime: 100,
+        updatedAt: 100,
+      })
+
+      // 模拟另一端只改了释义（完全没有学习字段，类型缺失用 as any 表达）后同步过来
+      const result = await store.importWords([{
+        id: local.id,
+        word: 'durian',
+        meaning: '新释义',
+        addTime: 1,
+        updatedAt: 200,
+      }] as any, undefined, { mergeExisting: true })
+
+      expect(result.success).toBe(true)
+      expect(store.words[0].meaning).toBe('新释义')
+      // 学习字段必须原样保留，不允许被远端的缺失值写成 undefined
+      expect(store.words[0].level).toBe(8)
+      expect(store.words[0].remembered).toBe(false)
+      expect(store.words[0].needsReview).toBe(true)
+      expect(store.words[0].lastReviewTime).toBe(100)
+      expect(store.words[0].nextReviewTime).toBe(999)
+      expect(store.words[0].reviewCount).toBe(5)
     })
 
     it('只有更新没有新增时也落库', async () => {
