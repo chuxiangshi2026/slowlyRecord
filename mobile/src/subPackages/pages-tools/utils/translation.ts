@@ -296,8 +296,8 @@ function sha256Pure(data: Uint8Array): Uint8Array {
   padded.set(data)
   padded[msgLen] = 0x80
   const dv = new DataView(padded.buffer)
-  dv.setUint32(paddedLen - 4, 0, false)
-  dv.setUint32(paddedLen - 8, bitLen, false)
+  dv.setUint32(paddedLen - 8, 0, false)
+  dv.setUint32(paddedLen - 4, bitLen, false)
   let H0=0x6a09e667,H1=0xbb67ae85,H2=0x3c6ef372,H3=0xa54ff53a,H4=0x510e527f,H5=0x9b05688c,H6=0x1f83d9ab,H7=0x5be0cd19
   for (let offset = 0; offset < paddedLen; offset += 64) {
     const w = new Uint32Array(64)
