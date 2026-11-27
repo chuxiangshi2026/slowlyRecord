@@ -28,6 +28,8 @@ let lastPolledIgnoreMouse: boolean | null = null;
 let warnedMissingApi = false;
 let dbPollTimer: any = null;
 let lastHandledAt = 0;
+let electronListenersBound = false;
+let currentElectronWinId: number | null = null;
 
 function getUtools() {
   return (window as any).utools;
@@ -142,6 +144,39 @@ function handleChildMessageElectron(channel: string, payload: any) {
   dispatchAction({ type: channel, payload });
 }
 
+/**
+ * 绑定 Electron 子窗口 IPC 监听（幂等）。
+ * preload 用 ipcRenderer.on 追加语义，重复绑定会让同一动作被分发多次；
+ * 监听内部按 currentElectronWinId 动态匹配当前窗口，重开后无需重新注册。
+ */
+function bindElectronListeners(winId: number) {
+  currentElectronWinId = winId;
+  if (electronListenersBound) return;
+  electronListenersBound = true;
+  const api = (window as any).electronAPI;
+  api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
+    if (id !== currentElectronWinId) return;
+    if (event === 'closed') {
+      if (helperWindow) helperWindow._destroyed = true;
+      if (helperWindow?._winId === id) {
+        helperWindow = null;
+        lastSyncedLocked = false;
+        stopIgnoreMousePoll();
+        stopDbPendingPoll();
+      }
+      currentElectronWinId = null;
+    } else if (event === 'focus') {
+      flushPendingAndPoll();
+    }
+  });
+  api.onFocusChildAction(({ channel, payload }: { channel: string; payload: any }) => {
+    handleChildMessageElectron(channel, payload);
+  });
+  api.onChildDbPut((doc: any) => {
+    handleChildDbPut(doc);
+  });
+}
+
 // 子窗口 db.put 转发 -> 父持久化（冲突时读最新 _rev 重试一次）
 async function handleChildDbPut(doc: any) {
   await persistChildDbPut(doc, '输入法键盘');
@@ -170,28 +205,7 @@ async function openInputMethodHelperElectron(scheme: string, schemeName: string,
     backgroundColor: '#00000000', resizable: true, modal: false, closable: true,
   });
   helperWindow = createElectronWindowProxy(winId);
-  const created = helperWindow;
-
-  api.onFocusWindowEvent(({ winId: id, event }: { winId: number; event: string }) => {
-    if (id !== winId) return;
-    if (event === 'closed') {
-      created._destroyed = true;
-      if (helperWindow === created) {
-        helperWindow = null;
-        lastSyncedLocked = false;
-        stopIgnoreMousePoll();
-        stopDbPendingPoll();
-      }
-    } else if (event === 'focus') {
-      flushPendingAndPoll();
-    }
-  });
-  api.onFocusChildAction(({ channel, payload }: { channel: string; payload: any }) => {
-    handleChildMessageElectron(channel, payload);
-  });
-  api.onChildDbPut((doc: any) => {
-    handleChildDbPut(doc);
-  });
+  bindElectronListeners(winId);
 
   bindParentLifecycleListeners();
   startDbPendingPoll();
@@ -209,7 +223,7 @@ async function openInputMethodHelperElectron(scheme: string, schemeName: string,
   } catch (e) {
     console.warn('[输入法键盘] 子窗口初始化推送失败', e);
     helperWindow?.close?.();
-    if (helperWindow === created) helperWindow = null;
+    helperWindow = null;
     return false;
   }
   return true;
