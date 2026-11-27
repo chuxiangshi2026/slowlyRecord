@@ -84,11 +84,12 @@ function doCompress(img: HTMLImageElement, opts: Required<CompressOptions>): str
   let quality = opts.quality
   let finalMimeType = opts.mimeType
 
-  // 检测是否支持 webp
+  // 检测是否支持 webp：仅在用户请求 webp 时才回退 jpeg；
+  // 显式指定 png 等格式不能被探测结果覆盖，否则会丢失透明通道
   const testCanvas = document.createElement('canvas')
   testCanvas.width = 1
   testCanvas.height = 1
-  if (!testCanvas.toDataURL('image/webp').startsWith('data:image/webp')) {
+  if (opts.mimeType === 'image/webp' && !testCanvas.toDataURL('image/webp').startsWith('data:image/webp')) {
     finalMimeType = 'image/jpeg'
   }
 
