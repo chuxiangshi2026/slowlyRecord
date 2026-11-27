@@ -532,4 +532,256 @@ describe('useMemoryStore', () => {
       expect(store.testHistory).toEqual([])
     })
   })
+
+  // generateConclusion 是纯计算：只依赖 mode / maxStage / difficulty，
+  // 不读取 stats / testHistory，也不读写 localStorage（见源码 180-217 行）。
+  describe('generateConclusion', () => {
+    describe('三种模式的结论与详情文案', () => {
+      it('number 模式 easy 达到优秀档时给出完整结论', () => {
+        const store = useMemoryStore()
+        const c = store.generateConclusion('number', 6, 'easy')
+
+        expect(c.level).toBe('excellent')
+        expect(c.levelText).toBe('优秀')
+        expect(c.summary).toBe('您的数字记忆能力出色，能够轻松记忆较长数字序列，这是超级记忆力的表现！')
+        // 位数 = 4 + (6 - 1) * 2 = 14
+        expect(c.details).toEqual([
+          '最高可记忆 14 位数字序列',
+          '完成 6 轮测试，表现卓越',
+          '可以尝试更难的难度等级或使用宫格记忆法'
+        ])
+        expect(c.recommendedTraining.method).toBe('高级记忆宫殿法')
+        expect(c.recommendedTraining.difficulty).toBe('hard')
+        expect(c.recommendedTraining.frequency).toBe('每天30分钟')
+        expect(c.recommendedTraining.steps).toHaveLength(5)
+      })
+
+      it('word 模式 medium 达到良好档时给出完整结论', () => {
+        const store = useMemoryStore()
+        const c = store.generateConclusion('word', 5, 'medium')
+
+        expect(c.level).toBe('good')
+        expect(c.levelText).toBe('良好')
+        expect(c.summary).toBe('您的单词记忆能力不错，可以较好地完成单词记忆任务。')
+        // 单词数 = 5 + floor((5 - 1) / 2) = 7
+        expect(c.details).toEqual([
+          '可同时记忆 7 个单词',
+          '完成 5 轮测试',
+          '可以尝试分类记忆法，将单词按主题分组'
+        ])
+        expect(c.recommendedTraining.method).toBe('图像联想法')
+        expect(c.recommendedTraining.difficulty).toBe('medium')
+      })
+
+      it('pattern 模式 hard 落在一般档时给出完整结论', () => {
+        const store = useMemoryStore()
+        const c = store.generateConclusion('pattern', 5, 'hard')
+
+        expect(c.level).toBe('average')
+        expect(c.levelText).toBe('一般')
+        expect(c.summary).toBe('您的图案记忆能力一般，需要更多练习来提高。')
+        // 网格 5×5，图案数 = 7 + floor((5 - 1) / 2) = 9，上限 5*5-1 = 24
+        expect(c.details).toEqual([
+          '可在 5×5 网格中记忆 9 个图案位置',
+          '空间记忆能力有待提升'
+        ])
+        expect(c.recommendedTraining.method).toBe('分区记忆法')
+        expect(c.recommendedTraining.frequency).toBe('每天15分钟')
+      })
+
+      it('pattern 模式优秀档的空间记忆评价为「很强」', () => {
+        const store = useMemoryStore()
+        const c = store.generateConclusion('pattern', 6, 'easy')
+
+        expect(c.level).toBe('excellent')
+        // 图案数 = 3 + floor((6 - 1) / 2) = 5
+        expect(c.details[0]).toBe('可在 3×3 网格中记忆 5 个图案位置')
+        expect(c.details[1]).toBe('空间记忆能力很强')
+        // 轮数 > 2，不再追加轨迹法建议
+        expect(c.details).toHaveLength(2)
+      })
+
+      it('未达标时给出「需加强」结论与基础训练建议', () => {
+        const store = useMemoryStore()
+
+        const word = store.generateConclusion('word', 2, 'medium')
+        expect(word.level).toBe('needs_improvement')
+        expect(word.levelText).toBe('需加强')
+        expect(word.summary).toBe('您的单词记忆能力需要提升，建议增加词汇量练习。')
+        expect(word.details).toEqual([
+          '可同时记忆 5 个单词',
+          '完成 2 轮测试',
+          '建议：将单词编成故事或图像来增强记忆'
+        ])
+        expect(word.recommendedTraining.method).toBe('基础单词积累')
+
+        const pattern = store.generateConclusion('pattern', 4, 'hard')
+        expect(pattern.level).toBe('needs_improvement')
+        expect(pattern.summary).toBe('您的图案记忆能力较弱，建议多进行视觉记忆训练。')
+        // 图案数 = 7 + floor((4 - 1) / 2) = 8
+        expect(pattern.details).toEqual([
+          '可在 5×5 网格中记忆 8 个图案位置',
+          '空间记忆能力有待提升'
+        ])
+        expect(pattern.recommendedTraining.method).toBe('基础视觉记忆训练')
+        expect(pattern.recommendedTraining.difficulty).toBe('easy')
+      })
+    })
+
+    describe('轮数边界', () => {
+      it('0 轮（第一轮即失败）时按公式取值，数字模式有基线兜底而单词/图案没有', () => {
+        const store = useMemoryStore()
+
+        const number = store.generateConclusion('number', 0, 'easy')
+        expect(number.level).toBe('needs_improvement')
+        // (4 + (0 - 1) * 2) = 2，被 Math.max(4, length) 兜底到 4
+        expect(number.details).toEqual([
+          '最高可记忆 4 位数字序列',
+          '完成 0 轮测试，表现稳定',
+          '建议：尝试使用联想记忆法，将数字转化为图像'
+        ])
+
+        // 单词/图案没有同等兜底：3 + floor((0 - 1) / 2) = 2
+        expect(store.generateConclusion('word', 0, 'easy').details[0]).toBe('可同时记忆 2 个单词')
+        expect(store.generateConclusion('pattern', 0, 'medium').details[0]).toBe('可在 4×4 网格中记忆 4 个图案位置')
+      })
+
+      it('轮数远超上限时，单词数与图案位置按上限封顶', () => {
+        const store = useMemoryStore()
+
+        // 数字序列长度不封顶：8 + (100 - 1) * 2 = 206
+        expect(store.generateConclusion('number', 100, 'hard').details[0]).toBe('最高可记忆 206 位数字序列')
+        // 单词封顶 12：min(12, 7 + 49) = 12
+        expect(store.generateConclusion('word', 100, 'hard').details[0]).toBe('可同时记忆 12 个单词')
+        // 图案封顶 size*size-1：3×3 → 8，5×5 → 24
+        expect(store.generateConclusion('pattern', 100, 'easy').details[0]).toBe('可在 3×3 网格中记忆 8 个图案位置')
+        expect(store.generateConclusion('pattern', 100, 'hard').details[0]).toBe('可在 5×5 网格中记忆 24 个图案位置')
+      })
+    })
+
+    describe('等级阈值（四档等级 × 三档难度）', () => {
+      const levelCases: Array<{
+        difficulty: 'easy' | 'medium' | 'hard'
+        maxStage: number
+        level: 'excellent' | 'good' | 'average' | 'needs_improvement'
+        levelText: string
+      }> = [
+        // easy：baseLevel 3，average 下界 max(1, 3-2)=1，good 下界 3，excellent 下界 6
+        { difficulty: 'easy', maxStage: 0, level: 'needs_improvement', levelText: '需加强' },
+        { difficulty: 'easy', maxStage: 1, level: 'average', levelText: '一般' },
+        { difficulty: 'easy', maxStage: 2, level: 'average', levelText: '一般' },
+        { difficulty: 'easy', maxStage: 3, level: 'good', levelText: '良好' },
+        { difficulty: 'easy', maxStage: 5, level: 'good', levelText: '良好' },
+        { difficulty: 'easy', maxStage: 6, level: 'excellent', levelText: '优秀' },
+        // medium：baseLevel 5，average 下界 3，good 下界 5，excellent 下界 8
+        { difficulty: 'medium', maxStage: 2, level: 'needs_improvement', levelText: '需加强' },
+        { difficulty: 'medium', maxStage: 3, level: 'average', levelText: '一般' },
+        { difficulty: 'medium', maxStage: 4, level: 'average', levelText: '一般' },
+        { difficulty: 'medium', maxStage: 5, level: 'good', levelText: '良好' },
+        { difficulty: 'medium', maxStage: 7, level: 'good', levelText: '良好' },
+        { difficulty: 'medium', maxStage: 8, level: 'excellent', levelText: '优秀' },
+        // hard：baseLevel 7，average 下界 5，good 下界 7，excellent 下界 10
+        { difficulty: 'hard', maxStage: 4, level: 'needs_improvement', levelText: '需加强' },
+        { difficulty: 'hard', maxStage: 5, level: 'average', levelText: '一般' },
+        { difficulty: 'hard', maxStage: 6, level: 'average', levelText: '一般' },
+        { difficulty: 'hard', maxStage: 7, level: 'good', levelText: '良好' },
+        { difficulty: 'hard', maxStage: 9, level: 'good', levelText: '良好' },
+        { difficulty: 'hard', maxStage: 10, level: 'excellent', levelText: '优秀' }
+      ]
+
+      it.each(levelCases)(
+        '$difficulty 难度、$maxStage 轮 → $level（$levelText）',
+        ({ difficulty, maxStage, level, levelText }) => {
+          const store = useMemoryStore()
+          const c = store.generateConclusion('number', maxStage, difficulty)
+
+          expect(c.level).toBe(level)
+          expect(c.levelText).toBe(levelText)
+        }
+      )
+
+      it('难度为非法值时整体按 hard 分支兜底', () => {
+        const store = useMemoryStore()
+
+        // baseLevel 走 else = 7；详情里的难度三元同样落到 hard 的数值分支
+        const invalid = store.generateConclusion('number', 7, 'unknown' as any)
+        expect(invalid).toEqual(store.generateConclusion('number', 7, 'hard'))
+        expect(invalid.level).toBe('good')
+        // 位数 = 8 + (7 - 1) * 2 = 20
+        expect(invalid.details[0]).toBe('最高可记忆 20 位数字序列')
+
+        expect(store.generateConclusion('pattern', 5, 'bogus' as any)).toEqual(
+          store.generateConclusion('pattern', 5, 'hard')
+        )
+      })
+    })
+
+    describe('摘要文案（mode × level 共 12 种组合）', () => {
+      const summaryCases: Array<{
+        mode: 'number' | 'word' | 'pattern'
+        level: string
+        maxStage: number
+        summary: string
+      }> = [
+        { mode: 'number', level: 'excellent', maxStage: 6, summary: '您的数字记忆能力出色，能够轻松记忆较长数字序列，这是超级记忆力的表现！' },
+        { mode: 'number', level: 'good', maxStage: 3, summary: '您的数字记忆能力良好，能够记住中等长度的数字序列，基础扎实。' },
+        { mode: 'number', level: 'average', maxStage: 1, summary: '您的数字记忆能力一般，通过训练可以记住更长的数字序列。' },
+        { mode: 'number', level: 'needs_improvement', maxStage: 0, summary: '您的数字记忆需要加强，建议从简单的数字串开始练习。' },
+        { mode: 'word', level: 'excellent', maxStage: 6, summary: '您的单词记忆能力优秀，可以快速记忆多个单词，语言能力很强！' },
+        { mode: 'word', level: 'good', maxStage: 3, summary: '您的单词记忆能力不错，可以较好地完成单词记忆任务。' },
+        { mode: 'word', level: 'average', maxStage: 1, summary: '您的单词记忆能力尚可，但还有较大提升空间。' },
+        { mode: 'word', level: 'needs_improvement', maxStage: 0, summary: '您的单词记忆能力需要提升，建议增加词汇量练习。' },
+        { mode: 'pattern', level: 'excellent', maxStage: 6, summary: '您的空间记忆和图形记忆能力极佳，对视觉信息的捕捉能力很强！' },
+        { mode: 'pattern', level: 'good', maxStage: 3, summary: '您的图案记忆能力良好，能够较好地完成图形记忆任务。' },
+        { mode: 'pattern', level: 'average', maxStage: 1, summary: '您的图案记忆能力一般，需要更多练习来提高。' },
+        { mode: 'pattern', level: 'needs_improvement', maxStage: 0, summary: '您的图案记忆能力较弱，建议多进行视觉记忆训练。' }
+      ]
+
+      it.each(summaryCases)('$mode 模式 $level 档的摘要文案固定', ({ mode, level, maxStage, summary }) => {
+        const store = useMemoryStore()
+        const c = store.generateConclusion(mode, maxStage, 'easy')
+
+        expect(c.level).toBe(level)
+        expect(c.summary).toBe(summary)
+      })
+    })
+
+    describe('与统计数据、持久化、随机数的关系', () => {
+      it('结论只由入参决定，不受 stats / testHistory 影响，也不写入 localStorage', () => {
+        const store = useMemoryStore()
+        const before = store.generateConclusion('word', 5, 'medium')
+
+        // 生成结论本身不落盘
+        expect(localStorage.length).toBe(0)
+
+        store.updateNumberStats(true, 12)
+        store.updateNumberStats(false)
+        store.updatePatternStats(true)
+        store.updateWordStats(5, 5)
+        store.addHistory({ mode: 'number', modeText: '数字记忆', success: true, result: '通过', time: '10s' })
+
+        // 统计确实变了：3 正确 / 4 次测试 = 75%
+        expect(store.overallAccuracy).toBe(75)
+        // 但结论不变
+        expect(store.generateConclusion('word', 5, 'medium')).toEqual(before)
+
+        const keys: string[] = []
+        for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i)!)
+        expect(keys.sort()).toEqual(['memoryTest_history', 'memoryTest_stats'])
+      })
+
+      it('不依赖随机数，相同入参结果稳定', () => {
+        const store = useMemoryStore()
+        const randomSpy = vi.spyOn(Math, 'random')
+        try {
+          expect(store.generateConclusion('pattern', 6, 'medium')).toEqual(
+            store.generateConclusion('pattern', 6, 'medium')
+          )
+          expect(randomSpy).not.toHaveBeenCalled()
+        } finally {
+          randomSpy.mockRestore()
+        }
+      })
+    })
+  })
 })

@@ -50,6 +50,8 @@ export default defineConfig({
       { find: /^@\/utils\/cdn-mirror$/, replacement: resolve(__dirname, 'mobile/src/utils/cdn-mirror.ts') },
       // mobile 轻量在线翻译：mobile 代码以 @/utils/quick-translate 引用，同上
       { find: /^@\/utils\/quick-translate$/, replacement: resolve(__dirname, 'mobile/src/utils/quick-translate.ts') },
+      // mobile 「点选拼答案」碎片工具：桌面端无此模块，测试解析时必须指向 mobile 目录
+      { find: /^@\/utils\/answer-tokens$/, replacement: resolve(__dirname, 'mobile/src/utils/answer-tokens.ts') },
       // mobile 首页快速入口注册表：mobile 代码以 @/utils/home-quick-entries 引用，同上
       { find: /^@\/utils\/home-quick-entries$/, replacement: resolve(__dirname, 'mobile/src/utils/home-quick-entries.ts') },
       // mobile 功能开关：home-quick-entries 等以 @/utils/feature-flags 引用，同上
