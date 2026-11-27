@@ -78,7 +78,9 @@ export const useSyncStore = defineStore('sync', () => {
     try {
       const enc = await api(plain)
       return enc ? PWD_ENC_PREFIX + enc : plain
-    } catch {
+    } catch (e) {
+      // 加密失败必须留痕：密文降级为明文时，用户与日志都要能感知
+      log.w('WebDAV 密码加密落盘失败，回退明文', e)
       return plain
     }
   }
