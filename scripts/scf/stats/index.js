@@ -1,12 +1,14 @@
 /**
  * 慢记统计采集函数（腾讯云函数 SCF + 函数 URL）
  *
- * 已弃用（2026-11-28）：统计采集已迁移到 CVM 本机 collector（mp.slowrecap.cn/collect），
- * 日志落 /var/lib/slowrecap-stats/events/*.jsonl，不再经过 SCF/CLS。
- * 本函数仅保留历史参考；请勿重新部署，并确认其日志投递已关闭，避免日志服务继续计费。
+ * 2026-11-28 起：本函数只做「转发」，不再把事件写进 CLS。
+ * 旧客户端仍请求 https://stats.slowrecap.cn/collect，函数校验后把事件
+ * POST 到 CVM 本机 collector（默认 https://mp.slowrecap.cn/collect），
+ * 由 collector 追加本地 JSONL；客户端无需升级即可完成切换。
  *
- * 只做一件事：校验事件格式后写一行 JSON 日志（console.log → 函数日志主题 CLS）。
- * 不存库、不读库、不记录请求方 IP。数据由本地脚本 scripts/pull-stats-logs.mjs 定期拉取分析。
+ * 重要：SCF 平台仍会把每次调用的 START/END/REPORT 投递到 CLS，
+ * 部署本文件后必须在「函数配置 → 日志配置」关闭日志投递，
+ * 否则日志服务（CLS）费用不会停止。
  *
  * 数据收口（与客户端 src/utils/stats.ts 共同约定）：
  * - data 字段按事件名白名单过滤（DATA_KEY_WHITELIST），不在名单内的键直接丢弃；
@@ -21,20 +23,21 @@
  * 如需全局防刷/更强成本保护，应在 API 网关层加规则，不要在函数内引入账号体系。
  *
  * 部署步骤（控制台，约 5 分钟）：
- * 1. 云函数控制台 → 新建 → 从头开始：函数名 slowrecord-stats，运行时 Nodejs18/20，空白模板
+ * 1. 云函数控制台 → 找到 slowrecord-stats（运行时 Nodejs18/20）
  * 2. 把本文件内容整体粘贴进在线编辑器（入口 main_handler），部署
- * 3. 函数配置 → 触发器 → 开启「函数 URL」（公网访问、免鉴权），记下 URL 回填 src/config.ts 的 STATS_ENDPOINT
- * 4. 日志配置：确认已开启日志投递到 CLS（新建函数默认开启），记下 日志集/主题 ID 供拉取脚本使用
- * 5. CLS 主题留存期当前设 7 天（压存储费；漏拉超过一周数据即丢失，
- *    数据量涨上来或需要容错时可在 CLS 控制台改回 30 天，成本几乎无感）
- * 6. 自定义域名（如 stats.slowrecap.cn 经 EdgeOne/网关反代到函数 URL）：域名侧配置 DNS 与反向代理，
- *    反代需原样转发方法、 body 与响应状态码（OPTIONS 204 / 405 / 400 / 413 / 429 行为都要保留）
+ * 3. 函数配置 → 环境变量：可选 STATS_FORWARD_URL 覆盖转发地址（默认 https://mp.slowrecap.cn/collect）
+ * 4. 函数配置 → 日志配置 → 关闭日志投递（停止 CLS 计费；不关闭则只减少业务日志，平台日志仍会计费）
+ * 5. 自定义域名 stats.slowrecap.cn 保持绑定，旧客户端继续可用
  *
  * 与同步函数分开部署、分开日志主题，避免数据混杂。
  */
 'use strict'
 
+const https = require('node:https')
+
 const MAX_BODY = 32 * 1024
+const FORWARD_URL = process.env.STATS_FORWARD_URL || 'https://mp.slowrecap.cn/collect'
+const FORWARD_TIMEOUT_MS = 5000
 // 事件名形如 word.add / page.view / translation.batch，最多 4 段
 const NAME_RE = /^[a-z][a-z0-9]*(\.[a-z0-9_]+){1,3}$/
 const PLATFORMS = new Set(['utools', 'electron', 'web'])
@@ -98,6 +101,57 @@ function sanitizeData(name, data) {
   return Object.keys(out).length ? out : undefined
 }
 
+/** 取客户端真实 IP，转发给 CVM 侧按 IP 限流；SCF 头部大小写不固定 */
+function clientIp(event) {
+  const headers = event.headers || {}
+  for (const key of Object.keys(headers)) {
+    const lower = key.toLowerCase()
+    if (lower === 'x-real-ip' || lower === 'x-forwarded-for') {
+      const ip = String(headers[key] || '').split(',')[0].trim()
+      if (ip) return ip
+    }
+  }
+  return ''
+}
+
+/** 把事件转发到 CVM collector；只转发脱敏后的记录，不转发原始请求体 */
+function forward(record, ip) {
+  return new Promise((resolve) => {
+    let url
+    try {
+      url = new URL(FORWARD_URL)
+    } catch {
+      resolve({ statusCode: 500, body: '{"ok":false}' })
+      return
+    }
+    const body = JSON.stringify(record)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+    }
+    if (ip) headers['X-Real-IP'] = ip
+    const req = https.request(
+      {
+        hostname: url.hostname,
+        port: url.port || 443,
+        path: url.pathname,
+        method: 'POST',
+        headers,
+        timeout: FORWARD_TIMEOUT_MS,
+      },
+      (res) => {
+        let text = ''
+        res.setEncoding('utf8')
+        res.on('data', (c) => { text += c })
+        res.on('end', () => resolve({ statusCode: res.statusCode || 502, body: text || '{"ok":false}' }))
+      },
+    )
+    req.on('timeout', () => req.destroy(new Error('forward timeout')))
+    req.on('error', () => resolve({ statusCode: 502, body: '{"ok":false}' }))
+    req.end(body)
+  })
+}
+
 exports.main_handler = async (event) => {
   // 函数 URL / API 网关触发均为 HTTP 事件格式
   const method = String(event.httpMethod || event.requestContext?.http?.method || '').toUpperCase()
@@ -105,8 +159,11 @@ exports.main_handler = async (event) => {
   if (method !== 'POST') return reply(405, { ok: false })
   if (!allowRequest()) return reply(429, { ok: false })
 
-  const raw = typeof event.body === 'string' ? event.body : ''
+  let raw = typeof event.body === 'string' ? event.body : ''
   if (!raw || raw.length > MAX_BODY) return reply(413, { ok: false })
+  if (event.isBase64Encoded) {
+    try { raw = Buffer.from(raw, 'base64').toString('utf8') } catch { return reply(400, { ok: false }) }
+  }
 
   let evt
   try { evt = JSON.parse(raw) } catch { return reply(400, { ok: false }) }
@@ -122,7 +179,15 @@ exports.main_handler = async (event) => {
     installId: String(evt.installId || '').slice(0, 64),
     data: sanitizeData(evt.name, evt.data),
   }
-  // [stats] 前缀用于拉取时过滤冷启动等系统日志行
-  console.log('[stats] ' + JSON.stringify(record))
-  return reply(200, { ok: true })
+
+  const result = await forward(record, clientIp(event))
+  // 不打印事件内容；转发失败只记一行错误，避免把业务数据写进平台日志
+  if (result.statusCode < 200 || result.statusCode >= 300) {
+    console.error('[stats] 转发失败:', result.statusCode)
+  }
+  return {
+    statusCode: result.statusCode,
+    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    body: result.body,
+  }
 }
