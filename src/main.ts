@@ -280,7 +280,7 @@ getDbAdapterAsync().then(async () => {
   // 先用 user-set 中持久化的统计偏好回填 localStorage（插件更新可能已清空），再初始化统计
   try {
     const setDb = getSetDb();
-    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, optedIn: setDb.statsOptedIn });
+    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, attribution: setDb.attributionEnabled });
   } catch { /* 读设置失败时按 localStorage 状态继续 */ }
   initStats().catch((err) => {
     console.error('[App] 统计初始化失败:', err);

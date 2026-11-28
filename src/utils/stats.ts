@@ -1,29 +1,31 @@
 /**
  * 使用统计模块（自建采集端点）
  *
- * 链路：页面 fetch 直发 → 腾讯云函数（只校验格式后写一行日志）→ CLS 日志服务
- *       → 本地 scripts/pull-stats-logs.mjs 定期拉取分析。不经过任何第三方统计平台。
+ * 链路：页面 fetch 直发 mp.slowrecap.cn/collect（自有服务器 collector，格式校验后写本机 JSONL，
+ *       不再走 SCF/CLS 云日志）。不经过任何第三方统计平台。
  *
  * 为什么不用第三方统计：uTools/Electron 生产插件页是 file:// 协议（无域名、cookie 不可写），
  * 百度统计 hm.js 依赖页面域名与 cookie，file:// 下数据会被丢弃；umami 欧区网关国内不可达，
  * 且第三方统计平台涉及合规告知成本。自建端点字段自控、不记录 IP，叙事最简单。
  *
  * 合规约定：
- * - 默认关闭：只有用户在设置页主动勾选后才发送，取消立即停发；插件升级不会重新开启（选择持久化在 user-set）。
- *   首启告知弹窗已移除（默认关闭无需征求同意），入口为设置页开关与隐私说明
- * - 程序异常始终只记录在本机（sr_error_log 环形缓冲，调试面板可查看），未开启统计时绝不离开设备；
- *   开启统计后才随通道上报脱敏错误消息
+ * - 默认开启（最小合规集）：仅上报操作计数（启动、页面浏览、添词等）、平台/版本/匿名安装 ID
+ *   与脱敏错误消息，不含词库内容与个人信息；设置页一键关闭立即停发，关闭选择持久化（opt-out 口径）
+ * - 需要额外授权的数据单独开关：来源归因（推广渠道/落地页）默认关闭，用户显式开启才记录与上报
+ * - 程序异常始终只记录在本机（sr_error_log 环形缓冲，调试面板可查看）；随统计开启才上传脱敏短消息
  * - 不伪造、不设置 User-Agent；端点固定为 config.ts 的 STATS_ENDPOINT
  * - 只发 JSON 事件：事件名/页面路径/平台/版本/匿名安装 ID/少量事件数据，不含用户词库内容
  */
 import { STATS_ENDPOINT, APP_VERSION } from '@/config';
 
-/** 主动开启标记键（值为 '1' 时才允许上报；默认关闭口径下的正向同意标记） */
-const STATS_OPTIN_KEY = 'sr_stats_optin';
+/** 关闭标记键（'1' = 用户已关闭；缺省即默认开启的最小合规口径） */
+const STATS_OPTOUT_KEY = 'sr_stats_optout';
 /** 强制启用标记键（开发自测用，优先于一切排除规则） */
 const STATS_FORCE_KEY = 'sr_stats_force';
 /** 匿名安装 ID 的 localStorage 键（仅用于统计独立安装量，不关联任何账号信息） */
 const INSTALL_ID_KEY = 'sr_install_id';
+/** 来源归因（额外授权）标记键：'1' = 允许记录与上报首次来源（默认关闭） */
+const ATTRIBUTION_OPTIN_KEY = 'sr_attribution_optin';
 
 function getFlag(key: string): boolean {
   try {
@@ -34,25 +36,25 @@ function getFlag(key: string): boolean {
 }
 
 /**
- * 当前是否未开启统计（设置页开关的显示值取反即用）。
- * 默认关闭口径：只有用户主动勾选过（存在 sr_stats_optin 标记）才视为已开启，
- * 未勾选、取消勾选、升级后无标记一律视为未开启。
+ * 当前是否被用户关闭（设置页开关取反即用）。
+ * 最小合规口径：默认开启，仅当存在 sr_stats_optout 关闭标记时停发；
+ * 旧版显式关闭（user-set statsExcluded===true）经 applyPersistedStatsPrefs 恢复后同样命中此标记。
  */
 export function isStatsExcluded(): boolean {
-  return !getFlag(STATS_OPTIN_KEY);
+  return getFlag(STATS_OPTOUT_KEY);
 }
 
 /**
  * 设置统计开关（设置页「匿名使用统计」开关调用；立即生效，无需重启）。
- * 开启 = 写 sr_stats_optin 正向标记；关闭 = 清除标记（默认即关闭）。
+ * 关闭 = 写 sr_stats_optout 标记；开启 = 清除标记（恢复默认开启）。
  */
 export function setStatsExcluded(excluded: boolean): void {
   try {
-    if (excluded) window.localStorage?.removeItem(STATS_OPTIN_KEY);
-    else window.localStorage?.setItem(STATS_OPTIN_KEY, '1');
+    if (excluded) window.localStorage?.setItem(STATS_OPTOUT_KEY, '1');
+    else window.localStorage?.removeItem(STATS_OPTOUT_KEY);
   } catch { /* localStorage 不可用时忽略 */ }
-  // 持久化到 user-set：uTools 插件更新可能清空 localStorage，用户的选择不能因此丢失；
-  // statsOptedIn 为正向同意标记，旧 statsExcluded 同步写以兼容旧版本读取侧
+  // 持久化到 user-set：uTools 插件更新可能清空 localStorage，用户的关闭选择不能因此丢失；
+  // statsOptedIn 继续同步写以兼容旧版本读取侧（旧读侧按 statsExcluded===false 判定显式开启）
   void import('@/utils/user-set-db-util')
     .then(({ upsertSetDbFields }) => upsertSetDbFields({ statsExcluded: excluded, statsOptedIn: !excluded }))
     .catch(() => { /* DB 未就绪时仅 localStorage 生效 */ });
@@ -61,15 +63,32 @@ export function setStatsExcluded(excluded: boolean): void {
 /**
  * 把 user-set 中持久化的统计偏好同步回 localStorage（插件更新清空 localStorage 后恢复用户选择）。
  * 在启动读取 user-set 后调用。
- * 迁移规则：旧版本只写 statsExcluded（无 statsOptedIn）——statsExcluded===false 表示用户曾显式
- * 开启（旧流程下只有主动打开开关才会是 false），映射为已 opt-in；undefined/true 一律按新默认关闭处理。
+ * 迁移规则：旧版默认关闭口径下 statsExcluded===true 表示用户显式关闭（保持关闭）；
+ * false/undefined 均按新口径默认开启处理（undefined = 旧版从未选择）。
  */
-export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; optedIn?: boolean }): void {
-  const optedIn = prefs.optedIn ?? (prefs.excluded === false);
+export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; attribution?: boolean }): void {
   try {
-    if (optedIn) window.localStorage?.setItem(STATS_OPTIN_KEY, '1');
-    else window.localStorage?.removeItem(STATS_OPTIN_KEY);
+    if (prefs.excluded === true) window.localStorage?.setItem(STATS_OPTOUT_KEY, '1');
+    else window.localStorage?.removeItem(STATS_OPTOUT_KEY);
+    if (prefs.attribution === true) window.localStorage?.setItem(ATTRIBUTION_OPTIN_KEY, '1');
+    else window.localStorage?.removeItem(ATTRIBUTION_OPTIN_KEY);
   } catch { /* localStorage 不可用时忽略 */ }
+}
+
+/** 来源归因是否开启（额外授权项，默认关闭） */
+export function isAttributionEnabled(): boolean {
+  return getFlag(ATTRIBUTION_OPTIN_KEY);
+}
+
+/** 设置来源归因开关（设置页调用；立即生效） */
+export function setAttributionEnabled(enabled: boolean): void {
+  try {
+    if (enabled) window.localStorage?.setItem(ATTRIBUTION_OPTIN_KEY, '1');
+    else window.localStorage?.removeItem(ATTRIBUTION_OPTIN_KEY);
+  } catch { /* localStorage 不可用时忽略 */ }
+  void import('@/utils/user-set-db-util')
+    .then(({ upsertSetDbFields }) => upsertSetDbFields({ attributionEnabled: enabled }))
+    .catch(() => { /* DB 未就绪时仅 localStorage 生效 */ });
 }
 
 /** 运行时检测是否应该启用统计（模块加载时 window 可能不可用，故每次调用时检测） */
@@ -94,7 +113,7 @@ export type StatsStatus = 'enabled' | 'excluded' | 'dev' | 'localhost' | 'no-end
 
 /**
  * 当前统计状态及停用原因；判定顺序与上报路径一致（force 优先于一切排除规则）。
- * 'excluded' 在默认关闭口径下同时表示「未开启（默认）」与「已关闭」
+ * 'excluded' 表示用户已主动关闭（默认开启口径下无「未开启」态）
  */
 export function getStatsStatus(): StatsStatus {
   if (!STATS_ENDPOINT) return 'no-endpoint';
@@ -232,9 +251,10 @@ export interface Attribution {
 
 const SLUG_RE = /^[a-zA-Z0-9_-]{1,32}$/;
 
-/** 读取已记录的首次来源；没有或数据损坏时返回 null */
+/** 读取已记录的首次来源；未开启归因（额外授权项）、没有或数据损坏时返回 null */
 export function getAttribution(): Attribution | null {
   if (typeof window === 'undefined') return null;
+  if (!isAttributionEnabled()) return null;
   try {
     const raw = window.localStorage?.getItem(ATTRIBUTION_KEY);
     if (!raw) return null;
@@ -252,10 +272,12 @@ export function getAttribution(): Attribution | null {
 
 /**
  * 从落地 URL 记录首次来源（只记第一次，后续不覆盖）。
+ * 额外授权项：用户未开启「来源归因」开关时不记录、不上报。
  * @returns 当前生效的首次来源
  */
 export function initAttribution(): Attribution | null {
   if (typeof window === 'undefined') return null;
+  if (!isAttributionEnabled()) return null;
   const existing = getAttribution();
   if (existing) return existing;
 
@@ -396,7 +418,7 @@ export function trackRouterPageView(path: string): void {
 /** 初始化统计：启动事件 + 首次来源。应用启动时调用一次
  *  首页浏览不在这里发：router.afterEach 对首次导航同样触发，这里再发会重复记一条 */
 export async function initStats(): Promise<void> {
-  // 归因先于启用判定落库：用户本次关闭统计、日后开启时，首次来源仍可回溯
+  // 归因受自身授权开关约束：未开启来源归因时 initAttribution 返回 null，不记录不上报
   const attribution = initAttribution();
   if (!shouldEnableStats()) {
     console.log('[统计] 当前环境未启用统计，跳过初始化');

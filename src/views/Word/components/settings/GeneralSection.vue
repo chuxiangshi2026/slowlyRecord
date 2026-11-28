@@ -194,16 +194,24 @@
       <img class="miniprogram-code" src="/static/minicode.png" alt="慢记微信小程序码" />
     </div>
 
-    <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向）；
-         隐私说明与上报状态同属一条（都是"采什么/目前是否在采"），合并展示不再单列 -->
+    <!-- 匿名统计开关：默认开启（最小合规集），取消勾选写关闭标记、立即停发；
+         来源归因为额外授权项，单独开关默认关。隐私说明与上报状态同属一条 -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（默认关闭；开启后仅上报功能使用计数、版本与脱敏错误消息，不含词库内容与个人信息。程序异常始终只保存在本机，可在调试面板查看）
+      <span class="stats-optout-text">匿名使用统计（默认开启：仅上报功能使用计数、平台版本与脱敏错误消息，不含词库内容与个人信息。程序异常同时始终保存在本机，可在调试面板查看）
         <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
               @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>
       <el-checkbox class="stats-optout-check" :model-value="statsOptIn" size="small"
                    aria-label="匿名使用统计"
                    @update:model-value="onStatsOptInChange"/>
+    </div>
+    <div class="stats-optout">
+      <span class="stats-optout-text">来源归因（默认关闭；需单独开启。开启后额外记录首次访问来源——推广渠道名与落地页，仅用于评估推广效果，不含个人身份信息）
+        <span class="stats-status">当前：{{ attributionStatusText }}</span>
+      </span>
+      <el-checkbox class="stats-optout-check" :model-value="attributionOn" size="small"
+                   aria-label="来源归因"
+                   @update:model-value="onAttributionChange"/>
     </div>
 
     <PrivacyDialog v-model="privacyVisible"/>
@@ -228,7 +236,7 @@ import {useUiStore} from "@/stores/ui.ts";
 import type {OcrPlatform, TranslationPlatform} from "@/types/words";
 import {isUtools, isWeb} from "@/adapters/platform";
 import {engineRequiresKey, getOcrEngineGroups, getTranslationEngine, getAvailableTranslationEngineGroups, OCR_KEY_PLATFORMS, TRANSLATION_KEY_PLATFORMS} from "@/utils/engine-options";
-import {isStatsExcluded, setStatsExcluded, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
+import {isStatsExcluded, setStatsExcluded, isAttributionEnabled, setAttributionEnabled, submitFeedback, getStatsStatus} from "@/utils/stats.ts";
 import type {StatsStatus} from "@/utils/stats.ts";
 import {ElMessage} from 'element-plus'
 import {isScheduleSupported, applyScheduleSetting, applyScheduleTimes, REMINDER_TIME_OPTIONS, MAX_REMINDER_TIMES} from "@/utils/schedule-reminder.ts";
@@ -281,7 +289,7 @@ const onCloseAfterAddSwitchChange = () => {
   wordsStore.setClosePlugin(wordsStore.pluginStatus)
 }
 
-// 匿名使用统计开关：默认关；勾选即写 sr_stats_optin 正向标记，取消立即停发（生产环境无控制台，这是唯一入口）
+// 匿名使用统计开关：默认开启（最小合规集）；取消勾选写 sr_stats_optout 关闭标记，立即停发（生产环境无控制台，这是唯一入口）
 const statsOptIn = ref(!isStatsExcluded())
 const onStatsOptInChange = (v: string | number | boolean | undefined) => {
   const on = !!v
@@ -289,12 +297,21 @@ const onStatsOptInChange = (v: string | number | boolean | undefined) => {
   statsOptIn.value = on
 }
 
+// 来源归因开关：额外授权项，默认关；勾选后才记录/上报首次来源
+const attributionOn = ref(isAttributionEnabled())
+const onAttributionChange = (v: string | number | boolean | undefined) => {
+  const on = !!v
+  setAttributionEnabled(on)
+  attributionOn.value = on
+}
+const attributionStatusText = computed(() => (attributionOn.value ? '已开启' : '默认关闭'))
+
 // 统计状态行：直接展示上报/停用原因（生产环境无控制台，排障就靠这行）
 const statsStatusText = computed(() => {
   void statsOptIn.value // 开关切换时重算（getStatsStatus 直接读 localStorage）
   return ({
     enabled: '上报中',
-    excluded: '未开启',
+    excluded: '已关闭',
     dev: '开发环境已停用',
     localhost: '本地调试已停用',
     'no-endpoint': '未配置端点',

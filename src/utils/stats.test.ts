@@ -24,6 +24,8 @@ import {
   getAttribution,
   getLocalErrors,
   clearLocalErrors,
+  isAttributionEnabled,
+  setAttributionEnabled,
 } from '@/utils/stats'
 
 /** 等待 send() 内部的异步信封组装（getPluginVersion 微任务）完成 */
@@ -60,14 +62,17 @@ describe('stats（自建端点）', () => {
   })
 
   describe('启用判定', () => {
-    it('默认关闭：生产环境未主动开启前不上报，opt-in 后立即启用', async () => {
-      await initStats()
-      await flush()
-      expect(globalThis.fetch).not.toHaveBeenCalled()
-      setStatsExcluded(false) // 用户主动勾选开启
+    it('默认开启：生产环境未关闭前上报，关闭后立即停发', async () => {
       await initStats()
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
+      setStatsExcluded(true) // 用户主动关闭
+      expect(isStatsExcluded()).toBe(true)
+      const sent = () => (globalThis.fetch as any).mock.calls.filter((c: any[]) => c[1]?.body).length
+      const n = sent()
+      trackPageView('/Word')
+      await flush()
+      expect(sent()).toBe(n)
     })
 
     it('未配置端点时不上报', async () => {
@@ -88,57 +93,55 @@ describe('stats（自建端点）', () => {
     it('非 uTools 的 localhost 排除', async () => {
       delete (globalThis as any).window.utools
       ;(globalThis as any).window.location.hostname = 'localhost'
-      setStatsExcluded(false)
       await initStats()
       await flush()
       expect(globalThis.fetch).not.toHaveBeenCalled()
     })
 
-    it('file:// 生产页（hostname 空、无 utools/electronAPI）opt-in 后按 web 平台启用', async () => {
+    it('file:// 生产页（hostname 空、无 utools/electronAPI）默认按 web 平台启用', async () => {
       delete (globalThis as any).window.utools
-      setStatsExcluded(false)
       await initStats()
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
       expect(sentEvents()[0].platform).toBe('web')
     })
 
-    it('默认关闭即未开启；setStatsExcluded 双向切换立即生效', async () => {
-      expect(isStatsExcluded()).toBe(true)
-      trackPageView('/Word')
-      await flush()
-      expect(globalThis.fetch).not.toHaveBeenCalled()
-      setStatsExcluded(false)
+    it('默认开启即上报；setStatsExcluded 双向切换立即生效', async () => {
       expect(isStatsExcluded()).toBe(false)
       trackPageView('/Word')
       await flush()
       expect(globalThis.fetch).toHaveBeenCalled()
       setStatsExcluded(true)
       expect(isStatsExcluded()).toBe(true)
+      const sent = () => (globalThis.fetch as any).mock.calls.filter((c: any[]) => c[1]?.body).length
+      const n = sent()
       trackPageView('/Word')
       await flush()
-      // 只有 opt-in 后的那一次 page.view 真正发出
-      expect((globalThis.fetch as any).mock.calls.filter((c: any[]) => c[1]?.body)).toHaveLength(1)
-    })
-
-    it('applyPersistedStatsPrefs 回填 localStorage（更新清空后恢复用户选择）', () => {
-      window.localStorage.removeItem('sr_stats_optin')
-      applyPersistedStatsPrefs({ optedIn: true })
+      expect(sent()).toBe(n)
+      setStatsExcluded(false)
       expect(isStatsExcluded()).toBe(false)
-      applyPersistedStatsPrefs({ optedIn: false })
-      expect(isStatsExcluded()).toBe(true)
+      trackPageView('/Word')
+      await flush()
+      expect(sent()).toBe(n + 1)
     })
 
-    it('旧版数据迁移：statsExcluded===false（曾显式开启）视为已 opt-in，其余按默认关闭', () => {
-      window.localStorage.removeItem('sr_stats_optin')
-      applyPersistedStatsPrefs({ excluded: false })
-      expect(isStatsExcluded()).toBe(false) // 保住旧版显式选择
-      window.localStorage.removeItem('sr_stats_optin')
+    it('applyPersistedStatsPrefs 回填关闭标记（更新清空后恢复用户选择）', () => {
       applyPersistedStatsPrefs({ excluded: true })
       expect(isStatsExcluded()).toBe(true)
-      window.localStorage.removeItem('sr_stats_optin')
-      applyPersistedStatsPrefs({}) // 旧版默认开启的老用户：无显式选择，按新默认关闭
-      expect(isStatsExcluded()).toBe(true)
+      expect(window.localStorage.getItem('sr_stats_optout')).toBe('1')
+      applyPersistedStatsPrefs({ excluded: false })
+      expect(isStatsExcluded()).toBe(false)
+      applyPersistedStatsPrefs({}) // 从未选择：按新口径默认开启
+      expect(isStatsExcluded()).toBe(false)
+    })
+
+    it('旧版数据迁移：statsExcluded===true（显式关闭）保持关闭，false/未选择按默认开启', () => {
+      applyPersistedStatsPrefs({ excluded: true })
+      expect(isStatsExcluded()).toBe(true) // 旧版显式关闭：选择必须保留
+      applyPersistedStatsPrefs({ excluded: false })
+      expect(isStatsExcluded()).toBe(false)
+      applyPersistedStatsPrefs({}) // 旧版从未选择：随新口径默认开启
+      expect(isStatsExcluded()).toBe(false)
     })
 
     it('强制启用标记优先于一切排除规则', async () => {      ;(globalThis as any).window.utools.isDev = () => true
@@ -151,7 +154,9 @@ describe('stats（自建端点）', () => {
   })
 
   describe('getStatsStatus', () => {
-    it('默认未开启返回 excluded，opt-in 后返回 enabled', () => {
+    it('默认开启返回 enabled，关闭后返回 excluded', () => {
+      expect(getStatsStatus()).toBe('enabled')
+      setStatsExcluded(true)
       expect(getStatsStatus()).toBe('excluded')
       setStatsExcluded(false)
       expect(getStatsStatus()).toBe('enabled')
@@ -184,6 +189,8 @@ describe('stats（自建端点）', () => {
   })
 
   describe('首次来源归因', () => {
+    beforeEach(() => setAttributionEnabled(true)) // 归因是额外授权项，用例统一先开启
+
     it('从 hash 前的查询参数记录第一次来源，后续不覆盖', () => {
       ;(globalThis as any).window.location.search = '?from=seo&page=cet4'
       expect(initAttribution()).toMatchObject({ source: 'seo', page: 'cet4' })
@@ -207,6 +214,42 @@ describe('stats（自建端点）', () => {
       expect(launch.data.landingPage).toBe('poem-tang_001')
       const landing = events.find(p => p.name === 'source.landing')
       expect(landing.data).toEqual({ source: 'github', page: 'poem-tang_001' })
+    })
+  })
+
+  describe('来源归因授权（额外授权项，默认关闭）', () => {
+    it('默认关闭：不记录归因，launch 不带 source，也不发 source.landing', async () => {
+      ;(globalThis as any).window.location.search = '?from=seo&page=cet4'
+      setStatsExcluded(false)
+      expect(initAttribution()).toBeNull()
+      expect(getAttribution()).toBeNull()
+      await initStats()
+      await flush()
+      const launch = sentEvents().find(p => p.name === 'app.launch')
+      expect(launch.data?.source).toBeUndefined()
+      expect(sentEvents().find(p => p.name === 'source.landing')).toBeUndefined()
+    })
+
+    it('开启后记录首次来源并上报；关闭后停止记录、不再读取', async () => {
+      setStatsExcluded(false)
+      setAttributionEnabled(true)
+      ;(globalThis as any).window.location.search = '?from=seo&page=cet4'
+      expect(initAttribution()).toMatchObject({ source: 'seo', page: 'cet4' })
+      await initStats()
+      await flush()
+      expect(sentEvents().find(p => p.name === 'app.launch').data.source).toBe('seo')
+      expect(sentEvents().find(p => p.name === 'source.landing')).toBeDefined()
+      setAttributionEnabled(false)
+      expect(getAttribution()).toBeNull()
+      ;(globalThis as any).window.location.search = '?from=wechat'
+      expect(initAttribution()).toBeNull()
+    })
+
+    it('归因选择持久化：applyPersistedStatsPrefs 恢复', () => {
+      applyPersistedStatsPrefs({ attribution: true })
+      expect(isAttributionEnabled()).toBe(true)
+      applyPersistedStatsPrefs({})
+      expect(isAttributionEnabled()).toBe(false)
     })
   })
 

@@ -91,10 +91,12 @@ export type UserSetType = DbDoc<{
     autoSpeak: boolean;
     /** 护眼模式（浅绿背景基底），默认开启 */
     eyeCare?: boolean;
-/** 已选择关闭匿名使用统计（旧版字段：新数据由 statsOptedIn 作为正向同意标记，此字段同步写以兼容旧版本读取） */
+/** 匿名使用统计已关闭（opt-out 口径：true=关闭；false/缺省=默认开启的最小合规集） */
     statsExcluded?: boolean;
-    /** 主动开启匿名使用统计（默认关闭口径的正向同意标记；缺失时读取侧按 statsExcluded===false 迁移，其余视为关闭） */
+    /** 遗留字段：旧版默认关闭口径的正向同意标记，新读侧只认 statsExcluded；写侧仍同步写以兼容旧版本 */
     statsOptedIn?: boolean;
+    /** 来源归因（额外授权项）已开启：true=记录与上报首次来源；缺省=默认关闭 */
+    attributionEnabled?: boolean;
     /** 遗留字段：首启统计告知弹窗已移除，旧文档可能仍带此字段，代码不再读写 */
     statsNoticeShown?: boolean;
     /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */
