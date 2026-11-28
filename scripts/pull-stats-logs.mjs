@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
- * 统计日志拉取脚本：从 CLS 拉取云函数写入的 [stats] 日志行，落成本地 JSONL。
+ * 统计日志拉取脚本（历史）：从 CLS 拉取云函数写入的 [stats] 日志行，落成本地 JSONL。
+ *
+ * 2026-11-28 起统计采集已迁移到 CVM 本机 collector，日志直接落
+ * /var/lib/slowrecap-stats/events/*.jsonl，不再需要本脚本；保留仅用于拉取迁移前的历史 CLS 数据。
  *
  * 用法：
  *   TENCENT_SECRET_ID=xxx TENCENT_SECRET_KEY=xxx STATS_TOPIC_ID=xxxx \

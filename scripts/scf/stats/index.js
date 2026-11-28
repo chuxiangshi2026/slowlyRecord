@@ -1,6 +1,10 @@
 /**
  * 慢记统计采集函数（腾讯云函数 SCF + 函数 URL）
  *
+ * 已弃用（2026-11-28）：统计采集已迁移到 CVM 本机 collector（mp.slowrecap.cn/collect），
+ * 日志落 /var/lib/slowrecap-stats/events/*.jsonl，不再经过 SCF/CLS。
+ * 本函数仅保留历史参考；请勿重新部署，并确认其日志投递已关闭，避免日志服务继续计费。
+ *
  * 只做一件事：校验事件格式后写一行 JSON 日志（console.log → 函数日志主题 CLS）。
  * 不存库、不读库、不记录请求方 IP。数据由本地脚本 scripts/pull-stats-logs.mjs 定期拉取分析。
  *
