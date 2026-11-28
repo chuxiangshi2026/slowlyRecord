@@ -10,6 +10,8 @@
  *   2. 每路由收集 console error / pageerror（渲染崩溃零容忍）
  *   3. 每路由全页截图存档到 test-results/e2e/，供人工复查/比对
  *   4. 交互断言：双抽屉互斥、抽屉随路由关闭、Escape 关抽屉后页面不空白（B2 回归）
+ *   5. 设置抽屉六分组全遍历（I1）、文本记忆「添加/导入」对话框默认内置库 tab（I2）
+ *   6. 子路由冒烟：数字/音标/快捷键训练子页、宫殿编辑器、/selftest 诊断页 JSON 断言
  *
  * 退出码 = 失败检查数（0 表示全部通过）。CI 可直接使用。
  */
@@ -43,9 +45,20 @@ const ROUTE_MATRIX = [
   { route: 'phonetic-memory', expect: '音标学习' },
   { route: 'knowledge-memory', expect: '知识库（含内置知识包）' },
   { route: 'memory-palace', expect: '记忆宫殿' },
+  { route: 'memory-palace/edit', expect: '记忆宫殿新建/编辑器' },
   { route: 'word-book', expect: '词集首页、继续学习或示例词集可见' },
   { route: 'shortcut-memory', expect: '快捷键记忆' },
+  { route: 'shortcut-memory/training', expect: '快捷键训练' },
   { route: 'sign', expect: '打卡页' },
+  { route: 'number-memory/training', expect: '数字记忆训练页' },
+  { route: 'number-memory/entries', expect: '数字记忆条目列表或空态' },
+  { route: 'number-memory/mapping', expect: '数字编码映射页' },
+  { route: 'phonetic-memory/recognition', expect: '音标认读' },
+  { route: 'phonetic-memory/minimal-pairs', expect: '最小对立组' },
+  { route: 'phonetic-memory/breakdown', expect: '音标分解' },
+  { route: 'selftest', expect: '诊断页输出适配器自检 JSON（独立于 Home 外壳，无页头）' },
+  // 带 :id 的动态路由（memory-palace/:id、word-book/:bookId、knowledge-memory/:id）
+  // 需要运行时数据 id，静态矩阵无法直接登记；由后续按数据驱动的用例补充。
 ]
 
 const MIME = {
@@ -163,8 +176,19 @@ async function main() {
     const shot = path.join(OUT_DIR, `${route.replace(/\//g, '_')}.png`)
     await page.screenshot({ path: shot, fullPage: false })
 
-    check(`${route}: 页面非空白`, probe.bodyTextLen > 0, `正文字数=${probe.bodyTextLen}`)
-    check(`${route}: 页头存在`, probe.headerVisible, routeExpect[route] || '')
+    if (route === 'selftest') {
+      // 诊断页独立于 Home 外壳（无 .el-header），改断言自检 JSON 可解析且含 platform
+      const st = await page.evaluate(() => {
+        const el = document.querySelector('.selftest')
+        let platform = null
+        try { platform = JSON.parse(el?.textContent || 'null')?.platform ?? null } catch {}
+        return { hasPre: !!el, platform }
+      })
+      check(`${route}: 自检 JSON 可解析且含 platform`, st.hasPre && !!st.platform, `platform=${st.platform}`)
+    } else {
+      check(`${route}: 页面非空白`, probe.bodyTextLen > 0, `正文字数=${probe.bodyTextLen}`)
+      check(`${route}: 页头存在`, probe.headerVisible, routeExpect[route] || '')
+    }
     check(`${route}: 无渲染崩溃`, pageErrors.length === 0, pageErrors[0] || '')
     if (consoleErrors.length) {
       // console.error 记为警告不判死：第三方组件（TTS/剪贴板）在 headless 下可能告警
@@ -255,6 +279,75 @@ async function main() {
   }))
   check('B2 守卫: 文本记忆页 Escape 关抽屉后不空白且有内容', afterEscTm.bodyTextLen > 0 && afterEscTm.headerVisible && afterEscTm.hasContent, JSON.stringify(afterEscTm))
   await page.screenshot({ path: path.join(OUT_DIR, 'interaction-escape-text-memory.png') })
+
+  // I1：设置抽屉六分组全遍历 —— 每个分组可进入、二级面板标题正确且非空
+  await page.goto(`${base}#/word`, { waitUntil: 'networkidle2' })
+  await new Promise(r => setTimeout(r, 1000))
+  await page.evaluate(() => {
+    const h = [...document.querySelectorAll('.el-header span, .el-header div, .el-header button')]
+    h.find(el => (el.textContent || '').trim() === '⋯')?.click()
+  })
+  await new Promise(r => setTimeout(r, 1200))
+  const SETTING_GROUPS = ['常规设置', '外观', '专注模式', '快捷键', 'API 密钥', '配置管理']
+  for (const name of SETTING_GROUPS) {
+    await page.evaluate(n => {
+      const entries = [...document.querySelectorAll('.group-entry')]
+      entries.find(e => e.querySelector('.group-entry-name')?.textContent?.trim() === n)?.click()
+    }, name)
+    await new Promise(r => setTimeout(r, 600))
+    let panel = await page.evaluate(() => ({
+      title: document.querySelector('.group-panel-title')?.textContent?.trim() || '',
+      bodyLen: (document.querySelector('.group-panel-body')?.innerText || '').trim().length,
+    }))
+    // 首击可能被抽屉过渡动画吞掉，未进入时重试一次
+    if (panel.title !== name) {
+      await page.evaluate(n => {
+        const entries = [...document.querySelectorAll('.group-entry')]
+        entries.find(e => e.querySelector('.group-entry-name')?.textContent?.trim() === n)?.click()
+      }, name)
+      await new Promise(r => setTimeout(r, 800))
+      panel = await page.evaluate(() => ({
+        title: document.querySelector('.group-panel-title')?.textContent?.trim() || '',
+        bodyLen: (document.querySelector('.group-panel-body')?.innerText || '').trim().length,
+      }))
+    }
+    check(`I1: 设置分组「${name}」可进入且面板非空`, panel.title === name && panel.bodyLen > 0, JSON.stringify(panel))
+    if (name === '配置管理') await page.screenshot({ path: path.join(OUT_DIR, 'interaction-settings-config.png') })
+    await page.evaluate(() => document.querySelector('.group-panel-back')?.click())
+    await new Promise(r => setTimeout(r, 500))
+  }
+  const drawerStillFine = await page.evaluate(() => {
+    const list = document.querySelector('.group-list')
+    return !!list && (list.innerText || '').trim().length > 0
+  })
+  check('I1: 返回后设置一级列表仍在', drawerStillFine, '')
+  await page.keyboard.press('Escape')
+
+  // I2：文本记忆「添加 / 导入」统一对话框 —— 打开即停留在「内置库」tab（既有规格）
+  await page.goto(`${base}#/text-memory`, { waitUntil: 'networkidle2' })
+  await new Promise(r => setTimeout(r, 1200))
+  // 「拼音」按钮开启预览时同为 primary+small，取 .filter-actions 内最后一个按钮（添加/导入）才准确
+  await page.evaluate(() => {
+    const btns = [...document.querySelectorAll('.filter-actions .el-button')]
+    btns[btns.length - 1]?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+  })
+  await new Promise(r => setTimeout(r, 1000))
+  const dlg = await page.evaluate(() => {
+    const dialog = [...document.querySelectorAll('.el-dialog')].find(d => {
+      const r = d.getBoundingClientRect()
+      return r.width > 100 && getComputedStyle(d).display !== 'none'
+    })
+    const active = document.querySelector('.el-tabs__item.is-active')
+    return {
+      dialogVisible: !!dialog,
+      activeTab: active?.textContent?.trim() || '',
+      dialogTextLen: (dialog?.innerText || '').trim().length,
+    }
+  })
+  check('I2: 添加/导入对话框打开且默认「内置库」tab', dlg.dialogVisible && dlg.activeTab === '内置库' && dlg.dialogTextLen > 0, JSON.stringify(dlg))
+  await page.screenshot({ path: path.join(OUT_DIR, 'interaction-import-dialog.png') })
+  await page.keyboard.press('Escape')
+  await new Promise(r => setTimeout(r, 700))
 
   // ── 汇总 ──────────────────────────────────────────────────────────
   const failed = results.filter(r => !r.ok)

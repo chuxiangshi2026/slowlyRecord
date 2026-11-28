@@ -12,6 +12,7 @@
 | L1 | 单元/适配器测试 | Vitest（已有 3134 例） | 纯逻辑、数据层、adapter 行为 | `npm run test:run` |
 | L1.5 | **fake utools 宿主集成测试** | Vitest + jsdom（`src/app-enter.test.ts`） | `handleUtoolsEnter` 全 action 分派、主窗口隐藏/恢复配对、OCR/划词/收藏入口链路 | `npx vitest run src/app-enter.test.ts` |
 | L2 | **黑盒 E2E 冒烟**（本文档主角） | Puppeteer + 真实构建产物 + 真实 Chromium | 逐路由真实加载、渲染崩溃、非空白、截图存档、关键交互断言 | `npm run test:e2e` |
+| L2.5 | **平台自动化** | Electron: Playwright `_electron` + xvfb；小程序：微信开发者工具自动化 + miniprogram-automator | Electron 主进程真实启动与导航；小程序主包/分包页面真实渲染与导航（模拟器级，不含真机授权场景） | `npm run test:e2e:electron`；`node scripts/e2e/miniprogram.cjs`（前置见下） |
 | L3 | **uTools 实机巡检** | 人工 + KimiCU 自动化辅助 | 真机窗口尺寸、亚克力/自定义背景、双抽屉手势、平台专属 API（focus.html、utools 头、截图/划词宿主行为） | 见第四节清单 |
 | L0 | 静态检查（uTools 面） | grep / CI 脚本 | plugin.json 关键字、focus.html、preload 完整性 | 见第五节 |
 
@@ -48,13 +49,15 @@ PUPPETEER_EXECUTABLE_PATH=/path/to/chrome npm run test:e2e
 
 ### 每次运行做什么
 
-1. 静态伺服 `dist/`，逐路由访问 `#/word`、`#/text-memory`、`#/translate` 等 13 个主路由；
-2. 每路由断言：**页面非空白**、**页头存在**、**无渲染崩溃**（pageerror 零容忍）；
+1. 静态伺服 `dist/`，逐路由访问 23 个路由（14 个主路由 + 数字记忆/音标/快捷键训练子页 + 宫殿编辑器 + `/selftest` 诊断页）；
+2. 每路由断言：**页面非空白**、**页头存在**、**无渲染崩溃**（pageerror 零容忍；`/selftest` 独立于 Home 外壳无页头，改断言自检 JSON 可解析且含 `platform`）；
 3. 每路由全页截图存档 `test-results/e2e/<route>.png`；
 4. 交互断言（回归已修缺陷、守卫未修缺陷）：
    - **F1 双抽屉互斥**：打开设置抽屉后再开「更多」抽屉，同时可见抽屉数 ≤ 1；
    - **F2 抽屉随路由关闭**：开着抽屉切路由，抽屉必须关闭；
    - **B2 守卫**：抽屉打开 → Escape → 页头仍在且页面不空白（文本记忆页整页空白的回归守卫）；
+   - **I1 设置抽屉六分组全遍历**：常规设置/外观/专注模式/快捷键/API 密钥/配置管理逐一进入，二级面板标题正确且非空；
+   - **I2 添加/导入对话框**：文本记忆页打开统一「添加/导入」对话框，默认停留在「内置库」tab；
 5. 输出 `test-results/e2e/report.json`，**退出码 = 失败数，可直接进 CI**。
 
 ### 已知无害告警
@@ -66,6 +69,32 @@ PUPPETEER_EXECUTABLE_PATH=/path/to/chrome npm run test:e2e
 1. 在 `ROUTE_MATRIX` 登记路由与一句话预期；
 2. 若有交互缺陷修复，在「交互断言」区加对应回归用例（模仿 F1/F2 写法）；
 3. 跑一次 `npm run test:e2e` 把新路由基线截图提交存档。
+
+### L2.5 平台自动化（Electron / 小程序模拟器）
+
+**Electron**（`scripts/e2e/electron.cjs`，依赖 `playwright-core` + 项目内 `electron` 二进制）：
+
+```bash
+npm run test:e2e:electron   # xvfb 虚拟屏下启动 dist-electron/main.js（生产 loadFile 模式）
+```
+
+断言：主窗口出现、页面非空白、word/dictation 导航、`/selftest` 诊断页 JSON `platform=electron`、无渲染崩溃；截图存档 `test-results/e2e-electron/`。
+
+**微信小程序模拟器**（`scripts/e2e/miniprogram.cjs`，依赖 `miniprogram-automator`）：
+
+前置（Windows 侧一次性）：
+1. 微信开发者工具已安装并登录，设置 → 安全 → 服务端口开启；
+2. 构建产物复制到 Windows 本地目录（9P/UNC 路径 DevTools 打开很慢），并把 `project.config.json` 的 `appid` 从 `touristappid` 换成真实 AppID（CLI 不支持游客 appid）；
+3. 以自动化模式启动：
+   ```bash
+   powershell.exe -NoProfile -Command '& "D:\Program Files (x86)\Tencent\微信web开发者工具\cli.bat" auto --project "C:\Users\skj\AppData\Local\Temp\slowlyrecord-mp-e2e" --auto-port 9420 --trust-project'
+   ```
+
+```bash
+node scripts/e2e/miniprogram.cjs   # 连接 ws://127.0.0.1:9420，主包 4 页 + 4 个分包代表页导航冒烟
+```
+
+覆盖范围说明：模拟器级页面渲染/导航/分包加载（对应巡检清单 MP01、MP02 部分、MP09–12 的可模拟器部分）；**相机/相册/录音授权（MP06–08）与真机特有行为仍需真机**，不在自动化范围。
 
 ---
 
