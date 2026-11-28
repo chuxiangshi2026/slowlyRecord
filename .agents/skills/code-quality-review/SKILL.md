@@ -14,11 +14,11 @@ description: slowlyRecord 项目代码质量审查与发布质量检查技能。
 先读取以下文件，并保持详细规则只在源文档维护：
 
 - `../../../AGENTS.md`：项目架构、平台约束、命令与提交要求。
-- `../../../docs/quality-control-process.md`：变更分级、质量门禁和完成定义。
-- `../../../docs/code-review-standard.md`：审查步骤、问题定级、检查清单和全库审计规程。
-- `../../../docs/coding-standard.md`：编码、Vue/TypeScript、异步、数据、样式和测试规范。
+- `../../../private-docs/docs/quality-control-process.md`：变更分级、质量门禁和完成定义。
+- `../../../private-docs/docs/code-review-standard.md`：审查步骤、问题定级、检查清单和全库审计规程。
+- `../../../private-docs/docs/coding-standard.md`：编码、Vue/TypeScript、异步、数据、样式和测试规范。
 
-变更审查至少读取质量流程第 3～5 节、审查标准第 2～7 节及代码规范第 13 节。发布检查额外读取 `../../../docs/blackbox-e2e-testing.md`。全库审计读取三份标准的完整内容。
+变更审查至少读取质量流程第 3～5 节、审查标准第 2～7 节及代码规范第 13 节。发布检查额外读取 `../../../private-docs/docs/blackbox-e2e-testing.md`。全库审计读取三份标准的完整内容。
 
 ## 选择审查模式
 
