@@ -22,6 +22,8 @@ import {
   getStatsStatus,
   initAttribution,
   getAttribution,
+  getLocalErrors,
+  clearLocalErrors,
 } from '@/utils/stats'
 
 /** 等待 send() 内部的异步信封组装（getPluginVersion 微任务）完成 */
@@ -121,10 +123,8 @@ describe('stats（自建端点）', () => {
 
     it('applyPersistedStatsPrefs 回填 localStorage（更新清空后恢复用户选择）', () => {
       window.localStorage.removeItem('sr_stats_optin')
-      window.localStorage.removeItem('sr_stats_notice_v1')
-      applyPersistedStatsPrefs({ optedIn: true, noticeShown: true })
+      applyPersistedStatsPrefs({ optedIn: true })
       expect(isStatsExcluded()).toBe(false)
-      expect(window.localStorage.getItem('sr_stats_notice_v1')).toBe('1')
       applyPersistedStatsPrefs({ optedIn: false })
       expect(isStatsExcluded()).toBe(true)
     })
@@ -320,6 +320,47 @@ describe('stats（自建端点）', () => {
       await flush()
       const p = sentEvents().find(x => x.name === 'bug.error')
       expect(p.data.message).toBe('请求 [url] 失败')
+    })
+  })
+
+  describe('本地错误日志（始终记录，不上传）', () => {
+    it('统计关闭时 trackError 仍写本地缓冲，只是不发网络请求', async () => {
+      setStatsExcluded(true)
+      await trackError('js', 'local-only-error', '/word')
+      await flush()
+      const list = getLocalErrors()
+      expect(list).toHaveLength(1)
+      expect(list[0]).toMatchObject({ source: 'js', message: 'local-only-error', page: '/word' })
+      expect(list[0].ts).toEqual(expect.any(Number))
+      expect(sentEvents().find(x => x.data?.message === 'local-only-error')).toBeUndefined()
+    })
+
+    it('新错误排在前；clearLocalErrors 清空', async () => {
+      clearLocalErrors()
+      await trackError('js', 'first')
+      await trackError('promise', 'second')
+      await flush()
+      expect(getLocalErrors().map(e => e.message)).toEqual(['second', 'first'])
+      clearLocalErrors()
+      expect(getLocalErrors()).toHaveLength(0)
+    })
+
+    it('环形缓冲上限 50 条，保留最新', async () => {
+      clearLocalErrors()
+      for (let i = 0; i < 55; i++) {
+        await trackError('js', `err-${i}`)
+      }
+      await flush()
+      const list = getLocalErrors()
+      expect(list).toHaveLength(50)
+      expect(list[0].message).toBe('err-54')
+    })
+
+    it('损坏的本地数据按空处理，不阻断后续记录', async () => {
+      window.localStorage.setItem('sr_error_log', '{broken json')
+      await trackError('js', 'after-corrupt')
+      await flush()
+      expect(getLocalErrors().map(e => e.message)).toEqual(['after-corrupt'])
     })
   })
 

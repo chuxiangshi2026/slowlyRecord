@@ -149,7 +149,7 @@ async function handleUtoolsEnter(action: any) {
   // 同步插件状态和快捷键设置
   if (setDb) {
     // 统计偏好以 user-set 为准回填 localStorage（插件更新可能清空 localStorage）
-    applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
+    applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, optedIn: setDb.statsOptedIn });
     wordsStore.pluginStatus = setDb.pluginStatus;
     wordsStore.shortcutEnabled = setDb.shortcutEnabled;
     if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;
@@ -1062,7 +1062,7 @@ onMounted(async () => {
     try {
       const setDb = getSetDb();
       if (setDb) {
-        applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
+        applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, optedIn: setDb.statsOptedIn });
         wordsStore.pluginStatus = setDb.pluginStatus;
         wordsStore.shortcutEnabled = setDb.shortcutEnabled;
         if (setDb.translationPlatform) wordsStore.currentTranslationPlatform = setDb.translationPlatform;

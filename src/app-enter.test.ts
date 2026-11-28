@@ -94,7 +94,6 @@ vi.mock('@/utils/stats', () => ({
   getStatsStatus: () => ({}),
   setStatsExcluded: vi.fn(),
   applyPersistedStatsPrefs: vi.fn(),
-  STATS_NOTICE_KEY: 'stats-notice',
 }))
 vi.mock('@/utils/schedule-reminder', () => ({ reconcileSchedules: vi.fn(async () => {}) }))
 vi.mock('@/adapters/local-bulk-store', () => ({ isStoreLocalOnly: () => false }))

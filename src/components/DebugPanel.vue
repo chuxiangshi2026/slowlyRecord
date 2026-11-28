@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { getLocalErrors } from '@/utils/stats';
 
 interface LogEntry {
   time: string;
@@ -75,6 +76,14 @@ defineExpose({
 
 // 捕获控制台日志
 if (typeof window !== 'undefined') {
+  // 注入本地错误日志（stats.ts 持久化环形缓冲，跨会话）：旧错误排在实时日志下方，新在前
+  logs.value = logs.value.concat(
+    getLocalErrors().map(e => ({
+      time: new Date(e.ts).toLocaleString('zh-CN', { hour12: false }),
+      message: `[错误:${e.source}] ${e.message}`,
+    }))
+  );
+
   const originalLog = console.log;
   const originalError = console.error;
   const originalWarn = console.warn;

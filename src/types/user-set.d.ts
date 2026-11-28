@@ -95,7 +95,7 @@ export type UserSetType = DbDoc<{
     statsExcluded?: boolean;
     /** 主动开启匿名使用统计（默认关闭口径的正向同意标记；缺失时读取侧按 statsExcluded===false 迁移，其余视为关闭） */
     statsOptedIn?: boolean;
-    /** 首次启动统计告知弹窗已展示过（跨更新只提示一次） */
+    /** 遗留字段：首启统计告知弹窗已移除，旧文档可能仍带此字段，代码不再读写 */
     statsNoticeShown?: boolean;
     /** 新词加入目标词库：current=当前词库（缺省），default=默认词库 */
     addWordTarget?: 'current' | 'default';

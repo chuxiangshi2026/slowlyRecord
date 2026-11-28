@@ -197,7 +197,7 @@
     <!-- 匿名统计开关：脚注行，文字在左（超宽自动换行）、对钩在行末（勾选=参与，与其他开关同向）；
          隐私说明与上报状态同属一条（都是"采什么/目前是否在采"），合并展示不再单列 -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（默认关闭；开启后仅统计功能使用与版本分布，不含词库内容与个人信息，用于改进产品）
+      <span class="stats-optout-text">匿名使用统计（默认关闭；开启后仅上报功能使用计数、版本与脱敏错误消息，不含词库内容与个人信息。程序异常始终只保存在本机，可在调试面板查看）
         <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
               @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>

@@ -516,7 +516,6 @@ import PipIcon from '@/components/icons/PipIcon.vue';
 import {useRouter, useRoute} from 'vue-router';
 import {getSetDb, updateSetDbWithRetry} from '@/utils/user-set-db-util.ts';
 import {FeatureEvents} from '@/utils/stats';
-import {maybeShowStatsNotice} from '@/utils/stats-notice';
 import {getDbAdapter, getDbStorage} from '@/adapters/db';
 import {isUtools, isElectron, isWeb} from '@/adapters/platform';
 import {createElectronWindowProxy, getCursorPointCandidates, applyChildWindowAlwaysOnTop, persistChildDbPut, hideMainWindow, showMainWindow, withMainWindowRestore} from '@/adapters/window';
@@ -3612,8 +3611,6 @@ onMounted(async () => {
       return
     }
   }
-  // 统计告知必须排在首启引导之后：引导浮层 z-index 9999，会挡住 ElMessageBox
-  maybeShowStatsNotice()
 })
 
 function onOnboardingFinish() {
@@ -3621,7 +3618,6 @@ function onOnboardingFinish() {
     localStorage.setItem(ONBOARDED_KEY, '1')
   } catch { /* ignore */ }
   showOnboarding.value = false
-  maybeShowStatsNotice()
 }
 </script>
 

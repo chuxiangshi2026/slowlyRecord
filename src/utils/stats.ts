@@ -9,8 +9,10 @@
  * 且第三方统计平台涉及合规告知成本。自建端点字段自控、不记录 IP，叙事最简单。
  *
  * 合规约定：
- * - 默认关闭：首次启动明确告知「默认关闭，主动开启后才发送」，用户勾选后立即生效、取消立即停发；
- *   插件升级不会重新开启（开启选择持久化在 user-set）
+ * - 默认关闭：只有用户在设置页主动勾选后才发送，取消立即停发；插件升级不会重新开启（选择持久化在 user-set）。
+ *   首启告知弹窗已移除（默认关闭无需征求同意），入口为设置页开关与隐私说明
+ * - 程序异常始终只记录在本机（sr_error_log 环形缓冲，调试面板可查看），未开启统计时绝不离开设备；
+ *   开启统计后才随通道上报脱敏错误消息
  * - 不伪造、不设置 User-Agent；端点固定为 config.ts 的 STATS_ENDPOINT
  * - 只发 JSON 事件：事件名/页面路径/平台/版本/匿名安装 ID/少量事件数据，不含用户词库内容
  */
@@ -18,8 +20,6 @@ import { STATS_ENDPOINT, APP_VERSION } from '@/config';
 
 /** 主动开启标记键（值为 '1' 时才允许上报；默认关闭口径下的正向同意标记） */
 const STATS_OPTIN_KEY = 'sr_stats_optin';
-/** 首次启动告知弹窗已展示标记键（同时持久化到 user-set，插件更新清空 localStorage 后不重弹） */
-export const STATS_NOTICE_KEY = 'sr_stats_notice_v1';
 /** 强制启用标记键（开发自测用，优先于一切排除规则） */
 const STATS_FORCE_KEY = 'sr_stats_force';
 /** 匿名安装 ID 的 localStorage 键（仅用于统计独立安装量，不关联任何账号信息） */
@@ -64,12 +64,11 @@ export function setStatsExcluded(excluded: boolean): void {
  * 迁移规则：旧版本只写 statsExcluded（无 statsOptedIn）——statsExcluded===false 表示用户曾显式
  * 开启（旧流程下只有主动打开开关才会是 false），映射为已 opt-in；undefined/true 一律按新默认关闭处理。
  */
-export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; noticeShown?: boolean; optedIn?: boolean }): void {
+export function applyPersistedStatsPrefs(prefs: { excluded?: boolean; optedIn?: boolean }): void {
   const optedIn = prefs.optedIn ?? (prefs.excluded === false);
   try {
     if (optedIn) window.localStorage?.setItem(STATS_OPTIN_KEY, '1');
     else window.localStorage?.removeItem(STATS_OPTIN_KEY);
-    if (prefs.noticeShown) window.localStorage?.setItem(STATS_NOTICE_KEY, '1');
   } catch { /* localStorage 不可用时忽略 */ }
 }
 
@@ -97,19 +96,6 @@ export type StatsStatus = 'enabled' | 'excluded' | 'dev' | 'localhost' | 'no-end
  * 当前统计状态及停用原因；判定顺序与上报路径一致（force 优先于一切排除规则）。
  * 'excluded' 在默认关闭口径下同时表示「未开启（默认）」与「已关闭」
  */
-/** 环境是否允许上报统计（忽略用户开关）：有端点、非 uTools 开发、非 localhost。
- * 首启告知弹窗按此判定，避免 getStatsStatus() 在默认关闭时恒为 'excluded' 而漏判 dev/localhost */
-export function isStatsEnvEligible(): boolean {
-  if (!STATS_ENDPOINT || typeof window === 'undefined') return false;
-  if (getFlag(STATS_FORCE_KEY)) return true;
-  const isUTools = !!(window as any).utools;
-  try {
-    if (isUTools && (window as any).utools.isDev?.()) return false;
-  } catch { /* 旧版本无 isDev 时忽略 */ }
-  const hostname = window.location.hostname;
-  return isUTools || (hostname !== 'localhost' && hostname !== '127.0.0.1');
-}
-
 export function getStatsStatus(): StatsStatus {
   if (!STATS_ENDPOINT) return 'no-endpoint';
   if (typeof window === 'undefined') return 'no-endpoint';
@@ -448,17 +434,63 @@ function sanitizeErrorMessage(raw: string): string {
   return (cleaned || 'unknown').slice(0, 200);
 }
 
+// ===== 本地错误日志（始终记录，不上传） =====
+
+/** 本地错误日志键：环形缓冲，调试面板（Ctrl+Shift+D）可查看与复制 */
+const LOCAL_ERROR_KEY = 'sr_error_log';
+const LOCAL_ERROR_CAP = 50;
+
+export interface LocalErrorEntry {
+  ts: number;
+  source: string;
+  message: string;
+  page: string;
+}
+
+function readLocalErrors(): LocalErrorEntry[] {
+  try {
+    const parsed = JSON.parse(window.localStorage?.getItem(LOCAL_ERROR_KEY) || '[]') as LocalErrorEntry[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+/** 读取本机记录的最近错误（新在前，最多 50 条；纯本地，从不自动上传） */
+export function getLocalErrors(): LocalErrorEntry[] {
+  if (typeof window === 'undefined') return [];
+  return readLocalErrors();
+}
+
+/** 清空本机错误日志 */
+export function clearLocalErrors(): void {
+  try {
+    window.localStorage?.removeItem(LOCAL_ERROR_KEY);
+  } catch { /* ignore */ }
+}
+
+function recordLocalError(source: string, message: string, page: string): void {
+  try {
+    const list = readLocalErrors();
+    list.unshift({ ts: Date.now(), source, message, page });
+    window.localStorage?.setItem(LOCAL_ERROR_KEY, JSON.stringify(list.slice(0, LOCAL_ERROR_CAP)));
+  } catch { /* localStorage 不可用（隐私模式/配额满）时放弃本地记录 */ }
+}
+
 /**
- * 上报 JS/Vue/未捕获 Promise 异常（事件名 bug.error）
- * 只带脱敏后的错误消息（去 URL/JSON 回显、截断 200 字符）、来源、平台、版本与非敏感运行时信息，
- * 不带堆栈，避免携带用户数据
+ * 记录 JS/Vue/未捕获 Promise 异常（事件名 bug.error）
+ * 本地错误日志始终记录（纯本机、无授权要求，调试面板可查看）；
+ * 上传仅在统计开启时发生（send 内部判定），只带脱敏后的错误消息（去 URL/JSON 回显、截断 200 字符）、
+ * 来源、平台、版本与非敏感运行时信息，不带堆栈，避免携带用户数据
  */
 export async function trackError(source: 'vue' | 'js' | 'promise', error: unknown, pageUrl?: string): Promise<void> {
   const msg = sanitizeErrorMessage(String(error instanceof Error ? error.message : error || 'unknown'));
   const key = `${source}:${msg}`;
   if (reportedErrors.has(key)) return;
   reportedErrors.add(key);
-  send('bug.error', pageUrl || currentUrl(), {
+  const page = pageUrl || currentUrl();
+  recordLocalError(source, msg, page);
+  send('bug.error', page, {
     source,
     message: msg,
     clientVersion: getClientVersion(),

@@ -133,7 +133,8 @@ app.use(VueVirtualScroller)
 // 若在 DB 就绪前发 app.launch，插件更新清空 localStorage 的用户会先被上报一次再恢复排除标记。
 // 全局异常捕获照常尽早注册；其上报同样受统计开关约束。
 
-// 全局异常捕获 → bug.error 统计事件（去重、截断，不含用户数据；跟随统计开关）
+// 全局异常捕获 → trackError（去重、截断，不含用户数据）：始终写本机错误日志（sr_error_log，
+// 调试面板可查看），仅在统计开关开启时才经统计通道上传脱敏消息
 // catch 兜底：上报自身异常绝不外抛，避免被自己的全局监听器接住形成循环
 app.config.errorHandler = (err) => {
   trackError('vue', err).catch(() => {});
@@ -279,7 +280,7 @@ getDbAdapterAsync().then(async () => {
   // 先用 user-set 中持久化的统计偏好回填 localStorage（插件更新可能已清空），再初始化统计
   try {
     const setDb = getSetDb();
-    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, noticeShown: setDb.statsNoticeShown, optedIn: setDb.statsOptedIn });
+    if (setDb) applyPersistedStatsPrefs({ excluded: setDb.statsExcluded, optedIn: setDb.statsOptedIn });
   } catch { /* 读设置失败时按 localStorage 状态继续 */ }
   initStats().catch((err) => {
     console.error('[App] 统计初始化失败:', err);
