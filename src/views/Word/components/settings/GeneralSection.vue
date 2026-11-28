@@ -197,7 +197,7 @@
     <!-- 匿名统计开关：默认开启（最小合规集），取消勾选写关闭标记、立即停发；
          来源归因为额外授权项，单独开关默认关。隐私说明与上报状态同属一条 -->
     <div class="stats-optout">
-      <span class="stats-optout-text">匿名使用统计（默认开启：仅上报功能使用计数、平台版本与脱敏错误消息，不含词库内容与个人信息。程序异常同时始终保存在本机，可在调试面板查看）
+      <span class="stats-optout-text">匿名使用统计（默认开启：仅上报功能使用计数、平台版本与错误指纹——类型和哈希，不含错误原文与任何用户内容。程序异常原文始终只保存在本机，可在调试面板查看）
         <span class="stats-status">当前：{{ statsStatusText }} · <a href="#"
               @click.prevent="privacyVisible = true">隐私说明</a></span>
       </span>

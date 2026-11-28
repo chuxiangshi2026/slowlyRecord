@@ -320,7 +320,7 @@ describe('stats（自建端点）', () => {
     // bug.error 与常规统计共用 opt-in 开关；用例统一先开启（关闭行为有专项用例）
     beforeEach(() => setStatsExcluded(false))
 
-    it('trackError 上报 bug.error，带路由和非敏感运行时上下文', async () => {
+    it('trackError 上报 bug.error 指纹（类型+哈希，不带消息原文），带路由和运行时上下文', async () => {
       ;(globalThis as any).window.utools.getAppVersion = () => '8.0.2'
       await trackError('js', new Error('boom'), '/word')
       await flush()
@@ -330,39 +330,42 @@ describe('stats（自建端点）', () => {
       expect(p.platform).toBe('utools')
       expect(p.appVersion).toBe('9.9.9')
       expect(p.data.source).toBe('js')
-      expect(p.data.message).toBe('boom')
+      expect(p.data.message).toBeUndefined() // 原文不出设备（苹果诊断模式）
+      expect(p.data.errorHash).toMatch(/^[0-9a-f]+$/)
       expect(p.data.clientVersion).toBe('8.0.2')
       expect(p.data.runtime).toEqual(expect.any(String))
       expect(p.data.errorName).toBe('Error')
     })
 
     it('同源同消息会话内去重', async () => {
+      clearLocalErrors()
       await trackError('js', 'dup-error')
       await trackError('js', 'dup-error')
       await flush()
-      const errs = sentEvents().filter(x => x.data?.message === 'dup-error')
-      expect(errs.length).toBe(1)
+      expect(sentEvents().filter(x => x.name === 'bug.error')).toHaveLength(1)
+      expect(getLocalErrors().filter(e => e.message === 'dup-error')).toHaveLength(1)
     })
 
     it('统计开关关闭时异常不上报', async () => {
       setStatsExcluded(true)
       await trackError('promise', 'excluded-error')
       await flush()
-      expect(sentEvents().find(x => x.data?.message === 'excluded-error')).toBeUndefined()
+      expect(sentEvents().find(x => x.name === 'bug.error')).toBeUndefined()
     })
 
-    it('错误消息截断 200 字符', async () => {
+    it('本地错误消息截断 200 字符（原文只留本地）', async () => {
+      clearLocalErrors()
       await trackError('vue', 'x'.repeat(300))
       await flush()
-      const p = sentEvents().find(x => x.name === 'bug.error')
-      expect(p.data.message.length).toBe(200)
+      expect(getLocalErrors()[0]?.message.length).toBe(200)
     })
 
-    it('错误消息脱敏：去 URL、去 JSON 回显、只留首行', async () => {
+    it('本地消息脱敏：去 URL、去 JSON 回显、只留首行（原文不出设备）', async () => {
+      clearLocalErrors()
       await trackError('js', new Error('请求 https://api.example.com/v1?q=原文 失败 {"echo":"用户原文"}\n第二行堆栈信息'))
       await flush()
-      const p = sentEvents().find(x => x.name === 'bug.error')
-      expect(p.data.message).toBe('请求 [url] 失败')
+      expect(getLocalErrors()[0]?.message).toBe('请求 [url] 失败')
+      expect(sentEvents().find(x => x.name === 'bug.error')?.data.errorHash).toMatch(/^[0-9a-f]+$/)
     })
   })
 

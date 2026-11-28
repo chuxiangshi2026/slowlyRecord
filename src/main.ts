@@ -133,8 +133,8 @@ app.use(VueVirtualScroller)
 // 若在 DB 就绪前发 app.launch，插件更新清空 localStorage 的用户会先被上报一次再恢复排除标记。
 // 全局异常捕获照常尽早注册；其上报同样受统计开关约束。
 
-// 全局异常捕获 → trackError（去重、截断，不含用户数据）：始终写本机错误日志（sr_error_log，
-// 调试面板可查看），仅在统计开关开启时才经统计通道上传脱敏消息
+// 全局异常捕获 → trackError（去重、截断）：完整脱敏消息只写本机错误日志（sr_error_log，
+// 调试面板可查看），统计开启时仅上传错误指纹（类型+哈希），原文不出设备
 // catch 兜底：上报自身异常绝不外抛，避免被自己的全局监听器接住形成循环
 app.config.errorHandler = (err) => {
   trackError('vue', err).catch(() => {});

@@ -10,9 +10,9 @@
  *
  * 合规约定：
  * - 默认开启（最小合规集）：仅上报操作计数（启动、页面浏览、添词等）、平台/版本/匿名安装 ID
- *   与脱敏错误消息，不含词库内容与个人信息；设置页一键关闭立即停发，关闭选择持久化（opt-out 口径）
+ *   与错误指纹（类型+哈希，不含错误原文），不含词库内容与个人信息；设置页一键关闭立即停发，关闭选择持久化（opt-out 口径）
  * - 需要额外授权的数据单独开关：来源归因（推广渠道/落地页）默认关闭，用户显式开启才记录与上报
- * - 程序异常始终只记录在本机（sr_error_log 环形缓冲，调试面板可查看）；随统计开启才上传脱敏短消息
+ * - 程序异常始终只记录在本机（sr_error_log 环形缓冲，调试面板可查看）；随统计开启仅上传错误指纹，原文永不离开设备
  * - 不伪造、不设置 User-Agent；端点固定为 config.ts 的 STATS_ENDPOINT
  * - 只发 JSON 事件：事件名/页面路径/平台/版本/匿名安装 ID/少量事件数据，不含用户词库内容
  */
@@ -456,6 +456,13 @@ function sanitizeErrorMessage(raw: string): string {
   return (cleaned || 'unknown').slice(0, 200);
 }
 
+/** 错误指纹：稳定哈希（djb2），同消息同指纹。仅用于聚合错误波次，原文永不离开设备 */
+function errorFingerprint(msg: string): string {
+  let h = 5381;
+  for (let i = 0; i < msg.length; i++) h = ((h << 5) + h + msg.charCodeAt(i)) >>> 0;
+  return h.toString(16);
+}
+
 // ===== 本地错误日志（始终记录，不上传） =====
 
 /** 本地错误日志键：环形缓冲，调试面板（Ctrl+Shift+D）可查看与复制 */
@@ -500,10 +507,11 @@ function recordLocalError(source: string, message: string, page: string): void {
 }
 
 /**
- * 记录 JS/Vue/未捕获 Promise 异常（事件名 bug.error）
- * 本地错误日志始终记录（纯本机、无授权要求，调试面板可查看）；
- * 上传仅在统计开启时发生（send 内部判定），只带脱敏后的错误消息（去 URL/JSON 回显、截断 200 字符）、
- * 来源、平台、版本与非敏感运行时信息，不带堆栈，避免携带用户数据
+ * 记录 JS/Vue/未捕获 Promise 异常（事件名 bug.error）——苹果诊断模式：
+ * 本地错误日志始终记录完整脱敏消息（纯本机、无授权要求，调试面板可查看与复制）；
+ * 上传仅在统计开启时发生（send 内部判定），且只带错误指纹（类型+稳定哈希）与来源/版本/运行时，
+ * 不带消息原文、不带堆栈——报错文本可能嵌入用户数据（如 undefined 属性名恰为用户输入），
+ * 原文留存本地，出网内容不含任何问题详情。
  */
 export async function trackError(source: 'vue' | 'js' | 'promise', error: unknown, pageUrl?: string): Promise<void> {
   const msg = sanitizeErrorMessage(String(error instanceof Error ? error.message : error || 'unknown'));
@@ -514,7 +522,7 @@ export async function trackError(source: 'vue' | 'js' | 'promise', error: unknow
   recordLocalError(source, msg, page);
   send('bug.error', page, {
     source,
-    message: msg,
+    errorHash: errorFingerprint(msg),
     clientVersion: getClientVersion(),
     runtime: getRuntimeVersion(),
     errorName: error instanceof Error ? error.name : error == null ? 'UnknownError' : typeof error,
